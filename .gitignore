@@ -1,0 +1,46 @@
+# Environment
+Backend/.env
+.env
+
+# Python
+__pycache__/
+*.py[cod]
+*.pyo
+*.pyd
+.Python
+*.egg
+*.egg-info/
+dist/
+build/
+.venv/
+venv/
+env/
+
+# Database
+*.db
+*.sqlite
+*.sqlite3
+
+# Uploads
+Backend/uploads/
+Backend/faiss_indexes/
+
+# Node
+node_modules/
+Frontend/node_modules/
+Frontend/dist/
+Frontend/.env
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Logs
+*.log
+
