@@ -396,7 +396,12 @@ function SubmissionEvaluation() {
       try {
         const er = await facultyApi.getEvaluation(id);
         setEvaluation(er.data);
-        setApproveForm(f => ({ ...f, faculty_total_score: er.data.ai_total_score || 0, faculty_feedback: er.data.ai_overall_feedback || '' }));
+        setApproveForm(f => ({
+          ...f,
+          faculty_total_score: er.data.faculty_total_score ?? er.data.ai_total_score ?? 0,
+          faculty_feedback: er.data.faculty_feedback ?? er.data.ai_overall_feedback ?? '',
+          faculty_notes: er.data.faculty_notes ?? '',
+        }));
         setCriterionOverrides(Object.fromEntries(
           (er.data.criterion_scores || []).map((cs: any) => [cs.id, cs.faculty_score ?? cs.ai_score])
         ));
@@ -435,6 +440,12 @@ function SubmissionEvaluation() {
     } catch (err: any) {
       setMsg('Error: ' + (err.response?.data?.detail || 'Failed'));
     }
+  };
+
+  const maximumMarks = Number(submission?.assessment_max_marks || 0);
+  const setFacultyScore = (value: number) => {
+    const score = Number.isFinite(value) ? Math.min(maximumMarks, Math.max(0, value)) : 0;
+    setApproveForm(f => ({ ...f, faculty_total_score: score }));
   };
 
   const handleReject = async () => {
@@ -650,17 +661,42 @@ function SubmissionEvaluation() {
             </div>
           )}
 
-          {/* Faculty Approval Section */}
-          {evaluation.status !== 'approved' && evaluation.status !== 'rejected' && (
-            <div className="card">
-              <h4 className="font-semibold text-slate-800 mb-4">Faculty Review & Approval</h4>
+          {/* Faculty Review Section - remains editable after approval and re-evaluation */}
+          <div id="faculty-score-editor" className="card">
+              <h4 className="font-semibold text-slate-800 mb-4">Faculty Review & Edit</h4>
               <div className="space-y-3">
                 <div>
-                  <label className="text-xs font-medium text-slate-600">Final Score (editable)</label>
-                  <input type="number" className="input-field mt-1 w-32"
-                    value={approveForm.faculty_total_score}
-                    onChange={e => setApproveForm({ ...approveForm, faculty_total_score: parseFloat(e.target.value) })}
-                    step="0.5" min={0} />
+                  <div className="flex items-center justify-between">
+                    <label className="text-xs font-medium text-slate-600">Faculty Final Score</label>
+                    <span className="text-xs font-semibold text-primary-700">
+                      {approveForm.faculty_total_score} / {maximumMarks}
+                    </span>
+                  </div>
+                  <div className="mt-2 flex items-center gap-3">
+                    <input
+                      type="range"
+                      className="w-full accent-primary-600"
+                      value={approveForm.faculty_total_score}
+                      onChange={e => setFacultyScore(parseFloat(e.target.value))}
+                      min={0}
+                      max={maximumMarks}
+                      step={0.5}
+                      aria-label={`Faculty final score out of ${maximumMarks}`}
+                    />
+                    <input
+                      type="number"
+                      className="input-field w-24"
+                      value={approveForm.faculty_total_score}
+                      onChange={e => setFacultyScore(parseFloat(e.target.value))}
+                      min={0}
+                      max={maximumMarks}
+                      step={0.5}
+                      aria-label="Faculty final score"
+                    />
+                  </div>
+                  <p className="text-xs text-slate-500 mt-1">
+                    Move the slider or enter a score from 0 to {maximumMarks}.
+                  </p>
                 </div>
                 {evaluation.criterion_scores?.length > 0 && (
                   <div>
@@ -701,21 +737,22 @@ function SubmissionEvaluation() {
                 </div>
                 <div className="flex gap-3 pt-2">
                   <button onClick={() => handleApprove(false)} className="btn-success flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4" /> Approve
+                    <CheckCircle className="w-4 h-4" /> {evaluation.status === 'approved' ? 'Save Changes' : 'Approve'}
                   </button>
                   <button onClick={() => handleApprove(true)} className="btn-primary flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4" /> Approve & Publish to Student
+                    <CheckCircle className="w-4 h-4" /> Save & Publish to Student
                   </button>
-                  <button onClick={handleReject} className="btn-danger flex items-center gap-2">
-                    <XCircle className="w-4 h-4" /> Reject
-                  </button>
+                  {evaluation.status !== 'approved' && (
+                    <button onClick={handleReject} className="btn-danger flex items-center gap-2">
+                      <XCircle className="w-4 h-4" /> Reject
+                    </button>
+                  )}
                   <button onClick={triggerEval} disabled={evaluating} className="btn-secondary text-sm flex items-center gap-1.5">
                     <Brain className="w-3.5 h-3.5" /> Re-evaluate
                   </button>
                 </div>
               </div>
-            </div>
-          )}
+          </div>
 
           {(evaluation.status === 'approved' || evaluation.status === 'rejected') && (
             <div className={`card border-2 ${evaluation.status === 'approved' ? 'border-green-300 bg-green-50' : 'border-red-300 bg-red-50'}`}>
@@ -726,8 +763,13 @@ function SubmissionEvaluation() {
               {evaluation.faculty_total_score !== null && (
                 <p className="text-sm text-slate-600 mt-2">Final Score: <strong>{evaluation.faculty_total_score}</strong></p>
               )}
-              <button onClick={triggerEval} disabled={evaluating} className="btn-secondary text-xs mt-3">
-                Re-evaluate
+              <button
+                onClick={() => {
+                  document.getElementById('faculty-score-editor')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }}
+                className="btn-secondary text-xs mt-3"
+              >
+                Edit Score & Feedback
               </button>
             </div>
           )}

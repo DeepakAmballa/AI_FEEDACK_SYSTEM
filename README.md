@@ -164,6 +164,31 @@ npm run dev
 
 The frontend application is accessible at `http://localhost:5173`.
 
+### 4. Production Deployment
+Deploy the `Frontend` directory to Vercel and deploy the `Backend` directory to a
+Python-capable service such as Render or Railway. Do not deploy the whole
+repository as a single Vercel project: Vercel will not run this FastAPI server
+and its SQLite database, uploads, and FAISS files are not durable production
+storage.
+
+Set these variables in the backend service, never in the frontend:
+
+```env
+OPENAI_API_KEY=<server-only-secret>
+SECRET_KEY=<long-random-secret>
+DATABASE_URL=<production-database-url>
+CORS_ORIGINS=https://your-frontend.vercel.app
+```
+
+Set this variable in Vercel for the frontend:
+
+```env
+VITE_API_BASE_URL=https://your-backend.example.com
+```
+
+Only variables prefixed with `VITE_` are bundled into the browser. The
+OpenAI key must remain a backend-only variable.
+
 ---
 
 ## 👤 Default Portal Credentials

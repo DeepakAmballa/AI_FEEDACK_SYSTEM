@@ -366,6 +366,23 @@ def get_submission_detail(submission_id: int, db: Session = Depends(get_db), use
 @router.post("/submissions/{submission_id}/evaluate")
 def trigger_evaluation(submission_id: int, db: Session = Depends(get_db), user=Depends(require_faculty)):
     """Trigger AI evaluation for a student submission."""
+    submission = db.query(StudentSubmission).filter(StudentSubmission.id == submission_id).first()
+    if not submission:
+        raise HTTPException(404, "Submission not found")
+
+    # Evaluation is intentionally idempotent. Re-evaluation must not replace
+    # AI results or faculty overrides that are already under review/published.
+    existing_eval = db.query(AIEvaluation).filter(
+        AIEvaluation.submission_id == submission_id
+    ).first()
+    if existing_eval:
+        return {
+            "message": "Existing AI evaluation returned unchanged",
+            "evaluation_id": existing_eval.id,
+            "ai_total_score": existing_eval.ai_total_score,
+            "reused_existing": True,
+        }
+
     from app.core.config import get_settings
     cfg = get_settings()
 
@@ -375,10 +392,6 @@ def trigger_evaluation(submission_id: int, db: Session = Depends(get_db), user=D
             "Please open Backend/.env and set OPENAI_API_KEY=<your_key>. "
             "Save the file to enable AI evaluation."
         ))
-
-    submission = db.query(StudentSubmission).filter(StudentSubmission.id == submission_id).first()
-    if not submission:
-        raise HTTPException(404, "Submission not found")
 
     if not submission.extracted_text or not submission.extracted_text.strip():
         # Attempt recovery if file exists on disk
@@ -470,11 +483,6 @@ def trigger_evaluation(submission_id: int, db: Session = Depends(get_db), user=D
         logger.warning(f"Rubric scoring warnings for submission {submission_id}: {scoring_warnings}")
 
     # Save evaluation
-    existing_eval = db.query(AIEvaluation).filter(AIEvaluation.submission_id == submission_id).first()
-    if existing_eval:
-        db.delete(existing_eval)
-        db.flush()
-
     evaluation = AIEvaluation(
         submission_id=submission_id,
         evaluated_by_id=user.id,
@@ -595,7 +603,8 @@ def approve_evaluation(
     if existing_af:
         existing_af.final_score = data.faculty_total_score
         existing_af.final_feedback = data.faculty_feedback or evaluation.ai_feedback or evaluation.ai_overall_feedback or ""
-        existing_af.is_published = data.publish_to_student
+        # Once published, keep student visibility while faculty edits the result.
+        existing_af.is_published = data.publish_to_student or existing_af.is_published
         existing_af.approved_by_id = user.id
         af = existing_af
     else:

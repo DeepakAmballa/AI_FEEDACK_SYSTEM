@@ -32,6 +32,14 @@ class Settings(BaseSettings):
     # ── App ───────────────────────────────────────────────────────────────────
     app_name: str = "EduEval AI"
     debug: bool = False
+    cors_origins: str = Field(
+        default="http://localhost:5173,http://localhost:3000,http://127.0.0.1:5173",
+        alias="CORS_ORIGINS",
+    )
+
+    @property
+    def cors_origin_list(self) -> list[str]:
+        return [origin.strip() for origin in self.cors_origins.split(",") if origin.strip()]
 
     @property
     def openai_configured(self) -> bool:
@@ -46,4 +54,3 @@ class Settings(BaseSettings):
 
 def get_settings() -> Settings:
     return Settings()
-
