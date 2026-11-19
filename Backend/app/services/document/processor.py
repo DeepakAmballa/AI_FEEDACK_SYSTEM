@@ -19,9 +19,15 @@ def extract_text_from_pdf(file_path: str) -> Tuple[str, int]:
             if text and text.strip():
                 pages.append(f"[Page {page_num + 1}]\n{text.strip()}")
             else:
-                ocr_text = extract_text_from_image_bytes(page.get_pixmap().tobytes("png"))
-                if ocr_text.strip():
-                    pages.append(f"[Page {page_num + 1}]\n{ocr_text.strip()}")
+                try:
+                    pix = page.get_pixmap()
+                    img_bytes = pix.tobytes("png")
+                    del pix  # release Pixmap before OCR to avoid "document closed" errors
+                    ocr_text = extract_text_from_image_bytes(img_bytes)
+                    if ocr_text.strip():
+                        pages.append(f"[Page {page_num + 1}]\n{ocr_text.strip()}")
+                except Exception:
+                    pass  # OCR failed for this page; continue with remaining pages
         doc.close()
         return "\n\n".join(pages), total_pages
     except Exception as e:

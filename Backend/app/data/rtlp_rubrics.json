@@ -1,0 +1,5465 @@
+{
+ "source": "Aurora Reflective Teaching Learning Policy (RTLP), Chapter 14 – Evaluation Rubrics",
+ "rubrics": [
+  {
+   "code": "14.2.1",
+   "name": "Free Writing",
+   "section": "Pre-Learning Assessment",
+   "category": "pre_learning",
+   "total_marks": 20,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Relevance",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Responses are highly relevant, directly addressing the questions with clarity and precision"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Responses are relevant and address the questions effectively but with minor gaps"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Responses are moderately relevant but lack focus or depth"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Responses are irrelevant or fail to address the questions"
+      }
+     ]
+    },
+    {
+     "name": "Understanding",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates a deep understanding of concepts with accurate and insightful answers"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Demonstrates good understanding with mostly accurate responses"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Demonstrates basic understanding but contains minor inaccuracies"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Demonstrates limited understanding with superficial or partially correct responses"
+      }
+     ]
+    },
+    {
+     "name": "Critical Thinking",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Provides strong analysis and logical reasoning, offering well-supported arguments or interpretations"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Demonstrates thoughtful analysis with some logical reasoning but lacks depth"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Provides basic analysis, with minimal reasoning or support"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Lacks analysis or reasoning; answers are superficial or unsupported"
+      }
+     ]
+    },
+    {
+     "name": "Clarity",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Writing is exceptionally clear, concise, and well-structured"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Writing is clear and organized, with minor lapses in flow or clarity"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Writing is somewhat clear but lacks strong organization or detail"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Writing is unclear, disorganized, or difficult to understand"
+      }
+     ]
+    },
+    {
+     "name": "Completeness",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Fully addresses all parts of the question, providing detailed and"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Answers most parts with minor omissions"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Answers some parts but several sections are incomplete"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Major gaps; many parts of the question are unanswered"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.2.2",
+   "name": "Inquiry Based Questions",
+   "section": "Pre-Learning Assessment",
+   "category": "pre_learning",
+   "total_marks": 20,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Understanding",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates thorough and accurate understanding of the concept; addresses all aspects of the question"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Demonstrates good understanding with minor omissions or gaps"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Shows basic understanding; key points are missing or partially correct"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Shows little understanding; significant errors or omissions"
+      }
+     ]
+    },
+    {
+     "name": "Application",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Effectively applies concepts to examples, problems, or contexts with clear reasoning"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Applies concepts with some accuracy; reasoning may be partial"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Limited application; examples or reasoning are weak"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Minimal or incorrect application of concepts"
+      }
+     ]
+    },
+    {
+     "name": "Critical Thinking",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates original thought, analysis, or meaningful connections beyond surface-level responses"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Shows some analysis and connections, though conventional or limited"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Demonstrates limited analysis; mostly descriptive"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Lacks analysis; response is repetitive or superficial"
+      }
+     ]
+    },
+    {
+     "name": "Clarity & Conciseness",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Response is exceptionally clear, well-structured, and within the word limit"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Response is clear with minor lapses in organization or brevity"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Response is somewhat clear; organization weak or wordy"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Response is unclear, disorganized, or confusing"
+      }
+     ]
+    },
+    {
+     "name": "Relevance",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Directly and completely answers the question, staying on topic"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Answers the question but may omit some relevant aspects"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Partially answers the question; drifts off-topic"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Mostly irrelevant to the question"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.2.4",
+   "name": "Video Watch",
+   "section": "Pre-Learning Assessment",
+   "category": "pre_learning",
+   "total_marks": 20,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Comprehension",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates a thorough understanding of the video's main ideas and details"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Demonstrates a good understanding with minor gaps"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Demonstrates partial understanding, missing key details"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Shows little or no understanding of the video's content"
+      }
+     ]
+    },
+    {
+     "name": "Critical Analysis",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Provides insightful analysis, connecting the video's content to broader concepts or personal perspectives"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Provides thoughtful analysis but may lack depth or connection to broader concepts"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Provides basic analysis with limited critical thinking or personal connection"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Lacks analysis or critical thinking; response is superficial or unrelated"
+      }
+     ]
+    },
+    {
+     "name": "Reflection Depth",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates deep, thoughtful reflection, offering meaningful insights and interpretations"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Demonstrates thoughtful reflection with minor gaps in depth or insight"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Reflection is basic, with limited depth or meaningful insights"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Reflection is shallow or absent, with no meaningful insights"
+      }
+     ]
+    },
+    {
+     "name": "Clarity & Organization",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Writing is clear, well-organized, and effectively communicates ideas"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Writing is mostly clear and organized, with minor lapses"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Writing is somewhat clear but lacks organization or logical flow"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Writing is unclear, disorganized, or difficult to follow"
+      }
+     ]
+    },
+    {
+     "name": "Integration of Video Content",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Effectively integrates specific examples or references from the video"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Integrates examples from the video but may lack depth or relevance"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Uses few or vague examples from the video, lacking strong connections"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Fails to reference the video or examples are irrelevant"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.2.5",
+   "name": "Concept Map",
+   "section": "Pre-Learning Assessment",
+   "category": "pre_learning",
+   "total_marks": 20,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Accuracy of Concepts",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "All concepts are accurate and clearly defined"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Most concepts are accurate, with minor errors"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Some concepts accurate, but noticeable errors present"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Many concepts inaccurate or unclear"
+      }
+     ]
+    },
+    {
+     "name": "Connections & Relationships",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Connections are logical, well-labeled, and show depth of understanding"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Most connections are logical and labeled, but may lack depth"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Some connections are logical, but labeling or clarity is weak"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Few logical connections; relationships unclear"
+      }
+     ]
+    },
+    {
+     "name": "Organization & Structure",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Map is well-structured, logically organized, and easy to follow"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Map is mostly organized, with minor lapses in clarity"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Organization is weak; structure somewhat confusing"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Poorly organized; difficult to follow"
+      }
+     ]
+    },
+    {
+     "name": "Depth & Integration",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates deep understanding; integrates multiple ideas and examples meaningfully"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Shows good integration of ideas, with minor gaps"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Limited integration of ideas; superficial connections"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Very limited depth; ideas mostly isolated"
+      }
+     ]
+    },
+    {
+     "name": "Presentation & Clarity",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Map is neat, clear, visually engaging, and easy to read"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Map is clear and readable, with minor issues in neatness"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Somewhat clear but cluttered or inconsistent"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Difficult to read; lacks clarity"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.2.6",
+   "name": "Group Discussion",
+   "section": "Pre-Learning Assessment",
+   "category": "pre_learning",
+   "total_marks": 20,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Participation",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Actively and consistently engages with the discussion, providing valuable insights"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Regularly contributes with thoughtful ideas, though may lack depth"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Contributes occasionally with relevant ideas but lacks consistency"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Rarely contributes or engages with the discussion"
+      }
+     ]
+    },
+    {
+     "name": "Listening Skills",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates exceptional listening skills, respects others' ideas, and supports group dynamics"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Actively listens and avoids interrupting, showing empathy"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Generally attentive but occasionally interrupts or loses focus"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Frequently interrupts or demonstrates poor listening skills"
+      }
+     ]
+    },
+    {
+     "name": "Content Relevance",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Contributions are highly relevant, insightful, and add significant value to the discussion"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Contributions are relevant and well-thought-out but lack depth"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Contributions are moderately relevant but lack focus or clarity"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Contributions are irrelevant or fail to align with the discussion topic"
+      }
+     ]
+    },
+    {
+     "name": "Collaboration",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Works exceptionally well with the group, fostering a positive and productive dynamic"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Collaborates effectively, resolving conflicts constructively"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Collaborates inconsistently, with occasional conflicts"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Does not collaborate effectively; may disrupt group dynamics"
+      }
+     ]
+    },
+    {
+     "name": "Problem Solving",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Consistently contributes innovative and effective solutions to group challenges"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Actively engages in problem-solving with creative solutions"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Provides basic solutions but lacks depth or creativity"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Rarely contributes to problem-solving or offers ineffective solutions"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.2.7",
+   "name": "Think-Pair-Share",
+   "section": "Pre-Learning Assessment",
+   "category": "pre_learning",
+   "total_marks": 20,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Individual Thinking",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Thoughtful, insightful, aligns fully with the question"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Good ideas; mostly aligned"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Basic ideas; partially aligned"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Minimal ideas; poorly aligned"
+      }
+     ]
+    },
+    {
+     "name": "Pair Discussion",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Actively engages, listens, builds on partner's ideas"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Engages; ideas mostly clear"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Some engagement; limited sharing"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Minimal participation"
+      }
+     ]
+    },
+    {
+     "name": "Class Sharing",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Shares insights clearly, confidently, and concisely"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Shares clearly; minor lapses"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Shares but lacks clarity or relevance"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Shares very little or unclearly"
+      }
+     ]
+    },
+    {
+     "name": "Critical Thinking",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates strong reasoning, synthesis, originality"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Reasoning evident, moderate originality"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Some reasoning; basic level"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Limited reasoning"
+      }
+     ]
+    },
+    {
+     "name": "Collaboration / Listening",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Excellent listening and respectful; enhances discussion"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Listens and engages respectfully"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Listens occasionally"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Poor listening or disruptive"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.2.8",
+   "name": "Round Robin Discussion",
+   "section": "Pre-Learning Assessment",
+   "category": "pre_learning",
+   "total_marks": 20,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Idea Contribution",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Consistently contributes insightful, relevant ideas"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Contributes relevant ideas most of the time"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Contributes some relevant ideas"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Rarely contributes relevant ideas"
+      }
+     ]
+    },
+    {
+     "name": "Communication & Clarity",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Communicates ideas clearly, concisely, and confidently"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Ideas mostly clear and understandable"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Ideas somewhat clear but lack conciseness"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Ideas unclear or confusing"
+      }
+     ]
+    },
+    {
+     "name": "Active Listening",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Listens attentively, responds thoughtfully, builds on others' ideas"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Listens and responds appropriately"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Sometimes listens; responses limited"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Poor listening; minimal response"
+      }
+     ]
+    },
+    {
+     "name": "Engagement",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Fully engages, encourages others, respects all contributions"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Engages and respects others"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Moderately engaged; some lapses in respect"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Minimal engagement or disrespectful"
+      }
+     ]
+    },
+    {
+     "name": "Critical Thinking",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates strong reasoning, creativity, and depth"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Demonstrates reasoning and some depth"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Some reasoning; basic level"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Limited reasoning"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.2.9",
+   "name": "Debate",
+   "section": "Pre-Learning Assessment",
+   "category": "pre_learning",
+   "total_marks": 20,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Understanding of Topic",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates thorough and accurate understanding with strong conceptual clarity"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Demonstrates good understanding with minor gaps"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Shows basic understanding with limited depth"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Shows weak understanding with factual errors"
+      }
+     ]
+    },
+    {
+     "name": "Argument Quality & Evidence",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Arguments are highly logical, well-structured, and strongly supported with facts/examples"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Arguments are clear with some supporting evidence"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Arguments are basic with weak or limited evidence"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Arguments are unclear or unsupported"
+      }
+     ]
+    },
+    {
+     "name": "Critical Thinking & Rebuttal",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Rebuttals are sharp, relevant, and directly address opposing points with strong reasoning"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Rebuttals are relevant but lack depth"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Limited attempt at rebuttal with weak reasoning"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "No meaningful rebuttal attempted"
+      }
+     ]
+    },
+    {
+     "name": "Communication & Presentation",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Speaks confidently with excellent clarity, structure, and appropriate academic language"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Speaks clearly with minor issues in fluency or structure"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Speech is understandable but lacks confidence or clarity"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Speech is unclear, disorganized, or very hesitant"
+      }
+     ]
+    },
+    {
+     "name": "Teamwork & Participation",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Actively contributes, supports team members, and collaborates effectively"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Participates well with some contribution to the group"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Limited participation with minimal contribution"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Very weak participation in the group"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.2.10",
+   "name": "Socratic Questioning",
+   "section": "Pre-Learning Assessment",
+   "category": "pre_learning",
+   "total_marks": 20,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Understanding of the Question",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Demonstrates complete and accurate understanding of the question and its intent"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Demonstrates good understanding with minor gaps"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Shows basic understanding but misses key aspects"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Shows weak or incorrect understanding"
+      }
+     ]
+    },
+    {
+     "name": "Depth of Reasoning",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Response shows deep logical reasoning with clear cause– effect analysis"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Reasoning is logical but lacks depth"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Reasoning is basic with limited justification"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Reasoning is weak or unclear"
+      }
+     ]
+    },
+    {
+     "name": "Use of Evidence / Examples",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Uses highly relevant examples, facts, or prior knowledge to justify the response"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Uses some relevant supporting examples"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Uses weak or minimal supporting evidence"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "No valid support provided"
+      }
+     ]
+    },
+    {
+     "name": "Clarity of Response & Communication",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Response is clear, well-structured, confident, and easy to understand"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Response is clear with minor issues in flow"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Response is understandable but lacks structure"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Response is unclear, disorganized, or hesitant"
+      }
+     ]
+    },
+    {
+     "name": "Group Participation & Engagement",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "All group members actively contribute to discussion and response"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Most members participate meaningfully"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Limited participation from the group"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Very weak group participation"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.2.11",
+   "name": "Peer-Reviewed Presentations",
+   "section": "Pre-Learning Assessment",
+   "category": "pre_learning",
+   "total_marks": 20,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Content",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Content is highly relevant, insightful, and thoroughly addresses the topic"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Content is relevant and addresses the topic effectively but with minor gaps"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Content is moderately relevant but lacks depth or focus"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Content is irrelevant or fails to address the topic"
+      }
+     ]
+    },
+    {
+     "name": "Organization",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Exceptionally well-structured with logical flow and clear transitions"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Well-structured but may have minor issues with flow"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Somewhat structured but lacks logical flow or clarity"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Poorly structured and disorganized, making it difficult to follow"
+      }
+     ]
+    },
+    {
+     "name": "Delivery",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Delivery is engaging, confident, and clear, maintaining audience attention throughout"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Delivery is clear and confident but may lack some engagement"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Delivery is moderately clear but lacks confidence or engagement"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Delivery is unclear, unconfident, or disengaging"
+      }
+     ]
+    },
+    {
+     "name": "Visual Aids",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Visual aids are exceptionally clear, well-designed, and enhance understanding"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Visual aids are clear and support the presentation effectively"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Visual aids are somewhat clear but lack alignment with content"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Visual aids are unclear, irrelevant, or absent"
+      }
+     ]
+    },
+    {
+     "name": "Engagement",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Actively engages the audience throughout with questions, discussions, or activities"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Effectively engages the audience, though with minor lapses"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Moderately engages the audience, with limited interaction"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Little or no engagement with the audience"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.3.1",
+   "name": "Reflective Journal",
+   "section": "Theory Assessment",
+   "category": "theory",
+   "total_marks": 20,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Average",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 1,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Experience (Concrete Experience)",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Clearly and accurately describes all learning activities (theory, lab, self-study); shows strong engagement and observation"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Describes most learning activities clearly with minor missing details"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Describes activities but lacks clarity or important details"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Very limited or unclear description of activities"
+      }
+     ]
+    },
+    {
+     "name": "Reflection (Feelings & Learning Experience)",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Deep and honest reflection on learning experience with clear emotional and cognitive responses"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Good reflection with some insight into learning experience"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Basic reflection with limited depth or personal insight"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Superficial reflection with little personal connection"
+      }
+     ]
+    },
+    {
+     "name": "Analysis (Conceptual Understanding)",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Shows deep conceptual understanding with strong links between theory and experience; insights are accurate and meaningful"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Shows good conceptual understanding with correct connections"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Shows basic understanding with minor inaccuracies"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Shows weak understanding with unclear or incorrect concepts"
+      }
+     ]
+    },
+    {
+     "name": "Action Plan (Application & Improvement)",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Clear, realistic, and detailed plan for applying learning and improving performance"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Practical action plan with some clarity for future use"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Basic plan mentioned with limited detail"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Vague or unclear plan with no real direction"
+      }
+     ]
+    },
+    {
+     "name": "Clarity & Organization",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Writing is very clear, well-organized, reflective in tone, and easy to understand"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Writing is clear with minor errors in flow or structure"
+      },
+      {
+       "level": "Average",
+       "min": 2,
+       "max": 2,
+       "text": "Writing is understandable but lacks proper organization"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 1,
+       "max": 1,
+       "text": "Writing is unclear, poorly structured, or difficult to follow"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.3.2",
+   "name": "Group Activity",
+   "section": "Theory Assessment",
+   "category": "theory",
+   "total_marks": 100,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Conceptual Understanding",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Complete, accurate, and in-depth understanding of all relevant theoretical concepts"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear understanding with minor conceptual gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic understanding with noticeable gaps"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Weak or incorrect understanding of concepts"
+      }
+     ]
+    },
+    {
+     "name": "Application & Problem Solving",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Applies concepts correctly with strong logic, accuracy, and depth of reasoning"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Applies concepts correctly with minor logical or technical errors"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Shows limited application with basic reasoning"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Application is weak, incorrect, or poorly justified"
+      }
+     ]
+    },
+    {
+     "name": "Research / Evidence / Data Use",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Uses strong, relevant data, examples, references, or evidence with proper integration"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Uses relevant evidence with limited depth or connection"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Uses minimal evidence with weak relevance"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Little to no valid evidence used"
+      }
+     ]
+    },
+    {
+     "name": "Teamwork & Individual Contribution",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "All members contribute equally with excellent coordination and shared responsibility"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Most members contribute well with good coordination"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Uneven contribution among members"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Very weak collaboration or dominance by one member"
+      }
+     ]
+    },
+    {
+     "name": "Quality of Output, Organization & Presentation",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Technically sound, well-structured, clear, and submitted on time"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear with minor structural or technical issues"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Partially complete or poorly organized"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Unclear, incomplete, or poorly presented"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.3.3",
+   "name": "Independent Assignment",
+   "section": "Theory Assessment",
+   "category": "theory",
+   "total_marks": 100,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Conceptual Understanding",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Complete, accurate, and in-depth understanding of all relevant theoretical concepts"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear understanding with minor conceptual gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic understanding with noticeable gaps"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Weak or incorrect understanding of concepts"
+      }
+     ]
+    },
+    {
+     "name": "Application & Analysis",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Applies concepts accurately with strong logic, depth of analysis, and clarity of reasoning"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Applies concepts correctly with minor logical or technical errors"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Shows limited application with basic reasoning"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Application is weak, incorrect, or poorly justified"
+      }
+     ]
+    },
+    {
+     "name": "Originality & Academic Integrity",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Work is completely original with strong independent thinking and proper citations"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Mostly original with minor issues in referencing"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Limited originality; dependence on sources evident"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor originality; improper or missing citations"
+      }
+     ]
+    },
+    {
+     "name": "Structure, Organization & Clarity",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Exceptionally well-organized, coherent, and academically well-written"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Well-organized with minor lapses in structure or clarity"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Organization is basic with noticeable clarity issues"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poorly structured, unclear, or difficult to follow"
+      }
+     ]
+    },
+    {
+     "name": "Presentation & Timeliness",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Neatly presented, follows all instructions, and submitted on time"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Neatly presented with minor formatting issues; submitted on time"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Presentation acceptable with minor delays or issues"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor presentation and/or late submission"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.3.4",
+   "name": "Case Study",
+   "section": "Theory Assessment",
+   "category": "theory",
+   "total_marks": 100,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Problem Identification & Understanding",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Accurately identifies all key issues with deep contextual understanding"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Identifies most issues clearly with minor gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Identifies basic issues but with limited insight"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Misidentifies or misses major issues"
+      }
+     ]
+    },
+    {
+     "name": "Application of Theory",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Applies relevant theories accurately and insightfully to the case"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Applies theory correctly with minor errors"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic or limited application of theory"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Incorrect or unclear theoretical application"
+      }
+     ]
+    },
+    {
+     "name": "Analysis & Evidence",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Presents strong, logical, well-supported analysis using data, examples, or references"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good analysis with some evidence or reasoning gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic analysis with minimal supporting evidence"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Weak or unsupported analysis"
+      }
+     ]
+    },
+    {
+     "name": "Recommendations & Justification",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Recommendations are realistic, well-justified, and clearly linked to analysis"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Recommendations are reasonable with some justification"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Recommendations lack depth or weak connection to analysis"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Recommendations unclear or unjustified"
+      }
+     ]
+    },
+    {
+     "name": "Organization, Clarity & Presentation",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Well-structured, coherent, clear, and submitted on time"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear structure with minor issues; submitted on time"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Acceptable structure but lacks clarity or detail"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poorly organized, unclear, or late submission"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.3.5",
+   "name": "Journal Review",
+   "section": "Theory Assessment",
+   "category": "theory",
+   "total_marks": 50,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 9,
+     "max": 10
+    },
+    {
+     "level": "Good",
+     "min": 6,
+     "max": 8
+    },
+    {
+     "level": "Satisfactory",
+     "min": 3,
+     "max": 5
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 0,
+     "max": 2
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Understanding of the Article",
+     "max_marks": 10,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 9,
+       "max": 10,
+       "text": "Complete and accurate understanding of research purpose, method, and findings"
+      },
+      {
+       "level": "Good",
+       "min": 6,
+       "max": 8,
+       "text": "Good understanding with minor gaps"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 5,
+       "text": "Basic understanding with limited clarity"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Weak or incorrect understanding"
+      }
+     ]
+    },
+    {
+     "name": "Critical Analysis",
+     "max_marks": 10,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 9,
+       "max": 10,
+       "text": "Deep, logical, well-supported evaluation of the study"
+      },
+      {
+       "level": "Good",
+       "min": 6,
+       "max": 8,
+       "text": "Reasonable analysis with some depth"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 5,
+       "text": "Basic analysis with minimal critical insight"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Very weak or superficial analysis"
+      }
+     ]
+    },
+    {
+     "name": "Connection to Course Concepts",
+     "max_marks": 10,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 9,
+       "max": 10,
+       "text": "Excellent integration of journal content with relevant theories taught"
+      },
+      {
+       "level": "Good",
+       "min": 6,
+       "max": 8,
+       "text": "Good linkage with course concepts"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 5,
+       "text": "Limited or partial linkage with theory"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "No meaningful connection to course content"
+      }
+     ]
+    },
+    {
+     "name": "Academic Writing, Organization & Referencing",
+     "max_marks": 10,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 9,
+       "max": 10,
+       "text": "Clear, well-structured writing with proper citations and formatting"
+      },
+      {
+       "level": "Good",
+       "min": 6,
+       "max": 8,
+       "text": "Mostly clear writing; minor issues with structure or citations"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 5,
+       "text": "Adequate structure but noticeable errors in writing or referencing"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Poor or disorganized writing; incorrect referencing"
+      }
+     ]
+    },
+    {
+     "name": "Originality & Insight (Learning Reflection)",
+     "max_marks": 10,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 9,
+       "max": 10,
+       "text": "Strong original interpretation with meaningful insights and learning reflections"
+      },
+      {
+       "level": "Good",
+       "min": 6,
+       "max": 8,
+       "text": "Some original thought and reflection"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 5,
+       "text": "Limited originality or reflection"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "No original insight shown"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.3.6",
+   "name": "Student Lecture",
+   "section": "Theory Assessment",
+   "category": "theory",
+   "total_marks": 50,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 9,
+     "max": 10
+    },
+    {
+     "level": "Good",
+     "min": 6,
+     "max": 8
+    },
+    {
+     "level": "Satisfactory",
+     "min": 3,
+     "max": 5
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 0,
+     "max": 2
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Conceptual Understanding & Accuracy",
+     "max_marks": 10,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 9,
+       "max": 10,
+       "text": "Excellent command over the topic with complete accuracy"
+      },
+      {
+       "level": "Good",
+       "min": 6,
+       "max": 8,
+       "text": "Good understanding with minor inaccuracies"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 5,
+       "text": "Basic understanding with noticeable gaps"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Poor or incorrect understanding"
+      }
+     ]
+    },
+    {
+     "name": "Organization & Structure of Content",
+     "max_marks": 10,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 9,
+       "max": 10,
+       "text": "Content is logically organized with clear flow and strong transitions"
+      },
+      {
+       "level": "Good",
+       "min": 6,
+       "max": 8,
+       "text": "Good organization with minor flow issues"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 5,
+       "text": "Basic organization with weak transitions"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Poorly structured and disorganized content"
+      }
+     ]
+    },
+    {
+     "name": "Communication & Delivery",
+     "max_marks": 10,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 9,
+       "max": 10,
+       "text": "Speaks clearly and confidently with excellent engagement and articulation"
+      },
+      {
+       "level": "Good",
+       "min": 6,
+       "max": 8,
+       "text": "Speaks clearly with minor hesitation or clarity issues"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 5,
+       "text": "Understandable but lacks confidence or fluency"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Unclear, very hesitant, or difficult to follow"
+      }
+     ]
+    },
+    {
+     "name": "Use of Teaching Aids & Examples",
+     "max_marks": 10,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 9,
+       "max": 10,
+       "text": "Excellent use of PPT/board/examples that strongly support learning"
+      },
+      {
+       "level": "Good",
+       "min": 6,
+       "max": 8,
+       "text": "Good use of teaching aids with minor gaps"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 5,
+       "text": "Limited or basic use of aids/examples"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "No meaningful use of aids or examples"
+      }
+     ]
+    },
+    {
+     "name": "Response to Questions & Time Management",
+     "max_marks": 10,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 9,
+       "max": 10,
+       "text": "Answers questions accurately and manages time perfectly"
+      },
+      {
+       "level": "Good",
+       "min": 6,
+       "max": 8,
+       "text": "Answers most questions well; minor time deviations"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 5,
+       "text": "Limited ability to answer questions; weak time control"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Unable to answer questions; poor time management"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.3.7",
+   "name": "Reflective Essay",
+   "section": "Theory Assessment",
+   "category": "theory",
+   "total_marks": 40,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 7,
+     "max": 8
+    },
+    {
+     "level": "Good",
+     "min": 5,
+     "max": 6
+    },
+    {
+     "level": "Satisfactory",
+     "min": 3,
+     "max": 4
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 0,
+     "max": 2
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Conceptual Understanding",
+     "max_marks": 8,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 7,
+       "max": 8,
+       "text": "Deep, accurate, and complete understanding of the concepts addressed in the task"
+      },
+      {
+       "level": "Good",
+       "min": 5,
+       "max": 6,
+       "text": "Good understanding with minor conceptual gaps"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 4,
+       "text": "Basic understanding with noticeable gaps"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Weak or incorrect understanding"
+      }
+     ]
+    },
+    {
+     "name": "Critical Analysis & Reflection",
+     "max_marks": 8,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 7,
+       "max": 8,
+       "text": "Exhibits strong critical thinking, insight, and meaningful reflection"
+      },
+      {
+       "level": "Good",
+       "min": 5,
+       "max": 6,
+       "text": "Good reflection with moderate analytical depth"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 4,
+       "text": "Limited reflection and surface-level analysis"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Reflection is minimal, weak, or descriptive only"
+      }
+     ]
+    },
+    {
+     "name": "Application & Integration of Learning",
+     "max_marks": 8,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 7,
+       "max": 8,
+       "text": "Excellent application of theory with strong integration across modules and real examples"
+      },
+      {
+       "level": "Good",
+       "min": 5,
+       "max": 6,
+       "text": "Good application with some integration across concepts"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 4,
+       "text": "Limited application and weak integration"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Poor or incorrect application of learning"
+      }
+     ]
+    },
+    {
+     "name": "Organization, Clarity & Academic Writing",
+     "max_marks": 8,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 7,
+       "max": 8,
+       "text": "Exceptionally well-structured, coherent, and academically sound writing"
+      },
+      {
+       "level": "Good",
+       "min": 5,
+       "max": 6,
+       "text": "Well-structured with minor clarity or language issues"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 4,
+       "text": "Acceptable structure with noticeable writing issues"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "Poorly structured, unclear, or weak academic writing"
+      }
+     ]
+    },
+    {
+     "name": "Originality, Insight & Personal Learning Growth",
+     "max_marks": 8,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 7,
+       "max": 8,
+       "text": "Strong originality with clear evidence of personal academic growth"
+      },
+      {
+       "level": "Good",
+       "min": 5,
+       "max": 6,
+       "text": "Some originality and learning insight evident"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 3,
+       "max": 4,
+       "text": "Limited originality and personal insight"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 2,
+       "text": "No originality or learning reflection evident"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.4.1",
+   "name": "Laboratory Participation",
+   "section": "Laboratory Assessment",
+   "category": "laboratory",
+   "total_marks": 10,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Good",
+     "min": 1.5,
+     "max": 1.5
+    },
+    {
+     "level": "Satisfactory",
+     "min": 1,
+     "max": 1
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 0,
+     "max": 0.5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Punctuality & Preparedness",
+     "max_marks": 2,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 2,
+       "max": 2,
+       "text": "Always on time and fully prepared"
+      },
+      {
+       "level": "Good",
+       "min": 1.5,
+       "max": 1.5,
+       "text": "Mostly on time and prepared"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 1,
+       "max": 1,
+       "text": "Occasionally late or unprepared"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 0.5,
+       "text": "Frequently late or unprepared"
+      }
+     ]
+    },
+    {
+     "name": "Safety Awareness & Discipline",
+     "max_marks": 2,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 2,
+       "max": 2,
+       "text": "Follows all safety rules strictly and consistently"
+      },
+      {
+       "level": "Good",
+       "min": 1.5,
+       "max": 1.5,
+       "text": "Follows safety rules with minor lapses"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 1,
+       "max": 1,
+       "text": "Needs reminders for safety"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 0.5,
+       "text": "Ignores safety norms"
+      }
+     ]
+    },
+    {
+     "name": "Active Engagement in Experiment",
+     "max_marks": 2,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 2,
+       "max": 2,
+       "text": "Actively performs all steps with strong involvement"
+      },
+      {
+       "level": "Good",
+       "min": 1.5,
+       "max": 1.5,
+       "text": "Performs most steps with good involvement"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 1,
+       "max": 1,
+       "text": "Limited involvement in experiment"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 0.5,
+       "text": "Passive or no meaningful involvement"
+      }
+     ]
+    },
+    {
+     "name": "Handling of Equipment & Materials",
+     "max_marks": 2,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 2,
+       "max": 2,
+       "text": "Handles all equipment carefully and correctly"
+      },
+      {
+       "level": "Good",
+       "min": 1.5,
+       "max": 1.5,
+       "text": "Minor handling errors without risk"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 1,
+       "max": 1,
+       "text": "Careless handling at times"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 0.5,
+       "text": "Unsafe or improper handling"
+      }
+     ]
+    },
+    {
+     "name": "Teamwork & Professional Conduct",
+     "max_marks": 2,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 2,
+       "max": 2,
+       "text": "Excellent cooperation and professional behavior"
+      },
+      {
+       "level": "Good",
+       "min": 1.5,
+       "max": 1.5,
+       "text": "Good cooperation with minor issues"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 1,
+       "max": 1,
+       "text": "Limited cooperation or professionalism"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 0.5,
+       "text": "Poor teamwork or misconduct"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.4.2",
+   "name": "Laboratory Report",
+   "section": "Laboratory Assessment",
+   "category": "laboratory",
+   "total_marks": 20,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "Excellent",
+     "min": 4,
+     "max": 4
+    },
+    {
+     "level": "Good",
+     "min": 3,
+     "max": 3
+    },
+    {
+     "level": "Satisfactory",
+     "min": 2,
+     "max": 2
+    },
+    {
+     "level": "Needs Improvement",
+     "min": 0,
+     "max": 1
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Organization & Structure",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "All sections complete, well-organized, and clearly presented"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Most sections complete with good structure"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 2,
+       "max": 2,
+       "text": "Some sections incomplete; weak organization"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 1,
+       "text": "Poorly organized or missing major sections"
+      }
+     ]
+    },
+    {
+     "name": "Accuracy of Data & Observations",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Observations are precise, complete, and neatly recorded"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Mostly accurate with minor errors"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 2,
+       "max": 2,
+       "text": "Some inaccuracies or missing observations"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 1,
+       "text": "Major errors or fabricated/inconsistent data"
+      }
+     ]
+    },
+    {
+     "name": "Analysis, Calculations & Interpretation",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Analysis is clear, correct, and logically connected to theory"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Good analysis with minor mistakes"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 2,
+       "max": 2,
+       "text": "Basic analysis with gaps or limited explanation"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 1,
+       "text": "Weak or incorrect analysis/interpretation"
+      }
+     ]
+    },
+    {
+     "name": "Results, Discussion & Conclusion",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Results are accurate; discussion is insightful and well-explained"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Good explanation with minor omissions"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 2,
+       "max": 2,
+       "text": "Basic explanation; limited connection to theory"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 1,
+       "text": "Incorrect or unclear discussion and conclusion"
+      }
+     ]
+    },
+    {
+     "name": "Clarity, Neatness & Scientific Writing",
+     "max_marks": 4,
+     "descriptors": [
+      {
+       "level": "Excellent",
+       "min": 4,
+       "max": 4,
+       "text": "Excellent clarity, neatness, proper units and terminology"
+      },
+      {
+       "level": "Good",
+       "min": 3,
+       "max": 3,
+       "text": "Good clarity with minor errors in writing or units"
+      },
+      {
+       "level": "Satisfactory",
+       "min": 2,
+       "max": 2,
+       "text": "Adequate but inconsistent scientific writing"
+      },
+      {
+       "level": "Needs Improvement",
+       "min": 0,
+       "max": 1,
+       "text": "Poor clarity, untidy work, incorrect terminology"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.4.4",
+   "name": "Open Laboratory (Open-Ended Problem-Based Assessment)",
+   "section": "Laboratory Assessment",
+   "category": "laboratory",
+   "total_marks": 100,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Problem Understanding & Experimental Planning",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Complete understanding; independently designs a clear, logical, and accurate experimental plan"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Understands the problem well and plans appropriately with minor gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic understanding with limited or partially correct planning"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor understanding and ineffective or incorrect planning"
+      }
+     ]
+    },
+    {
+     "name": "Selection & Use of Apparatus, Materials & Technique",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Selects all apparatus/materials correctly and uses them skillfully and efficiently"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Minor errors in selection or handling without affecting outcome significantly"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Limited accuracy in selection or technique"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Incorrect or unsafe selection and use of equipment/materials"
+      }
+     ]
+    },
+    {
+     "name": "Execution, Observation & Data Recording",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Executes procedure accurately with complete, precise, and well-recorded observations and data"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Minor procedural or recording errors"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic execution with noticeable gaps in observation or recording"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor execution with incorrect or missing data"
+      }
+     ]
+    },
+    {
+     "name": "Analysis, Interpretation & Scientific Conclusion",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Results are accurately analyzed with strong logical reasoning and valid scientific conclusions"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good analysis with minor reasoning gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic analysis with weak interpretation"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Incorrect or unclear analysis and conclusion"
+      }
+     ]
+    },
+    {
+     "name": "Safety, Discipline & Professional Conduct",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Strictly follows all safety rules with excellent discipline and professional lab behaviour"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Minor safety lapses with good overall discipline"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Occasional reminders required for safety and discipline"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Unsafe behaviour or poor laboratory discipline"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.5",
+   "name": "Practice Assessment",
+   "section": "Practice Assessment",
+   "category": "practice",
+   "total_marks": 100,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Conceptual Understanding & Application",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Complete, accurate, and in-depth understanding with correct application"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear understanding with minor application gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic understanding with noticeable application gaps"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Weak or incorrect understanding and application"
+      }
+     ]
+    },
+    {
+     "name": "Research / Evidence / Problem Solving",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Strong, relevant evidence, data, or problem-solving approach with proper integration"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good evidence with limited depth or connection"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Minimal evidence or problem-solving with weak relevance"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Little to no valid evidence or solution approach"
+      }
+     ]
+    },
+    {
+     "name": "Collaboration & Contribution",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "All members/student contribute equally with excellent coordination"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good contribution with reasonable coordination"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Uneven contribution or limited participation"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Very weak collaboration or no contribution"
+      }
+     ]
+    },
+    {
+     "name": "Quality of Output & Presentation",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Technically sound, well-structured, clear, and submitted on time"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear with minor structural or technical issues"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Partially complete or poorly organized"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Unclear, incomplete, or poorly presented"
+      }
+     ]
+    },
+    {
+     "name": "Reflection & Learning Insight",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Strong evidence of reflection and actionable learning insights"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good reflection with some depth"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic reflection with limited insight"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Superficial or no reflection shown"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.6.1",
+   "name": "Literature Survey",
+   "section": "Course Project Assessment",
+   "category": "course_project",
+   "total_marks": 100,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Understanding of Background & Concepts",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Deep and accurate understanding of project background and core concepts"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good understanding with minor conceptual gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic understanding with limited conceptual clarity"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor understanding of background and concepts"
+      }
+     ]
+    },
+    {
+     "name": "Quality & Relevance of Sources",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Uses high-quality, peer-reviewed, and highly relevant sources"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Uses mostly relevant and credible sources"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Uses limited or partially relevant sources"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Uses poor-quality, outdated, or irrelevant sources"
+      }
+     ]
+    },
+    {
+     "name": "Critical Comparison & Synthesis",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Excellent comparison and synthesis of multiple studies with strong analytical insight"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good comparison with moderate analytical depth"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Limited comparison; mostly descriptive review"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "No meaningful comparison or synthesis"
+      }
+     ]
+    },
+    {
+     "name": "Identification of Research Gaps & Justification",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Clearly identifies research/technica l gaps with strong rationale linked to the proposed project"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Identifies gaps with reasonable clarity and justification"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Gaps vaguely identified with weak justification"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "No gaps identified or justification missing"
+      }
+     ]
+    },
+    {
+     "name": "Writing Quality, Referencing & Originality",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Writing is clear, well-structured, properly referenced, and highly original"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear writing with minor referencing or originality issues"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Acceptable writing with weak referencing and limited originality"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor writing, improper citations, or low originality"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.6.2",
+   "name": "Design, Methodology & Implementation",
+   "section": "Course Project Assessment",
+   "category": "course_project",
+   "total_marks": 200,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 31,
+     "max": 40
+    },
+    {
+     "level": "B (Good)",
+     "min": 21,
+     "max": 30
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 11,
+     "max": 20
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 10
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Problem Definition & Objectives",
+     "max_marks": 40,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 31,
+       "max": 40,
+       "text": "Problem is clearly defined with precise, measurable, and well-aligned objectives"
+      },
+      {
+       "level": "B (Good)",
+       "min": 21,
+       "max": 30,
+       "text": "Problem is clearly stated with generally aligned objectives"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 11,
+       "max": 20,
+       "text": "Problem is identified but objectives lack clarity or alignment"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 10,
+       "text": "Problem definition is unclear or objectives are missing"
+      }
+     ]
+    },
+    {
+     "name": "Design & System Architecture",
+     "max_marks": 40,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 31,
+       "max": 40,
+       "text": "Design is highly logical, innovative, well-structured with accurate diagrams/models"
+      },
+      {
+       "level": "B (Good)",
+       "min": 21,
+       "max": 30,
+       "text": "Design is logical and structured with minor gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 11,
+       "max": 20,
+       "text": "Design is basic with limited structure or clarity"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 10,
+       "text": "Design is poorly structured, incorrect, or missing"
+      }
+     ]
+    },
+    {
+     "name": "Methodology & Tool Selection",
+     "max_marks": 40,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 31,
+       "max": 40,
+       "text": "Methodology is fully justified with appropriate tools, techniques, and technologies"
+      },
+      {
+       "level": "B (Good)",
+       "min": 21,
+       "max": 30,
+       "text": "Methodology is suitable with partial justification"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 11,
+       "max": 20,
+       "text": "Methodology is weakly justified or tools are partly inappropriate"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 10,
+       "text": "Methodology is incorrect or unjustified"
+      }
+     ]
+    },
+    {
+     "name": "Implementation Quality & Functionality",
+     "max_marks": 40,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 31,
+       "max": 40,
+       "text": "Implementation is fully functional, accurate, optimized, and meets all objectives"
+      },
+      {
+       "level": "B (Good)",
+       "min": 21,
+       "max": 30,
+       "text": "Implementation is functional with minor errors or limitations"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 11,
+       "max": 20,
+       "text": "Implementation is partially functional with noticeable issues"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 10,
+       "text": "Implementation is non-functional or seriously flawed"
+      }
+     ]
+    },
+    {
+     "name": "Testing, Validation & Performance Analysis",
+     "max_marks": 40,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 31,
+       "max": 40,
+       "text": "Systematic testing with valid results, strong validation, and clear performance analysis"
+      },
+      {
+       "level": "B (Good)",
+       "min": 21,
+       "max": 30,
+       "text": "Adequate testing with reasonable validation and analysis"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 11,
+       "max": 20,
+       "text": "Limited testing and weak validation"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 10,
+       "text": "No proper testing or validation conducted"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.6.3",
+   "name": "Project Presentation",
+   "section": "Course Project Assessment",
+   "category": "course_project",
+   "total_marks": 100,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Content Clarity & Structure",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Presentation is well-organized, coherent, and logically structured; concepts explained with excellent clarity"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear structure with minor gaps in flow or explanation"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic structure present but lacks coherence or completeness"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poorly structured, unclear, or missing key content"
+      }
+     ]
+    },
+    {
+     "name": "Technical Understanding",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Demonstrates deep understanding of concepts, methods, and results; confidently explains technical decisions"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good understanding with minor inaccuracies"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Limited understanding; explanation is partly correct or incomplete"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Weak understanding; unable to explain core concepts"
+      }
+     ]
+    },
+    {
+     "name": "Visual Aids & Demonstration",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Visuals (slides, diagrams, models, demos) are clear, accurate, and enhance understanding; excellent design quality"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Visuals are useful but may have minor design or clarity issues"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Visuals are basic, cluttered, or only somewhat effective"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Visual aids are unclear, incorrect, or missing"
+      }
+     ]
+    },
+    {
+     "name": "Communication & Delivery",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Delivery is confident, clear, well-paced, and engaging; excellent professional presence"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good delivery with minor issues in confidence, pacing, or articulation"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Delivery is understandabl e but lacks confidence or clarity"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Delivery is unclear, disorganized, or difficult to follow"
+      }
+     ]
+    },
+    {
+     "name": "Response to Questions",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Answers are accurate, insightful, and well-justified; handles questions confidently"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Answers most questions correctly with minor gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Answers are partially correct or insufficiently justified"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Unable to answer questions or responses are incorrect"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.6.4",
+   "name": "Project Report",
+   "section": "Course Project Assessment",
+   "category": "course_project",
+   "total_marks": 100,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Structure & Format",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "All required sections are complete, logically organized, and strictly follow the prescribed format"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Structure is clear with minor issues in sequencing or formatting"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic structure followed but lacks consistency or logical flow"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poorly structured with missing sections or major formatting errors"
+      }
+     ]
+    },
+    {
+     "name": "Technical Accuracy",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "All technical data, calculations, diagrams, and explanations are completely accurate and precise"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Minor technical errors that do not affect overall correctness"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Some technical inaccuracies affecting clarity and correctness"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Major technical errors affecting validity of the work"
+      }
+     ]
+    },
+    {
+     "name": "Depth of Analysis",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Deep, critical, and insightful analysis with strong linkage to theory"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Sound analytical thinking with moderate depth"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Mostly descriptive analysis with limited interpretation"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Superficial, incorrect, or no meaningful analysis"
+      }
+     ]
+    },
+    {
+     "name": "Writing & Presentation",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Writing is clear, coherent, professional, and technically well-articulated"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Writing is clear with minor language or presentation issues"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Writing is understandable but lacks technical clarity or smooth flow"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Writing is unclear, disorganized, or poorly presented"
+      }
+     ]
+    },
+    {
+     "name": "Referencing & Originality",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "All sources are properly cited; work shows high originality and strong academic integrity"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Minor citation issues; originality largely maintained"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Weak citation practices; originality questionable in parts"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor or missing citations; low originality evident"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.7.1",
+   "name": "Progress Review Presentation",
+   "section": "Internship Assessment",
+   "category": "internship",
+   "total_marks": 100,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Clarity of Work Progress & Role",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Work progress, role, and responsibilities are clearly and precisely explained with strong task-level details"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear explanation with minor gaps in detailing"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic explanation with limited clarity of role/work"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Progress and role are unclear or poorly explained"
+      }
+     ]
+    },
+    {
+     "name": "Application of Academic Knowledge",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Excellent linkage between academic concepts and workplace tasks"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good linkage with minor gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Limited linkage between theory and practice"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "No clear application of academic knowledge"
+      }
+     ]
+    },
+    {
+     "name": "Skill Development & Learning Outcomes",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Strong evidence of professional skill development and learning outcomes"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good evidence of skill development"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Limited skill development demonstrated"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "No meaningful skill development evident"
+      }
+     ]
+    },
+    {
+     "name": "Communication & Presentation Quality",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Highly confident, clear, professional delivery with well-designed visuals"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear delivery with minor confidence or structure issues"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Delivery understandable but lacks confidence or organization"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor communication and weak presentation structure"
+      }
+     ]
+    },
+    {
+     "name": "Response to Questions & Professional Attitude",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Answers accurately and confidently with excellent professional conduct"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Answers most questions correctly with good professionalism"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Partial or weak responses; professionalism inconsistent"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Unable to answer; poor professional attitude"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.7.2",
+   "name": "Internship Diary",
+   "section": "Internship Assessment",
+   "category": "internship",
+   "total_marks": 200,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 31,
+     "max": 40
+    },
+    {
+     "level": "B (Good)",
+     "min": 21,
+     "max": 30
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 11,
+     "max": 20
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 10
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Regularity & Completeness of Entries",
+     "max_marks": 40,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 31,
+       "max": 40,
+       "text": "All entries are consistently and completely maintained throughout the internship"
+      },
+      {
+       "level": "B (Good)",
+       "min": 21,
+       "max": 30,
+       "text": "Minor gaps in regularity or completeness"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 11,
+       "max": 20,
+       "text": "Several missing or inconsistent entries"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 10,
+       "text": "Largely incomplete or irregular entries"
+      }
+     ]
+    },
+    {
+     "name": "Description of Work & Responsibilities",
+     "max_marks": 40,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 31,
+       "max": 40,
+       "text": "Tasks and responsibilities are recorded with excellent clarity and detail"
+      },
+      {
+       "level": "B (Good)",
+       "min": 21,
+       "max": 30,
+       "text": "Clear description with minor gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 11,
+       "max": 20,
+       "text": "Basic description with limited clarity"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 10,
+       "text": "Vague, unclear, or missing work description"
+      }
+     ]
+    },
+    {
+     "name": "Learning Outcomes & Skill Development",
+     "max_marks": 40,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 31,
+       "max": 40,
+       "text": "Strong evidence of continuous learning and professional skill development"
+      },
+      {
+       "level": "B (Good)",
+       "min": 21,
+       "max": 30,
+       "text": "Good evidence of learning and skill growth"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 11,
+       "max": 20,
+       "text": "Limited learning outcomes documented"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 10,
+       "text": "No meaningful learning or skill development evident"
+      }
+     ]
+    },
+    {
+     "name": "Reflection on Challenges & Problem Solving",
+     "max_marks": 40,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 31,
+       "max": 40,
+       "text": "Deep reflection with strong problem-solving insights and learning from challenges"
+      },
+      {
+       "level": "B (Good)",
+       "min": 21,
+       "max": 30,
+       "text": "Good reflection with reasonable problem-solving insight"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 11,
+       "max": 20,
+       "text": "Basic reflection with weak problem-solving linkage"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 10,
+       "text": "No meaningful reflection or problem-solving evidence"
+      }
+     ]
+    },
+    {
+     "name": "Organization, Neatness & Authenticity",
+     "max_marks": 40,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 31,
+       "max": 40,
+       "text": "Diary is highly organized, neat, original, and professionally maintained"
+      },
+      {
+       "level": "B (Good)",
+       "min": 21,
+       "max": 30,
+       "text": "Well-organized with minor neatness or authenticity concerns"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 11,
+       "max": 20,
+       "text": "Acceptable organization with noticeable issues"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 10,
+       "text": "Poor organization, untidy, or doubtful authenticity"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.7.3",
+   "name": "Internship Report",
+   "section": "Internship Assessment",
+   "category": "internship",
+   "total_marks": 100,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Structure & Organization",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Excellently structured with all required sections logically and clearly presented"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Well-structured with minor issues in organization"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic structure present but weak logical flow"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor structure with missing or poorly organized sections"
+      }
+     ]
+    },
+    {
+     "name": "Understanding of Organization & Role",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Demonstrates deep understanding of the organization, role, and functional processes"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good understanding with minor gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Limited understanding of organizational profile and role"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor or incorrect understanding of organization and role"
+      }
+     ]
+    },
+    {
+     "name": "Learning Outcomes & Skill Application",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Clearly demonstrates strong learning outcomes and effective application of skills"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good learning outcomes with reasonable skill application"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Limited learning outcomes and skill application"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "No clear learning outcomes or skill application"
+      }
+     ]
+    },
+    {
+     "name": "Depth of Analysis & Reflection",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Deep analytical reflection on professional experience with strong insights"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good reflection with moderate analytical depth"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic reflection with limited analysis"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Superficial or no meaningful reflection"
+      }
+     ]
+    },
+    {
+     "name": "Writing Quality, Referencing & Originality",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Excellent academic writing, proper citations, and high originality"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good writing with minor citation or originality issues"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Acceptable writing with weak referencing or originality"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor writing, improper citations, or low originality"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.8.1",
+   "name": "Capstone Project Phase I",
+   "section": "Capstone Project Assessment",
+   "category": "capstone",
+   "total_marks": 100,
+   "evaluation_mode": "observation",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Problem Identification (Clarity & Relevance)",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Problem is articulated with exceptional clarity; relevance and need strongly justified"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Problem is clear and relevant with minor gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Problem is understandable but lacks depth or clarity"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Problem is unclear, irrelevant, or poorly defined"
+      }
+     ]
+    },
+    {
+     "name": "Objectives & Scope Definition",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Objectives are precise, aligned, and measurable; scope is clearly defined and realistic"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Objectives clear with minor ambiguity; scope mostly defined"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Objectives and scope partially clear with limited structure"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Objectives and scope unclear or missing"
+      }
+     ]
+    },
+    {
+     "name": "Concept Understanding / Proposed Approach",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Demonstrates excellent understanding of project concept and proposed solution"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good understanding with minor inaccuracies"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic understanding with limited clarity"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Weak or incorrect understanding of concept"
+      }
+     ]
+    },
+    {
+     "name": "Seminar Delivery & Organization",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Highly professional, confident delivery with excellent structure and visuals"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Clear delivery with minor issues in flow/organization"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Understandable but lacks clarity, structure, or effective visuals"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Poor delivery, unclear structure, weak or no visuals"
+      }
+     ]
+    },
+    {
+     "name": "Response to Questions & Analytical Ability",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Responses are accurate, logical, and insightful; strong analytical reasoning shown"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Responses mostly correct with minor reasoning gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Partial or unclear responses with limited reasoning"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Unable to answer or weak analytical ability"
+      }
+     ]
+    }
+   ]
+  },
+  {
+   "code": "14.8.2",
+   "name": "Capstone Project Phase II",
+   "section": "Capstone Project Assessment",
+   "category": "capstone",
+   "total_marks": 100,
+   "evaluation_mode": "document",
+   "scale": [
+    {
+     "level": "A (Excellent)",
+     "min": 16,
+     "max": 20
+    },
+    {
+     "level": "B (Good)",
+     "min": 11,
+     "max": 15
+    },
+    {
+     "level": "C (Satisfactory)",
+     "min": 6,
+     "max": 10
+    },
+    {
+     "level": "D (Needs Improvement)",
+     "min": 0,
+     "max": 5
+    }
+   ],
+   "criteria": [
+    {
+     "name": "Technical Implementation Quality",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Fully functional system; exceeds expectations; high technical accuracy"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Functional with minor issues"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Partially functional; limited accuracy"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Non-functional or major errors"
+      }
+     ]
+    },
+    {
+     "name": "Complexity & Innovation",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "High complexity; creative, innovative approach"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good complexity; some innovation"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Moderate complexity; limited innovation"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Very basic; no innovation"
+      }
+     ]
+    },
+    {
+     "name": "Alignment With Approved Methodology",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Implementation perfectly follows approved methodology"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Mostly aligned with few deviations"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Some deviations; partially aligned"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Misaligned or incorrect methodology"
+      }
+     ]
+    },
+    {
+     "name": "Use of Tools, Technologies, Algorithms",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Excellent selection & use of tools; domain-appropriate"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Good use with minor gaps"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Basic tools used; lacks depth"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Inappropriate or incorrect tools"
+      }
+     ]
+    },
+    {
+     "name": "Work Quality & Completion",
+     "max_marks": 20,
+     "descriptors": [
+      {
+       "level": "A (Excellent)",
+       "min": 16,
+       "max": 20,
+       "text": "Complete, well-tested and refined"
+      },
+      {
+       "level": "B (Good)",
+       "min": 11,
+       "max": 15,
+       "text": "Mostly complete; minor issues"
+      },
+      {
+       "level": "C (Satisfactory)",
+       "min": 6,
+       "max": 10,
+       "text": "Partially complete"
+      },
+      {
+       "level": "D (Needs Improvement)",
+       "min": 0,
+       "max": 5,
+       "text": "Incomplete"
+      }
+     ]
+    }
+   ]
+  }
+ ]
+}

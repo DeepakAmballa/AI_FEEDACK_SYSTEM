@@ -1,0 +1,15 @@
+import sqlite3
+conn = sqlite3.connect('edueval.db')
+cur = conn.cursor()
+cur.execute("SELECT name FROM sqlite_master WHERE type='table'")
+tables = [r[0] for r in cur.fetchall()]
+print('Tables:', tables)
+cur.execute("PRAGMA table_info(student_submissions)")
+print('student_submissions cols:', [(r[1],r[2]) for r in cur.fetchall()])
+cur.execute("PRAGMA table_info(assessments)")
+print('assessments cols:', [(r[1],r[2]) for r in cur.fetchall()])
+cur.execute("SELECT id, title, assessment_type, is_active FROM assessments")
+print('assessments:', cur.fetchall())
+cur.execute("SELECT id, student_id, assessment_id, status, extraction_status FROM student_submissions")
+print('submissions:', cur.fetchall())
+conn.close()

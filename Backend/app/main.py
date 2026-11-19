@@ -15,7 +15,7 @@ from fastapi.middleware.cors import CORSMiddleware
 from app.core.config import get_settings
 from app.core.database import engine, Base
 from app.core.security import get_password_hash
-from app.api.routes import auth, admin, faculty, student
+from app.api.routes import auth, admin, faculty, student, admin_assessments
 
 logging.basicConfig(
     level=logging.INFO,
@@ -75,6 +75,8 @@ def print_startup_banner() -> None:
 async def lifespan(_app: FastAPI):
     # Startup
     create_tables()
+    from app.core.init_db import run_migrations_and_seed
+    run_migrations_and_seed()
     create_default_admin()
     print_startup_banner()
     yield
@@ -101,6 +103,7 @@ app.add_middleware(
 # Register routers
 app.include_router(auth.router)
 app.include_router(admin.router)
+app.include_router(admin_assessments.router)
 app.include_router(faculty.router)
 app.include_router(student.router)
 

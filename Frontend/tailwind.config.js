@@ -4,6 +4,10 @@ export default {
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
   ],
+  // Stat-card accent bars are derived at runtime (text-* -> bg-*), so keep these generated.
+  safelist: [
+    { pattern: /^bg-(blue|purple|indigo|teal|orange|yellow|green|emerald|red|slate)-600$/ },
+  ],
   theme: {
     extend: {
       colors: {
@@ -27,6 +31,7 @@ export default {
       },
       fontFamily: {
         sans: ['Inter', 'system-ui', 'sans-serif'],
+        heading: ['Manrope', 'Inter', 'system-ui', 'sans-serif'],
       },
     },
   },

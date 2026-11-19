@@ -1,0 +1,697 @@
+# Resuming from a compaction
+
+You are continuing work on the task described above, but you have lost access to the full conversation history, and need to resume work efficiently using the progress summary below:
+
+# User Requests
+The following were user requests from the truncated conversation in chronological order:
+1. here you can see the 2 images that ive got the errors and also we have some errors in some of our files of our directory ok, clear everything that cause errors ok go ahead.
+  - [Attachment: image/png (C:/Users/deepa/.gemini/antigravity/brain/b16badd1-b57e-4ae0-9b54-f2d13117c696/.user_uploaded/media_1794324720049.png)]
+  - [Attachment: image/png (C:/Users/deepa/.gemini/antigravity/brain/b16badd1-b57e-4ae0-9b54-f2d13117c696/.user_uploaded/media_1794324840748.png)]
+2. continue where you left
+3. now start the application and also give the commands to run and also i ve placed a new API key ok go ahead
+4. now start the application and also give the commands to run and also i ve placed a new API key ok go ahead
+5. now i have changed the api key from openAI to Openrouter API key ok so i will replace it ok now refresh everything and go ahead restart the application
+6. now i have changed the api key from openAI to Openrouter API key ok so i will replace it ok now refresh everything and go ahead restart the application
+7. here you just do not mention the credits and the model name ok, one more thing after adding the new subject in that after adding new assessment, student  cannot access the new file upload feature is not working look into it once. ok go ahead and also remove the course profile feature take all those contents from the syllubus, or notes document that we are uploading as document ok, look into it go ahead.
+  - [Attachment: image/png (C:/Users/deepa/.gemini/antigravity/brain/b16badd1-b57e-4ae0-9b54-f2d13117c696/.user_uploaded/media_1794329317766_fc558737.png)]
+  - [Attachment: image/png (C:/Users/deepa/.gemini/antigravity/brain/b16badd1-b57e-4ae0-9b54-f2d13117c696/.user_uploaded/media_1794329934771_6745f89d.png)]
+8. here you just do not mention the credits and the model name ok, one more thing after adding the new subject in that after adding new assessment, student  cannot access the new file upload feature is not working look into it once. ok go ahead and also remove the course profile feature take all those contents from the syllubus, or notes document that we are uploading as document ok, look into it go ahead.
+9. continue where you left
+10. # EDU EVAL AI — COMPLETE IMPLEMENTATION PROMPT FOR ANTIGRAVITY
+
+## Project objective
+
+Enhance the existing EduEval AI application into a complete AI-assisted academic assessment and evaluation platform.
+
+Implement all the requirements below while preserving the existing application, working features, architecture, database records, authentication, and user workflows.
+
+**MOST IMPORTANT: Do not rebuild the project from scratch. Do not replace working modules unnecessarily. Inspect the existing codebase first, understand its architecture, and make incremental, backward-compatible changes.**
+
+---
+
+# 1. EXISTING TECHNOLOGY STACK
+
+The project currently uses the following technologies. Continue using the existing stack wherever possible.
+
+### Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Axios
+- React Router
+- Lucide React
+- React Hot Toast
+
+### Backend
+- Python 3.11
+- FastAPI
+- Uvicorn
+- SQLAlchemy
+- Pydantic
+- Pydantic Settings
+- JWT authentication using Python-Jose
+- Passlib / Bcrypt
+
+### AI and document processing
+- OpenAI Python SDK
+- Sentence Transformers for local embeddings
+- FAISS CPU for local vector search
+- PyMuPDF for PDF extraction
+- python-docx
+- python-pptx
+- Pillow
+- Tesseract OCR
+- ReportLab for PDF report generation
+
+### Database and storage
+- SQLite for local development.
+- Uploaded documents stored under `Backend/uploads/`.
+- FAISS indexes stored under `Backend/faiss_indexes/`.
+
+Reuse existing database models, services, routes, utilities, and components wherever appropriate.
+
+---
+
+# 2. FIRST STEP — INSPECT THE EXISTING PROJECT
+
+Before modifying anything:
+
+1. Inspect the complete frontend and backend folder structures.
+2. Identify existing authentication, Admin, Faculty, and Student modules.
+3. Inspect the current database models, schemas, migrations, and relationships.
+4. Understand existing assessment creation and submission workflows.
+5. Inspect the existing course profile upload and RAG indexing process.
+6. Identify the current AI evaluation implementation.
+7. Inspect existing report generation and download functionality.
+8. Identify reusable components and services.
+9. Identify existing bugs without unnecessarily changing unrelated functionality.
+
+Create a backup of important files before making structural changes.
+
+Prepare an implementation plan based on the existing code.
+
+Do not:
+- Delete existing working features.
+- Replace the existing application with a new project.
+- Change the technology stack unnecessarily.
+- Remove existing uploaded documents or database records.
+- Break authentication or role-based access.
+- Introduce duplicate API endpoints or duplicate frontend components.
+- Hardcode assessment types in multiple locations.
+- expose API keys or internal AI results to unauthorized users.
+
+---
+
+# 3. USER ROLES AND ACCESS CONTROL
+
+Maintain three separate portals.
+
+### Admin
+Admin has complete system-level access.
+
+Admin must be able to:
+- Manage users and roles.
+- Manage faculty and student accounts.
+- Manage subjects and course assignments.
+- Manage assessment types and rubrics.
+- Monitor student submissions.
+- View faculty evaluations.
+- View AI evaluations.
+- Compare faculty and AI marks.
+- View discrepancy calculations.
+- View final calculated marks.
+- Inspect AI evaluation failures.
+- Retry failed AI evaluations.
+- Review combined evaluation reports.
+- Monitor audit logs and system activity.
+
+### Faculty
+Faculty can:
+- Access assigned subjects.
+- Create assessments.
+- View student submissions.
+- Manually evaluate complete submissions.
+- View assessment-specific rubric reference guides.
+- Submit overall marks and feedback.
+- Manage course profiles.
+- Review evaluation history.
+- View final published student evaluation information as permitted.
+
+Faculty must not see:
+- AI evaluation buttons.
+- AI-generated marks.
+- AI-generated criterion scores.
+- AI comparison results.
+- AI discrepancy calculations.
+- AI processing details or internal statuses.
+- Admin-only evaluation monitoring.
+
+### Student
+Students can:
+- Access assigned subjects.
+- View available assessments.
+- Upload assignment files.
+- Type submissions directly.
+- Save drafts.
+- Submit assignments.
+- View submission history.
+- View published final marks.
+- View combined feedback.
+- Download published evaluation reports.
+
+Students must never see:
+- AI marks.
+- Faculty-versus-AI comparisons.
+- AI-only evaluation reports.
+- Internal AI processing statuses.
+- Other students' submissions or evaluation information.
+
+Implement authorization at both frontend and backend levels. Hiding a button is not sufficient.
+
+---
+
+# 4. ADMIN — ASSESSMENT AND RUBRIC MANAGEMENT
+
+Create or enhance the following Admin Dashboard section:
+
+**Assessment & Rubric Management**
+
+Admin must be able to create, manage, activate, deactivate, and maintain assessment types and their associated rubrics.
+
+Initially configure these three assessment types:
+
+1. Group Discussion
+2. Free Writing
+3. Reflective Journal
+
+Each assessment type has five criteria. Each criterion has four performance levels:
+
+- 4 — Excellent
+- 3 — Good
+- 2 — Average
+- 1 — Needs Improvement
+
+Each criterion contributes a maximum of four points. Total rubric maximum: 20 points.
+
+## 4.1 Group Discussion Rubric
+
+### Criterion 1: Participation
+
+**4 — Excellent:** Actively and consistently engages with the discussion, providing valuable insights.
+
+**3 — Good:** Regularly contributes with thoughtful ideas, though may lack depth.
+
+**2 — Average:** Contributes occasionally with relevant ideas but lacks consistency.
+
+**1 — Needs Improvement:** Rarely contributes or engages with the discussion.
+
+### Criterion 2: Listening Skills
+
+**4 — Excellent:** Demonstrates exceptional listening skills, respects others' ideas, and supports group dynamics.
+
+**3 — Good:** Actively listens and avoids interrupting, showing empathy.
+
+**2 — Average:** Generally attentive but occasionally interrupts or loses focus.
+
+**1 — Needs Improvement:** Frequently interrupts or demonstrates poor listening skills.
+
+### Criterion 3: Content Relevance
+
+**4 — Excellent:** Contributions are highly relevant, insightful, and add significant value to the discussion.
+
+**3 — Good:** Contributions are relevant and well-thought-out but lack depth.
+
+**2 — Average:** Contributions are moderately relevant but lack focus or clarity.
+
+**1 — Needs Improvement:** Contributions are irrelevant or fail to align with the discussion topic.
+
+### Criterion 4: Collaboration
+
+**4 — Excellent:** Works exceptionally well with the group, fostering a positive and productive dynamic.
+
+**3 — Good:** Collaborates effectively, resolving conflicts constructively.
+
+**2 — Average:** Collaborates inconsistently, with occasional conflicts.
+
+**1 — Needs Improvement:** Does not collaborate effectively; may disrupt group dynamics.
+
+### Criterion 5: Problem Solving
+
+**4 — Excellent:** Consistently contributes innovative and effective solutions to group challenges.
+
+**3 — Good:** Actively engages in problem-solving with creative solutions.
+
+**2 — Average:** Provides basic solutions but lacks depth or creativity.
+
+**1 — Needs Improvement:** Rarely contributes to problem-solving or offers ineffective solutions.
+
+## 4.2 Free Writing Rubric
+
+### Criterion 1: Relevance
+
+**4 — Excellent:** Responses are highly relevant, directly addressing the questions with clarity and precision.
+
+**3 — Good:** Responses are relevant and address the questions effectively but with minor gaps.
+
+**2 — Average:** Responses are moderately relevant but lack focus or depth.
+
+**1 — Needs Improvement:** Responses are irrelevant or fail to address the questions.
+
+### Criterion 2: Understanding
+
+**4 — Excellent:** Demonstrates a deep understanding of concepts with accurate and insightful answers.
+
+**3 — Good:** Demonstrates good understanding with mostly accurate responses.
+
+**2 — Average:** Demonstrates basic understanding but contains minor inaccuracies.
+
+**1 — Needs Improvement:** Demonstrates limited understanding with superficial or partially correct responses.
+
+### Criterion 3: Critical Thinking
+
+**4 — Excellent:** Provides strong analysis and logical reasoning, offering well-supported arguments or interpretations.
+
+**3 — Good:** Demonstrates thoughtful analysis with some logical reasoning but lacks depth.
+
+**2 — Average:** Provides basic analysis, with minimal reasoning or support.
+
+**1 — Needs Improvement:** Lacks analysis or reasoning; answers are superficial or unsupported.
+
+### Criterion 4: Clarity
+
+**4 — Excellent:** Writing is exceptionally clear, concise, and well-structured.
+
+**3 — Good:** Writing 
+<truncated 36074 bytes>
+
+<summary>
+
+# EduEval AI — Continuation Summary
+
+## 1. Task Overview
+
+**Core Request:** Enhance the existing EduEval AI academic evaluation platform with a comprehensive set of features, following an exact 24-section specification. This is an **incremental enhancement** — do NOT rebuild from scratch.
+
+**Success Criteria (all 28 non-negotiable requirements):**
+1. Faculty-first evaluation workflow (Faculty evaluates → AI auto-triggers → Python calculates final)
+2. Admin exclusively manages assessment types & rubrics (3 pre-seeded: Group Discussion, Free Writing, Reflective Journal)
+3. Faculty enters ONE overall mark (not criterion-wise)
+4. AI generates criterion-wise scores internally (Admin-only visibility)
+5. Discrepancy: average only when `|F - A| > 0.20 × M` (strict greater-than, not ≥)
+6. Student typed submission option
+7. Faculty typed course profile option
+8. PDF report generation for students
+9. Role-based security at API level
+10. No model name or token counts visible in UI
+
+**Project Location:** `c:\AI_FEEDACK_SYSTEM\`
+- Backend: `c:\AI_FEEDACK_SYSTEM\Backend\`
+- Frontend: `c:\AI_FEEDACK_SYSTEM\Frontend\`
+
+**Deliverables Required:** All 10 items in Section 24 of the spec.
+
+---
+
+## 2. Progress
+
+### Completed Before This Session's Big Spec Was Received
+
+**Backend (all files exist and work):**
+- `Backend/app/main.py` — FastAPI app with lifespan, CORS, default admin seeding
+- `Backend/app/core/config.py` — Pydantic settings, `openai_configured` property, `openai_base_url` for OpenRouter support (key auto-detected by `sk-or-` prefix)
+- `Backend/app/core/security.py` — bcrypt (with `__about__` monkeypatch) + JWT
+- `Backend/app/core/database.py` — SQLAlchemy SQLite engine
+- `Backend/app/core/deps.py` — `get_current_user`, `require_admin`, `require_faculty`, `require_student`
+- `Backend/app/models/models.py` — 20+ ORM tables including `StudentSubmission` (now has `page_count` column added via ALTER TABLE)
+- `Backend/app/schemas/schemas.py` — Pydantic schemas
+- `Backend/app/services/document/processor.py` — **FIXED**: `extract_text_from_pdf` now stores `total_pages = len(doc)` BEFORE `doc.close()`
+- `Backend/app/services/rag/pipeline.py` — SentenceTransformers + FAISS
+- `Backend/app/services/ai/rubric_scorer.py` — custom scoring engine
+- `Backend/app/services/ai/evaluator.py` — OpenRouter/OpenAI client with auto-detection
+- `Backend/app/api/routes/auth.py`, `admin.py`, `faculty.py`, `student.py`
+- `Backend/.env` — user has placed OpenRouter key (`sk-or-v1...`), model `gpt-4o-mini`
+- `Backend/.env.example` — template
+- `Backend/test_workflow.py` — 13-step E2E test, ALL PASSED
+- `Backend/requirements.txt`
+
+**Database Migration Applied:**
+```sql
+ALTER TABLE student_submissions ADD COLUMN page_count INTEGER DEFAULT 1
+```
+(Applied directly via sqlite3 in Python script)
+
+**Frontend (all files built successfully, `npm run build` exits 0):**
+- `Frontend/src/api/client.ts` — Axios with JWT interceptor, all API functions
+- `Frontend/src/contexts/AuthContext.tsx` — React auth context
+- `Frontend/src/components/shared/DashboardLayout.tsx` — shared sidebar+topbar
+- `Frontend/src/pages/auth/LoginPage.tsx` — 3-portal switchable login
+- `Frontend/src/pages/admin/AdminPortal.tsx` — full admin portal (stats, faculty/student management, subjects, audit logs)
+- `Frontend/src/pages/faculty/FacultyPortal.tsx` — **PARTIALLY UPDATED**: Course Profile tab removed (tabs now: docs, assessments, submissions). AI model/token display removed from evaluation results card.
+- `Frontend/src/pages/student/StudentPortal.tsx` — **UPDATED**: Re-submit allowed if not approved, better error messages
+- `Frontend/vite.config.ts`, `tsconfig.json`, `index.html`
+
+**Launchers:**
+- `c:\AI_FEEDACK_SYSTEM\run_app.bat`
+- `c:\AI_FEEDACK_SYSTEM\run_app.ps1`
+- `c:\AI_FEEDACK_SYSTEM\README.md`
+
+**Pre-seeded data in `edueval.db`:**
+- Admin: `admin@edueval.ai` / `Admin@123`
+- Faculty: `dr.smith@university.edu` / `Faculty@123`
+- Student: `john.doe@student.edu` / `Student@123`
+- Subject: Operating Systems & Concurrency (CS301) + Gen AI (CS032)
+- Assessments 1-4 exist, Submission #2 (RJ 2.pdf) repaired
+
+---
+
+## 3. Key Findings
+
+### Architecture & Constraints
+- SQLite with `check_same_thread=False`; no Alembic — migrations done via raw `ALTER TABLE`
+- SentenceTransformers model: `all-MiniLM-L6-v2` (CPU-only)
+- FAISS: `faiss-cpu`
+- OpenRouter API works via `openai` SDK with `base_url="https://openrouter.ai/api/v1"` and `HTTP-Referer`/`X-Title` headers
+- Key auto-detected: if starts with `sk-or-`, route to OpenRouter; model prefixed with `openai/` automatically
+- Login endpoint uses `OAuth2PasswordRequestForm` → `application/x-www-form-urlencoded` (NOT JSON)
+- JWT payload: `{"sub": str(user.id), "role": user.role.value}`
+- File uploads: Max 25MB, extensions: pdf, docx, doc, txt
+
+### Database Schema (current StudentSubmission - missing columns from spec)
+Currently `student_submissions` has: id, student_id, assessment_id, filename, original_filename, file_type, file_path, file_size, extracted_text, extraction_status, page_count, status, submitted_at, updated_at
+
+**Missing for new spec**: submission_version, submission_type (uploaded/typed), typed_content
+
+### The Big Spec Requirements NOT Yet Implemented
+Everything in the 24-section spec is essentially unimplemented. The existing app is at ~35% of the final spec. The massive new spec arrived at the end of the session.
+
+---
+
+## 4. Errors & Fixes
+
+| Error | Fix | Status |
+|-------|-----|--------|
+| `PDF extraction failed: document closed` — `len(doc)` called after `doc.close()` | Store `total_pages = len(doc)` before `doc.close()` in `processor.py` | ✅ Fixed |
+| `'page_count' is an invalid keyword argument for StudentSubmission` — column missing in SQLite | `ALTER TABLE student_submissions ADD COLUMN page_count INTEGER DEFAULT 1` | ✅ Fixed |
+| `npm run build` failed: `Cannot use JSX unless '--jsx' flag is provided` — old scaffold `main.ts` still present, wrong tsconfig | Deleted `counter.ts`, `main.ts`, `style.css`; updated `tsconfig.json` with `"jsx": "react-jsx"`, created `vite-env.d.ts`, removed `allowImportingTsExtensions` | ✅ Fixed |
+| OpenAI key `credit_balance_exhausted` (429) | User switched to OpenRouter key; code updated to auto-detect `sk-or-` prefix and route to `https://openrouter.ai/api/v1` | ✅ Fixed |
+| Frontend dev server stopped | Servers need manual restart each session | ⚠️ Ongoing (session-based) |
+| `Upload failed` (generic) for new subject assessments | Root cause: `page_count` column missing → StudentSubmission insert failed with 500 | ✅ Fixed via ALTER TABLE |
+
+---
+
+## 5. Active Context
+
+### Server State (need to restart)
+Both servers were stopped due to system restart:
+- **Backend**: `cd c:\AI_FEEDACK_SYSTEM\Backend; python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload`
+- **Frontend**: `cd c:\AI_FEEDACK_SYSTEM\Frontend; npm run dev`
+
+### Partially Completed Changes (Mid-Session)
+The FacultyPortal.tsx was partially edited when the session ended:
+- The Course Profile tab was being removed from SubjectDetail (tabs changed from `['profile', 'docs', 'assessments', 'submissions']` to `['docs', 'assessments', 'submissions']`)
+- The AI model/token display was being removed from the evaluation results card
+- **VERIFY**: The current state of `FacultyPortal.tsx` may have an inconsistent edit mid-way. Read the file carefully before proceeding.
+
+### Current faculty.py State
+- `upload_course_document` now auto-creates CourseProfile if missing (doesn't throw 400)
+- `build_rag_index` also auto-creates CourseProfile if missing
+- `get_submission_detail` has auto-recovery extraction
+- `trigger_evaluation` has auto-recovery extraction + better error messages for credit_balance_exhausted
+
+---
+
+## 6. Next Steps (Priority Order)
+
+### IMMEDIATE: Verify & Fix Partial Edits
+1. **Read** `c:\AI_FEEDACK_SYSTEM\Frontend\src\pages\faculty\FacultyPortal.tsx` fully — the SubjectDetail function may be in an inconsistent state from the mid-session edit. Ensure:
+   - Tabs are `['docs', 'assessments', 'submissions']` only (Course Profile tab removed)
+   - No duplicate/broken JSX blocks
+   - AI model/token display removed from evaluation results
+
+2. **Build test**: `cd c:\AI_FEEDACK_SYSTEM\Frontend; npm run build` — fix any TypeScript errors
+
+### PHASE 2: Database Schema Extensions
+
+Add via `ALTER TABLE` or SQLAlchemy model + migration script:
+
+**New tables needed:**
+```sql
+-- Assessment Types (Admin-managed)
+CREATE TABLE assessment_types (
+    id INTEGER PRIMARY KEY,
+    name TEXT NOT NULL,
+    description TEXT,
+    is_active BOOLEAN DEFAULT TRUE,
+    max_marks FLOAT DEFAULT 20.0,
+    discrepancy_threshold_pct FLOAT DEFAULT 0.20,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Rubric Versions
+CREATE TABLE rubric_versions (
+    id INTEGER PRIMARY KEY,
+    assessment_type_id INTEGER REFERENCES assessment_types(id),
+    version INTEGER DEFAULT 1,
+    is_active BOOLEAN DEFAULT TRUE,
+    total_marks FLOAT DEFAULT 20.0,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Rubric Criteria (5 per rubric version)
+CREATE TABLE rubric_version_criteria (
+    id INTEGER PRIMARY KEY,
+    rubric_version_id INTEGER REFERENCES rubric_versions(id),
+    name TEXT NOT NULL,
+    order_index INTEGER DEFAULT 0,
+    max_marks FLOAT DEFAULT 4.0,
+    description TEXT
+);
+
+-- Performance Levels (4 per criterion)
+CREATE TABLE rubric_performance_levels (
+    id INTEGER PRIMARY KEY,
+    criterion_id INTEGER REFERENCES rubric_version_criteria(id),
+    level INTEGER NOT NULL,  -- 1=Needs Improvement, 2=Average, 3=Good, 4=Excellent
+    label TEXT NOT NULL,
+    description TEXT
+);
+
+-- Faculty Evaluations (new model)
+CREATE TABLE faculty_evaluations (
+    id INTEGER PRIMARY KEY,
+    submission_id INTEGER UNIQUE REFERENCES student_submissions(id),
+    faculty_id INTEGER REFERENCES users(id),
+    faculty_total_marks FLOAT,
+    overall_feedback TEXT,
+    strengths TEXT,
+    weaknesses TEXT,
+    improvement_suggestions TEXT,
+    irrelevant_content_observations TEXT,
+    deduction_reasons TEXT,
+    internal_notes TEXT,
+    status TEXT DEFAULT 'draft',  -- draft, submitted
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    updated_at DATETIME DEFAULT CURRENT_TIMESTAMP
+);
+
+-- Final Evaluations
+CREATE TABLE final_evaluations (
+    id INTEGER PRIMARY KEY,
+    submission_id INTEGER UNIQUE REFERENCES student_submissions(id),
+    faculty_evaluation_id INTEGER REFERENCES faculty_evaluations(id),
+    ai_evaluation_id INTEGER REFERENCES ai_evaluations(id),
+    faculty_marks FLOAT,
+    ai_marks FLOAT,
+    discrepancy FLOAT,
+    threshold FLOAT,
+    calculation_method TEXT,  -- 'faculty_only' or 'average'
+    final_marks FLOAT,
+    combined_feedback TEXT,
+    report_path TEXT,
+    is_published BOOLEAN DEFAULT FALSE,
+    created_at DATETIME DEFAULT CURRENT_TIMESTAMP,
+    published_at DATETIME
+);
+```
+
+**Alter existing tables:**
+```sql
+ALTER TABLE student_submissions ADD COLUMN submission_type TEXT DEFAULT 'uploaded';
+ALTER TABLE student_submissions ADD COLUMN typed_content TEXT;
+ALTER TABLE student_submissions ADD COLUMN submission_version INTEGER DEFAULT 1;
+ALTER TABLE assessments ADD COLUMN assessment_type_id INTEGER;
+ALTER TABLE assessments ADD COLUMN rubric_version_id INTEGER;
+ALTER TABLE assessments ADD COLUMN question TEXT;
+ALTER TABLE assessments ADD COLUMN instructions TEXT;
+ALTER TABLE assessments ADD COLUMN deadline DATETIME;
+ALTER TABLE assessments ADD COLUMN allowed_file_types TEXT;
+ALTER TABLE ai_evaluations ADD COLUMN rubric_version_id INTEGER;
+ALTER TABLE ai_evaluations ADD COLUMN ai_criterion_scores TEXT;  -- JSON
+ALTER TABLE ai_evaluations ADD COLUMN ai_criterion_explanations TEXT;  -- JSON
+ALTER TABLE ai_evaluations ADD COLUMN irrelevant_content_observations TEXT;
+```
+
+### PHASE 2: Seed Assessment Types & Rubrics
+
+Create a seeding script `Backend/seed_assessment_types.py` with exact rubric text from the spec:
+- Group Discussion (5 criteria × 4 levels)
+- Free Writing (5 criteria × 4 levels)
+- Reflective Journal (5 criteria × 4 levels)
+
+### PHASE 3: Backend API Changes
+
+**New routes in `admin.py`:**
+- `GET /api/admin/assessment-types` — list all
+- `POST /api/admin/assessment-types` — create
+- `PUT /api/admin/assessment-types/{id}` — update
+- `GET /api/admin/assessment-types/{id}/rubric` — get rubric with criteria and levels
+- `POST /api/admin/assessment-types/{id}/rubric` — create/update rubric version
+- `GET /api/admin/evaluations/monitoring` — AI evaluation monitoring with filters
+- `POST /api/admin/evaluations/{id}/retry-ai` — retry failed AI evaluation
+- `GET /api/admin/evaluations/{id}/comparison` — faculty vs AI comparison view
+
+**New routes in `faculty.py`:**
+- `POST /api/faculty/evaluations` — save faculty evaluation (draft or submit)
+- `GET /api/faculty/evaluations/{submission_id}` — get faculty evaluation
+- `PUT /api/faculty/evaluations/{id}` — update draft
+- `POST /api/faculty/evaluations/{id}/submit` — submit (triggers AI automatically)
+- Remove `POST /api/faculty/submissions/{id}/evaluate` (manual AI trigger — replaced by auto)
+
+**New routes in `student.py`:**
+- `POST /api/student/assessments/{id}/submit-typed` — typed submission
+- `GET /api/student/submissions/{id}/report` — download PDF report
+- `PUT /api/student/submissions/{id}/draft` — save typed draft
+
+**Update `faculty.py` assessment creation:**
+- Accept `assessment_type_id`, `rubric_version_id`, `question`, `instructions`, `deadline`, `allowed_file_types`
+- Validate `assessment_type_id` against active types from DB
+
+### PHASE 4: Faculty Evaluation Logic Changes
+
+In `faculty.py` route for submitting evaluation:
+1. Save `faculty_evaluations` record with status=submitted
+2. Update `student_submissions.status` = `evaluated`
+3. Launch background task for AI evaluation (use `FastAPI BackgroundTasks`)
+4. Return success immediately (don't wait for AI)
+
+Background task `run_ai_evaluation(submission_id, db)`:
+1. Set `ai_evaluations.status` = `processing`
+2. Run existing RAG + OpenAI pipeline
+3. Validate with rubric scorer
+4. Save criterion scores and overall
+5. Set status = `completed`
+6. Call `calculate_final_score(submission_id)`
+7. On error: set status = `failed`, record error_detail
+
+`calculate_final_score(submission_id, db)`:
+```python
+D = abs(F - A)
+T = assessment.max_marks * threshold_pct  # from assessment_type config
+if D > T:
+    final = (F + A) / 2
+    method = 'average'
+else:
+    final = F
+    method = 'faculty_only'
+# Save to final_evaluations
+```
+
+### PHASE 5: Update AI Evaluator
+
+Update `evaluator.py`:
+- Accept rubric_version_id and retrieve criteria/levels from DB
+- Build prompt with criterion names, descriptions, and all 4 performance level descriptions
+- Expect structured JSON: `criterion_scores` as list of `{criterion_name, level (1-4), score, explanation}`
+- Overall score derived from sum of criterion scores
+- Do NOT show criterion scores to faculty or student
+
+### PHASE 6: Frontend Changes
+
+**Admin Portal additions in `AdminPortal.tsx`:**
+- Add `AssessmentTypeManagement` component (CRUD for types + rubrics)
+- Add `EvaluationMonitoring` component (table with filters, retry button, comparison modal)
+
+**Faculty Portal changes in `FacultyPortal.tsx`:**
+- Assessment creation form: change type selector to dynamic API call `GET /api/admin/assessment-types`
+- Remove manual AI evaluation button
+- Replace faculty evaluation section with single overall mark + feedback form
+- Display rubric reference panel (read-only, shows criteria + 4 levels)
+- Save Draft / Submit Evaluation buttons
+
+**Student Portal changes in `StudentPortal.tsx`:**
+- Add tab: "Upload Document" / "Type Submission"
+- Rich text area for typed submission with save draft functionality
+- Published report download button
+
+### PHASE 7: Combined Report & PDF
+
+Create `Backend/app/services/report/generator.py` using ReportLab:
+- `generate_evaluation_report(final_evaluation_id) -> pdf_bytes`
+- Student-facing content only (no AI marks, no criterion scores, no faculty vs AI)
+- Store PDF to `uploads/reports/`
+- Return path stored in `final_evaluations.report_path`
+
+### PHASE 8: Security Audit
+
+For every new endpoint, verify:
+- `require_admin`, `require_faculty`, or `require_student` dependency
+- Students can only access own submissions
+- Faculty only assigned subjects
+- No AI score fields in faculty-facing or student-facing responses
+
+### PHASE 9: Testing
+
+Run tests for each scenario in Section 21 of the spec.
+
+---
+
+## 7. Commitments & Constraints
+
+1. **Do NOT rebuild** — incremental changes to existing codebase only
+2. **Do NOT delete** existing database records, uploaded files, or working features
+3. **Do NOT show** model name or token counts in any UI (removed per user request)
+4. **Do NOT show** credits/billing information in UI
+5. **OpenRouter** key is in place (`sk-or-v1...`), model `gpt-4o-mini` auto-prefixed to `openai/gpt-4o-mini`
+6. Faculty sees **ONE** overall mark field, rubric is reference-only
+7. AI trigger is **automatic** after faculty submits (no manual button)
+8. Admin exclusively sees AI marks, criterion scores, discrepancy
+9. Students see only final marks + combined feedback
+10. Discrepancy: average **only** when `D > T` (strict greater-than)
+11. Keep existing stack exactly as-is (React, FastAPI, SQLite, FAISS, SentenceTransformers)
+12. Backend `.env` must stay in `.gitignore`
+13. Use `BackgroundTasks` from FastAPI for AI evaluation (lightweight, no Celery needed at this scale)
+14. All new SQLite columns added via `ALTER TABLE` (no Alembic)
+15. Test commands to start:
+    - Backend: `cd c:\AI_FEEDACK_SYSTEM\Backend; python -m uvicorn app.main:app --host 127.0.0.1 --port 8000 --reload`
+    - Frontend: `cd c:\AI_FEEDACK_SYSTEM\Frontend; npm run dev`
+16. Use `/plan` slash command if user wants to review the plan before execution
+
+</summary>
+
+You have the 5 following artifacts written to the artifacts directory:
+
+[ARTIFACT: media_1794324720049]
+Path: file:///C:/Users/deepa/.gemini/antigravity/brain/b16badd1-b57e-4ae0-9b54-f2d13117c696/.user_uploaded/media_1794324720049.png
+Last Edited: 2026-11-10T15:44:31Z
+
+[ARTIFACT: media_1794324840748]
+Path: file:///C:/Users/deepa/.gemini/antigravity/brain/b16badd1-b57e-4ae0-9b54-f2d13117c696/.user_uploaded/media_1794324840748.png
+Last Edited: 2026-11-10T15:44:31Z
+
+[ARTIFACT: media_1794329317766_fc558737]
+Path: file:///C:/Users/deepa/.gemini/antigravity/brain/b16badd1-b57e-4ae0-9b54-f2d13117c696/.user_uploaded/media_1794329317766_fc558737.png
+Last Edited: 2026-11-10T17:07:28Z
+
+[ARTIFACT: media_1794329934771_6745f89d]
+Path: file:///C:/Users/deepa/.gemini/antigravity/brain/b16badd1-b57e-4ae0-9b54-f2d13117c696/.user_uploaded/media_1794329934771_6745f89d.png
+Last Edited: 2026-11-10T17:07:28Z
+
+[ARTIFACT: PLAN]
+Path: file:///C:/Users/deepa/.gemini/antigravity/brain/b16badd1-b57e-4ae0-9b54-f2d13117c696/PLAN.md
+Last Edited: 2026-11-10T14:45:42Z
+
+# Conversation Logs
+Start with the compact transcript; if a step has `truncated_fields`, read only that specific line in `transcript_full.jsonl`:
+- `<appDataDir>/brain/<conversation-id>/.system_generated/logs/transcript.jsonl`
+- `<appDataDir>/brain/<conversation-id>/.system_generated/logs/transcript_full.jsonl`

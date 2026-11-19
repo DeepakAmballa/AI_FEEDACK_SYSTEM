@@ -1,0 +1,589 @@
+<USER_REQUEST>
+# MASTER DEVELOPMENT PROMPT — EDU EVAL AI
+
+## PROJECT TITLE
+
+EduEval AI — AI-Powered Academic Evaluation and Student Feedback System.
+
+## 1. PROJECT OBJECTIVE
+
+Develop a complete, functional, secure, and responsive academic evaluation platform for educational institutions.
+
+The application must have three separate login portals:
+
+1. Admin.
+2. Faculty.
+3. Student.
+
+Students upload their academic assignments, journals, presentations, and assessment reports.
+
+Faculty members upload the complete course profile, syllabus, reference materials, learning objectives, and marking rubrics.
+
+When faculty members select a student submission and trigger AI evaluation, the system must retrieve relevant course information using a local RAG pipeline and send the necessary academic content to the OpenAI API for analysis and feedback generation.
+
+The system must generate:
+- Estimated marks.
+- Criterion-wise scores.
+- Conceptual understanding analysis.
+- Strengths and weaknesses.
+- Missing concepts.
+- Supporting evidence.
+- Personalized improvement suggestions.
+- Overall academic feedback.
+
+All AI-generated scores must remain provisional until faculty approval.
+
+IMPORTANT:
+Do not train a large AI model for this prototype. Use the Hybrid architecture consisting of local RAG, OpenAI API, and our own Python rubric-scoring engine.
+
+## 2. STRICT TECHNOLOGY STACK
+
+Frontend:
+- React.
+- TypeScript.
+- Vite.
+- Tailwind CSS.
+- Axios.
+- React Router.
+
+Backend:
+- Python.
+- FastAPI.
+- SQLAlchemy.
+- Pydantic.
+- JWT authentication.
+
+Database:
+- SQLite.
+
+AI and NLP:
+- OpenAI API.
+- Sentence Transformers.
+- FAISS.
+- Custom Python rubric-scoring engine.
+
+Document processing:
+- PyMuPDF.
+- python-docx.
+
+Development must support normal laptop hardware without requiring a dedicated GPU.
+
+## 3. OPENAI API KEY CONFIGURATION — IMPORTANT
+
+The OpenAI API key will be provided manually by the project owner during development.
+
+Antigravity must prepare the complete API configuration automatically.
+
+Create the following files:
+
+Backend/.env
+Backend/.env.example
+
+The .env.example file must contain:
+
+OPENAI_API_KEY=
+OPENAI_MODEL=
+
+The actual .env file must be included in .gitignore.
+
+IMPORTANT IMPLEMENTATION RULES:
+
+1. Do not generate a fake API key.
+2. Do not hardcode an API key.
+3. Do not expose the API key in frontend code.
+4. Do not include the API key in GitHub commits.
+5. Do not print the API key in terminal logs.
+6. Do not send the API key in frontend requests.
+7. Read the API key securely from environment variables.
+8. Use the official OpenAI Python SDK.
+9. Keep the model name configurable through environment variables.
+10. Validate API configuration when the backend starts.
+11. If the key is missing, display a clear configuration message instead of crashing the entire application.
+12. Provide a clear setup instruction showing the project owner where to enter the API key.
+
+The developer must pause for the project owner's manual input when the API key is required.
+
+Never ask the user to paste their secret key into frontend source code or commit it to the repository.
+
+Use a backend configuration module to load environment variables.
+
+Example:
+
+OPENAI_API_KEY=owner_provided_secret
+OPENAI_MODEL=owner_selected_available_model
+
+Use the OpenAI API only for academic analysis and feedback generation.
+
+Do not use external AI APIs for document storage, embeddings, or course-profile retrieval.
+
+## 4. ADMIN PORTAL
+
+Create a secure Admin login.
+
+Admin features:
+
+- Admin dashboard.
+- View institution-level statistics.
+- Create faculty accounts.
+- Edit and manage faculty accounts.
+- Create student accounts.
+- Edit and manage student accounts.
+- Manage subjects.
+- View all student submissions.
+- View assessment statistics.
+- Monitor AI evaluation records.
+- Manage roles and permissions.
+- View application activity and audit logs.
+
+Only authorized administrators can access administrative operations.
+
+## 5. FACULTY PORTAL
+
+Create a separate Faculty login and dashboard.
+
+Faculty features:
+
+- View assigned subjects.
+- View enrolled students.
+- Upload complete course profiles.
+- Upload subject syllabi.
+- Upload lecture notes and reference documents.
+- Manage topics and subtopics.
+- Configure assessment maximum marks.
+- Create marking rubrics.
+- View student submissions.
+- Open and preview submitted documents.
+- View extracted document content.
+- Trigger AI evaluation.
+- View AI-generated evaluation reports.
+- Modify estimated marks.
+- Edit feedback.
+- Approve or reject evaluations.
+- Publish approved evaluations to students.
+
+The AI Evaluation button must be available only to authorized faculty members.
+
+The faculty member must be able to choose the maximum marks for each assessment.
+
+## 6. STUDENT PORTAL
+
+Create a separate Student login and dashboard.
+
+Student features:
+
+- View personal dashboard.
+- View assigned subjects.
+- View assessment topics.
+- Upload academic assignments.
+- Upload journals.
+- Upload presentations.
+- Upload assessment reports.
+- Support PDF, DOCX, and TXT.
+- View submission history.
+- View submission status.
+- View faculty-approved marks.
+- View faculty-approved feedback.
+- Download evaluation reports if permitted.
+
+Students must not be able to initiate AI evaluations or access other students' information.
+
+## 7. COURSE PROFILE MANAGEMENT
+
+Create a complete Course Profile Management module.
+
+Faculty must be able to provide:
+
+- Subject name.
+- Subject code.
+- Course description.
+- Complete syllabus.
+- Units and chapters.
+- Topics and subtopics.
+- Learning objectives.
+- Expected learning outcomes.
+- Academic reference documents.
+- Lecture notes.
+- Important concepts.
+- Definitions.
+- Teacher-provided reference answers.
+
+Allow multiple course documents for each subject.
+
+Extract and store document content locally.
+
+Each course profile must be associated with its correct subject.
+
+Allow faculty to update course profiles.
+
+When course content changes, update the corresponding RAG index.
+
+Do not mix information from unrelated subjects.
+
+## 8. DOCUMENT PROCESSING
+
+Implement document extraction using:
+
+- PyMuPDF for PDF files.
+- python-docx for DOCX files.
+- Native text reading for TXT files.
+
+Implement:
+
+- File validation.
+- Secure document storage.
+- Text extraction.
+- Document metadata.
+- Subject and assessment association.
+- Submission history.
+- Meaningful error handling.
+
+Preserve page references wherever possible.
+
+Do not silently evaluate empty, unreadable, or corrupted documents.
+
+## 9. LOCAL RAG PIPELINE
+
+Implement a complete Retrieval-Augmented Generation pipeline.
+
+Use:
+
+- Sentence Transformers for local embeddings.
+- FAISS for local vector search.
+- Python for retrieval orchestration.
+
+Workflow:
+
+1. Extract text from faculty course profile documents.
+2. Split text into appropriate chunks.
+3. Generate embeddings locally.
+4. Store embeddings in FAISS.
+5. Associate each chunk with its subject, source document, and page number.
+6. Receive a faculty evaluation request.
+7. Retrieve the appropriate course profile.
+8. Identify relevant content from the student's submission topic.
+9. Retrieve the most relevant reference passages.
+10. Pass the relevant academic context to OpenAI.
+
+Do not send the entire institution database to OpenAI.
+
+Keep retrieval subject-specific and assessment-specific.
+
+If no relevant course content is found, warn the faculty member and avoid pretending that a proper course-based evaluation has occurred.
+
+## 10. OPENAI AI EVALUATION ENGINE
+
+Integrate the official OpenAI Python SDK.
+
+Use environment-based configuration.
+
+The AI evaluation component must receive:
+
+- Subject name.
+- Assessment topic.
+- Student submission content.
+- Retrieved course reference content.
+- Learning objectives.
+- Marking rubric.
+- Maximum marks.
+
+The AI must analyze the student's actual understanding rather than simply matching keywords.
+
+Required evaluation parameters:
+
+1. Conceptual understanding.
+2. Subject knowledge.
+3. Content relevance.
+4. Technical accuracy.
+5. Explanation quality.
+6. Learning objective coverage.
+
+Required output:
+
+- Criterion-wise estimated marks.
+- Supporting evidence from the submitted answer.
+- Strengths.
+- Weaknesses.
+- Missing concepts.
+- Improvement suggestions.
+- Overall academic feedback.
+
+Use structured JSON output and validate the response using Pydantic.
+
+Use a configurable OpenAI model.
+
+Handle API errors, timeouts, rate limits, insufficient credits, invalid keys, and malformed responses.
+
+If OpenAI is unavailable, show a clear error and allow faculty to retry.
+
+Do not silently replace an unsuccessful AI evaluation with fabricated scores.
+
+The AI must not invent supporting evidence.
+
+## 11. CUSTOM PYTHON RUBRIC SCORING ENGINE
+
+Develop a separate Python module for marking calculations.
+
+Example:
+
+Assessment maximum: 20 marks.
+
+- Conceptual understanding: 5.
+- Technical knowledge: 5.
+- Relevance: 4.
+- Explanation quality: 3.
+- Examples: 3.
+
+The OpenAI component estimates criterion-wise scores.
+
+The Python scoring engine must:
+
+- Validate individual criterion scores.
+- Prevent scores from exceeding allocated marks.
+- Calculate the total.
+- Validate maximum marks.
+- Validate rubric allocation.
+- Reject invalid responses.
+- Store the final estimated score.
+
+Support:
+
+- 10 marks.
+- 20 marks.
+- 25 marks.
+- 50 marks.
+- 100 marks.
+- Custom maximum marks.
+
+Do not invent a rubric when faculty has not provided one.
+
+## 12. COMPLETE EVALUATION WORKFLOW
+
+Implement the following exact process:
+
+STEP 1: Faculty logs in.
+
+STEP 2: Faculty selects a subject.
+
+STEP 3: Faculty selects an assessment topic.
+
+STEP 4: Faculty selects a student submission.
+
+STEP 5: The system extracts document content.
+
+STEP 6: The system retrieves the associated course profile.
+
+STEP 7: Local RAG retrieves relevant academic reference material.
+
+STEP 8: The system loads the assessment marking rubric.
+
+STEP 9: The backend sends the necessary content to OpenAI.
+
+STEP 10: OpenAI analyzes the answer and returns structured evaluation results.
+
+STEP 11: Python scoring engine validates the marks.
+
+STEP 12: The system generates the evaluation report.
+
+STEP 13: Faculty reviews the estimated marks and feedback.
+
+STEP 14: Faculty can modify the marks and feedback.
+
+STEP 15: Faculty approves or rejects the evaluation.
+
+STEP 16: Approved results become visible in the Student portal.
+
+## 13. EVALUATION REPORT INTERFACE
+
+Build a professional report interface displaying:
+
+Student information:
+- Name.
+- Student ID.
+- Subject.
+- Assessment topic.
+- Submission date.
+
+Evaluation information:
+- Maximum marks.
+- Estimated marks.
+- Criterion-wise scores.
+- Supporting evidence.
+- Relevant course references.
+- Strengths.
+- Weaknesses.
+- Missing concepts.
+- Improvement suggestions.
+- Overall feedback.
+
+Provide functional controls:
+
+- Edit marks.
+- Edit feedback.
+- Approve evaluation.
+- Reject evaluation.
+
+Clearly distinguish AI-estimated scores from faculty-approved scores.
+
+## 14. DATABASE DESIGN
+
+Use SQLite and SQLAlchemy.
+
+Create tables for:
+
+- Users.
+- Faculty profiles.
+- Student profiles.
+- Subjects.
+- Course profiles.
+- Course documents.
+- Course topics.
+- Assessments.
+- Marking rubrics.
+- Rubric criteria.
+- Student submissions.
+- Extracted content.
+- AI evaluation records.
+- Criterion scores.
+- Supporting evidence.
+- Faculty-approved feedback.
+- Audit logs.
+
+Use proper foreign keys and relationships.
+
+## 15. SECURITY
+
+Implement:
+
+- Secure password hashing.
+- JWT authentication.
+- Role-based authorization.
+- Backend access controls.
+- File validation.
+- Secure document storage.
+- API input validation.
+- Environment-variable protection.
+- Audit logging.
+
+Keep the OpenAI API key exclusively on the backend.
+
+Never commit .env to GitHub.
+
+Student information must only be accessible to authorized users.
+
+Ensure institutional approval before transmitting student documents to an external AI service.
+
+Minimize personal information sent to OpenAI.
+
+## 16. USER INTERFACE
+
+Create a modern educational dashboard.
+
+Use:
+
+- Professional typography.
+- Responsive layouts.
+- Sidebar navigation.
+- Dashboard cards.
+- Search and filtering.
+- Submission tables.
+- Document previews.
+- Evaluation progress indicators.
+- Professional report layouts.
+
+Make all buttons functional.
+
+Do not use placeholder actions for important application workflows.
+
+## 17. PROJECT EXECUTION
+
+First inspect the existing project directory.
+
+Preserve working code.
+
+Create a clean frontend and backend folder structure.
+
+Implement modules incrementally.
+
+After each module:
+
+1. Run the backend.
+2. Run the frontend.
+3. Check terminal errors.
+4. Test API endpoints.
+5. Verify database operations.
+6. Test user interactions.
+7. Fix errors before continuing.
+
+Create README.md with complete installation and execution instructions.
+
+Create .env.example and configure .gitignore.
+
+Do not overwrite an existing valid API key.
+
+Do not print secrets in logs.
+
+## 18. FINAL TESTING
+
+Test:
+
+- Admin login.
+- Faculty login.
+- Student login.
+- Role-based permissions.
+- Course profile uploads.
+- Document uploads.
+- PDF extraction.
+- DOCX extraction.
+- Local embedding generation.
+- FAISS retrieval.
+- OpenAI API communication.
+- Structured AI response validation.
+- Rubric calculations.
+- Maximum marks validation.
+- Faculty approval.
+- Student feedback visibility.
+- Error handling.
+- Complete end-to-end workflow.
+
+Do not claim success until the actual application has been executed and tested.
+
+## 19. FINAL EXPECTED DELIVERABLE
+
+Deliver a fully functional EduEval AI prototype with:
+
+1. Admin portal.
+2. Faculty portal.
+3. Student portal.
+4. Course profile management.
+5. Student document submission.
+6. Local document extraction.
+7. Local RAG pipeline.
+8. OpenAI-powered academic evaluation.
+9. Custom Python rubric scoring engine.
+10. Criterion-wise marks.
+11. Evidence-based feedback.
+12. Faculty approval.
+13. Student feedback access.
+14. Secure API configuration.
+15. Complete README and setup instructions.
+
+The application must run locally on a normal laptop without GPU requirements.
+
+The primary objective is to finish a working end-to-end prototype today.
+
+Prioritize working functionality, correct academic evaluation, security, and integration over unnecessary advanced features.
+
+FINAL INSTRUCTION:
+
+Do not stop after generating code.
+
+Execute the application, test all three login portals, test document uploads, verify RAG retrieval, verify OpenAI communication, and complete an actual student-submission-to-faculty-approval demonstration.
+
+If the API key is not yet configured, finish all local components first and request the owner's manual configuration before testing live AI evaluation.
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-11-10T19:06:05+05:30.
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from None to Claude Sonnet 4.6 (Thinking). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

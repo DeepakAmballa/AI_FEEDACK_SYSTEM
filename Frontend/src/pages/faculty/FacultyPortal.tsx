@@ -1,17 +1,20 @@
 import React, { useEffect, useState } from 'react';
 import { Routes, Route, Link, useNavigate, useParams } from 'react-router-dom';
 import DashboardLayout from '../../components/shared/DashboardLayout';
+import FeedbackDocument from '../../components/shared/FeedbackDocument';
+import toast from 'react-hot-toast';
 import { facultyApi } from '../../api/client';
 import {
   LayoutDashboard, BookOpen, FileText, Users,
-  Upload, Brain, CheckCircle, XCircle, Edit3,
-  ChevronRight, AlertTriangle, Star
+  Upload, CheckCircle, XCircle, Edit3,
+  ChevronRight, AlertTriangle, Star, Eye, Download,
+  Info, Save, Send, HelpCircle, Brain
 } from 'lucide-react';
 
 const navItems = [
   { label: 'Dashboard', to: '/faculty', icon: LayoutDashboard },
-  { label: 'My Subjects', to: '/faculty/subjects', icon: BookOpen },
-  { label: 'Evaluations', to: '/faculty/evaluations', icon: Brain },
+  { label: 'My Subjects', to: '/faculty/subjects', icon: BookOpen, match: ['/faculty/assessments'] },
+  { label: 'Evaluations', to: '/faculty/evaluations', icon: FileText, match: ['/faculty/submissions'] },
 ];
 
 // ─── Faculty Dashboard ────────────────────────────────────────────────────────
@@ -21,7 +24,7 @@ function FacultyDashboard() {
   return (
     <div>
       <div className="mb-6">
-        <h2 className="text-xl font-bold text-slate-800">Faculty Dashboard</h2>
+        <h2 className="text-xl font-semibold text-slate-900 tracking-tight">Faculty Dashboard</h2>
         <p className="text-slate-500 text-sm mt-1">Manage your subjects, learning documents, and student evaluations</p>
       </div>
       <div className="grid grid-cols-1 md:grid-cols-3 gap-4 mb-6">
@@ -50,25 +53,85 @@ function FacultyDashboard() {
 }
 
 // ─── Subject Detail ───────────────────────────────────────────────────────────
+/** Course-profile units may be stored as structured JSON or as legacy text ("Unit 1: ...\nUnit 2: ..."). */
+function normalizeUnits(raw: any): { unit_number?: number | string; unit_name: string; topics: string[] }[] {
+  if (!raw) return [];
+  if (typeof raw === 'string') {
+    try { return normalizeUnits(JSON.parse(raw)); } catch { /* plain text */ }
+    return raw.split(/\n+/).map(l => l.trim()).filter(Boolean).map((line, i) => {
+      const m = line.match(/^(?:unit|module)\s*(\d+)\s*[:.-]\s*(.*)$/i);
+      return { unit_number: m ? Number(m[1]) : i + 1, unit_name: (m ? m[2] : line).replace(/\.$/, ''), topics: [] };
+    });
+  }
+  if (!Array.isArray(raw)) return [];
+  return raw.map((u: any, i: number) => typeof u === 'string'
+    ? { unit_number: i + 1, unit_name: u, topics: [] }
+    : {
+      unit_number: u.unit_number ?? u.number ?? i + 1,
+      unit_name: u.unit_name ?? u.name ?? u.title ?? '',
+      topics: Array.isArray(u.topics) ? u.topics.map((t: any) => (typeof t === 'string' ? t : t.name || t.topic_name || '')) : [],
+    });
+}
+
 function SubjectDetail() {
   const { subjectId } = useParams<{ subjectId: string }>();
   const id = parseInt(subjectId!);
-  const [tab, setTab] = useState<'docs' | 'assessments' | 'submissions'>('docs');
+  const [tab, setTab] = useState<'docs' | 'profile' | 'assessments' | 'submissions'>('docs');
   const [docs, setDocs] = useState<any[]>([]);
   const [assessments, setAssessments] = useState<any[]>([]);
   const [submissions, setSubmissions] = useState<any[]>([]);
+  const [submissionDateFrom, setSubmissionDateFrom] = useState('');
+  const [submissionDateTo, setSubmissionDateTo] = useState('');
   const [msg, setMsg] = useState('');
   const [uploading, setUploading] = useState(false);
   const navigate = useNavigate();
 
-  // Assessment form
-  const [showAssessForm, setShowAssessForm] = useState(false);
-  const [assessForm, setAssessForm] = useState({ title: '', description: '', assessment_type: 'assignment', max_marks: 20, subject_id: id });
+  // Typed course profile state
+  const [courseProfile, setCourseProfile] = useState<any>({
+    title: '',
+    description: '',
+    syllabus: '',
+    learning_objectives: '',
+    expected_outcomes: '',
+    reference_content: '',
+    learning_materials: '',
+    additional_info: '',
+    units_topics: [],
+    is_typed_published: false,
+  });
+  const [savingProfile, setSavingProfile] = useState(false);
+
+  const units: { unit_number?: number | string; unit_name: string; topics: string[] }[] = normalizeUnits(courseProfile.units_topics);
+
+  const openSubmissionFile = async (submissionId: number, download: boolean) => {
+    try {
+      const response = await facultyApi.getSubmissionFile(submissionId, download);
+      const url = URL.createObjectURL(response.data);
+      if (download) {
+        const link = document.createElement('a');
+        link.href = url;
+        link.download = 'student-submission';
+        document.body.appendChild(link);
+        link.click();
+        link.remove();
+      } else {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+      window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    } catch (err: any) {
+      setMsg('Error: ' + (err.response?.data?.detail || 'Unable to access submission file'));
+    }
+  };
 
   useEffect(() => {
     facultyApi.listCourseDocs(id).then(r => setDocs(r.data));
     facultyApi.listAssessments(id).then(r => setAssessments(r.data));
     facultyApi.getSubmissions(id).then(r => setSubmissions(r.data));
+    facultyApi.getCourseProfile(id).then(r => {
+      if (r.data) {
+        setCourseProfile({ ...r.data, units_topics: normalizeUnits(r.data.units_topics) });
+      }
+    });
   }, [id]);
 
   const handleDocUpload = async (e: React.ChangeEvent<HTMLInputElement>, docType: string) => {
@@ -93,20 +156,42 @@ function SubjectDetail() {
     }
   };
 
-  const createAssessment = async (e: React.FormEvent) => {
-    e.preventDefault();
+  const handleSaveTypedProfile = async (publish: boolean) => {
+    setSavingProfile(true);
+    setMsg(publish ? 'Publishing and indexing course profile in FAISS...' : 'Saving draft course profile...');
     try {
-      await facultyApi.createAssessment({ ...assessForm, subject_id: id });
-      setMsg('Assessment created!');
-      setShowAssessForm(false);
-      facultyApi.listAssessments(id).then(r => setAssessments(r.data));
+      const r = await facultyApi.saveTypedCourseProfile(id, {
+        ...courseProfile,
+        units_topics: normalizeUnits(courseProfile.units_topics)
+          .filter(u => u.unit_name.trim())
+          .map(u => ({ ...u, unit_name: u.unit_name.trim(), topics: u.topics.map(t => t.trim()).filter(Boolean) })),
+        is_published: publish,
+      });
+      setCourseProfile({ ...r.data, units_topics: normalizeUnits(r.data.units_topics) });
+      setMsg(publish ? '✅ Course profile published and successfully indexed in local RAG!' : 'Course profile draft saved successfully.');
     } catch (err: any) {
-      setMsg('Error: ' + (err.response?.data?.detail || 'Failed'));
+      setMsg('Error: ' + (err.response?.data?.detail || 'Failed to save course profile'));
+    } finally {
+      setSavingProfile(false);
     }
   };
 
-  const tabs = ['docs', 'assessments', 'submissions'] as const;
-  const tabLabels = { docs: 'Course Documents & Syllabus', assessments: 'Assessments', submissions: 'Submissions' };
+  const tabs = ['docs', 'profile', 'assessments', 'submissions'] as const;
+  const tabLabels = {
+    docs: 'Course Documents',
+    profile: 'Type Course Profile',
+    assessments: 'Assessments',
+    submissions: 'Submissions'
+  };
+  const visibleSubmissions = submissions
+    .filter((submission: any) => {
+      const submittedDate = new Date(submission.submitted_at).toISOString().slice(0, 10);
+      return (!submissionDateFrom || submittedDate >= submissionDateFrom)
+        && (!submissionDateTo || submittedDate <= submissionDateTo);
+    })
+    .sort((a: any, b: any) => (
+      new Date(b.submitted_at).getTime() - new Date(a.submitted_at).getTime()
+    ));
 
   return (
     <div>
@@ -138,8 +223,8 @@ function SubjectDetail() {
       {tab === 'docs' && (
         <div className="space-y-4">
           <div className="card">
-            <h3 className="font-semibold text-slate-800 mb-1">Upload Course Documents & Syllabus</h3>
-            <p className="text-xs text-slate-500 mb-4">Upload subject syllabi, lecture notes, reference material, and rubrics. These documents automatically train the local RAG engine for student evaluations.</p>
+            <h3 className="font-semibold text-slate-800 mb-1">Option 1: Upload Course Documents & Syllabus</h3>
+            <p className="text-xs text-slate-500 mb-4">Upload subject syllabi, lecture notes, reference material, and rubrics. These documents train the local RAG engine for student evaluations.</p>
             <div className="grid grid-cols-2 md:grid-cols-4 gap-4">
               {['syllabus', 'notes', 'reference', 'rubric'].map(type => (
                 <label key={type} className="border-2 border-dashed border-edu-border rounded-xl p-4 text-center cursor-pointer hover:border-primary-400 hover:bg-primary-50 transition-all">
@@ -184,595 +269,633 @@ function SubjectDetail() {
           </div>
         </div>
       )}
-      {/* Assessments Tab */}
-      {tab === 'assessments' && (
-        <div className="space-y-4">
+
+      {/* Type Course Profile Tab */}
+      {tab === 'profile' && (
+        <div className="card space-y-4">
           <div className="flex items-center justify-between">
-            <h3 className="font-semibold text-slate-800">Assessments</h3>
-            <button onClick={() => setShowAssessForm(!showAssessForm)} className="btn-primary text-sm">+ Create Assessment</button>
+            <div>
+              <h3 className="font-bold text-slate-800">Option 2: Type Course Profile Editor</h3>
+              <p className="text-xs text-slate-500 mt-0.5">
+                Type the syllabus, learning objectives, outcomes, and materials directly. Publishing automatically embeds and indexes the content for RAG.
+              </p>
+            </div>
+            <span className={courseProfile.is_typed_published ? 'badge-approved' : 'badge-pending'}>
+              {courseProfile.is_typed_published ? 'Published & Indexed' : 'Draft'}
+            </span>
           </div>
 
-          {showAssessForm && (
-            <form onSubmit={createAssessment} className="card grid grid-cols-2 gap-4">
-              <div><label className="text-xs font-medium text-slate-600">Title *</label><input className="input-field mt-1" value={assessForm.title} onChange={e => setAssessForm({...assessForm, title: e.target.value})} required /></div>
-              <div>
-                <label className="text-xs font-medium text-slate-600">Type</label>
-                <select className="input-field mt-1" value={assessForm.assessment_type} onChange={e => setAssessForm({...assessForm, assessment_type: e.target.value})}>
-                  <option value="assignment">Assignment</option>
-                  <option value="journal">Journal</option>
-                  <option value="presentation">Presentation</option>
-                  <option value="report">Report</option>
-                </select>
-              </div>
-              <div><label className="text-xs font-medium text-slate-600">Maximum Marks</label><input type="number" className="input-field mt-1" value={assessForm.max_marks} onChange={e => setAssessForm({...assessForm, max_marks: parseFloat(e.target.value)})} min={1} /></div>
-              <div className="col-span-2"><label className="text-xs font-medium text-slate-600">Description</label><textarea className="input-field mt-1" rows={2} value={assessForm.description} onChange={e => setAssessForm({...assessForm, description: e.target.value})} /></div>
-              <div className="col-span-2 flex gap-2">
-                <button type="submit" className="btn-primary text-sm">Create</button>
-                <button type="button" onClick={() => setShowAssessForm(false)} className="btn-secondary text-sm">Cancel</button>
-              </div>
-            </form>
-          )}
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-xs font-semibold text-slate-600">Course / Subject Title</label>
+              <input
+                className="input-field mt-1"
+                value={courseProfile.title || ''}
+                onChange={e => setCourseProfile({ ...courseProfile, title: e.target.value })}
+                placeholder="e.g. Distributed Operating Systems"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-slate-600">Course Description</label>
+              <input
+                className="input-field mt-1"
+                value={courseProfile.description || ''}
+                onChange={e => setCourseProfile({ ...courseProfile, description: e.target.value })}
+                placeholder="Brief course overview"
+              />
+            </div>
+          </div>
 
+          <div>
+            <label className="text-xs font-semibold text-slate-600">Course Syllabus & Units</label>
+            <textarea
+              className="input-field mt-1"
+              rows={4}
+              value={courseProfile.syllabus || ''}
+              onChange={e => setCourseProfile({ ...courseProfile, syllabus: e.target.value })}
+              placeholder="Unit 1: Concurrency and Synchronization&#10;Unit 2: Distributed File Systems&#10;Unit 3: Fault Tolerance..."
+            />
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-xs font-semibold text-slate-600">Course Learning Objectives</label>
+              <textarea
+                className="input-field mt-1"
+                rows={3}
+                value={courseProfile.learning_objectives || ''}
+                onChange={e => setCourseProfile({ ...courseProfile, learning_objectives: e.target.value })}
+                placeholder="Key concepts students must learn"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-slate-600">Expected Course Outcomes</label>
+              <textarea
+                className="input-field mt-1"
+                rows={3}
+                value={courseProfile.expected_outcomes || ''}
+                onChange={e => setCourseProfile({ ...courseProfile, expected_outcomes: e.target.value })}
+                placeholder="Specific abilities students should demonstrate"
+              />
+            </div>
+          </div>
+
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+            <div>
+              <label className="text-xs font-semibold text-slate-600">Reference Content & Academic Standard</label>
+              <textarea
+                className="input-field mt-1"
+                rows={3}
+                value={courseProfile.reference_content || ''}
+                onChange={e => setCourseProfile({ ...courseProfile, reference_content: e.target.value })}
+                placeholder="Important reference definitions, principles, and concepts"
+              />
+            </div>
+            <div>
+              <label className="text-xs font-semibold text-slate-600">Recommended Learning Materials</label>
+              <textarea
+                className="input-field mt-1"
+                rows={3}
+                value={courseProfile.learning_materials || ''}
+                onChange={e => setCourseProfile({ ...courseProfile, learning_materials: e.target.value })}
+                placeholder="Textbooks, research papers, lab manuals"
+              />
+            </div>
+          </div>
+
+          <div>
+            <div className="flex items-center justify-between">
+              <label className="text-xs font-semibold text-slate-600">Units / modules and topics</label>
+              <button type="button" className="btn-ghost text-xs py-1"
+                onClick={() => setCourseProfile({ ...courseProfile, units_topics: [...units, { unit_number: units.length + 1, unit_name: '', topics: [] }] })}>
+                + Add unit
+              </button>
+            </div>
+            <p className="text-[11px] text-slate-400 mb-2">Assessments are linked to a unit; the AI evaluates against that unit's topics.</p>
+            <div className="space-y-2">
+              {units.length === 0 && <p className="text-xs text-slate-400 italic">No units yet.</p>}
+              {units.map((u, i) => (
+                <div key={i} className="grid grid-cols-12 gap-2 items-start">
+                  <input className="input-field col-span-2" value={u.unit_number ?? ''} aria-label="Unit number"
+                    onChange={e => { const next = [...units]; next[i] = { ...u, unit_number: e.target.value }; setCourseProfile({ ...courseProfile, units_topics: next }); }} />
+                  <input className="input-field col-span-4" value={u.unit_name} placeholder="Unit name"
+                    onChange={e => { const next = [...units]; next[i] = { ...u, unit_name: e.target.value }; setCourseProfile({ ...courseProfile, units_topics: next }); }} />
+                  <input className="input-field col-span-5" value={u.topics.join(', ')} placeholder="Topics, comma separated"
+                    onChange={e => { const next = [...units]; next[i] = { ...u, topics: e.target.value.split(',').map(t => t.trimStart()) }; setCourseProfile({ ...courseProfile, units_topics: next }); }} />
+                  <button type="button" className="icon-btn col-span-1" aria-label="Remove unit"
+                    onClick={() => setCourseProfile({ ...courseProfile, units_topics: units.filter((_, j) => j !== i) })}>
+                    <XCircle className="w-4 h-4" />
+                  </button>
+                </div>
+              ))}
+            </div>
+          </div>
+
+          <div>
+            <label className="text-xs font-semibold text-slate-600">Additional Academic Information</label>
+            <input
+              className="input-field mt-1"
+              value={courseProfile.additional_info || ''}
+              onChange={e => setCourseProfile({ ...courseProfile, additional_info: e.target.value })}
+              placeholder="Evaluation policies, grading notes, or prerequisites"
+            />
+          </div>
+
+          <div className="flex gap-3 pt-3 border-t border-edu-border">
+            <button
+              onClick={() => handleSaveTypedProfile(false)}
+              disabled={savingProfile}
+              className="btn-secondary text-sm"
+            >
+              Save as Draft
+            </button>
+            <button
+              onClick={() => handleSaveTypedProfile(true)}
+              disabled={savingProfile}
+              className="btn-primary text-sm flex items-center gap-1.5"
+            >
+              <Brain className="w-4 h-4" />
+              {savingProfile ? 'Publishing & Indexing...' : 'Publish Course Profile & Index RAG'}
+            </button>
+          </div>
+        </div>
+      )}
+
+      {/* Assessments Tab — created and maintained by the admin */}
+      {tab === 'assessments' && (
+        <div className="space-y-4">
+          <div className="flex flex-wrap items-center justify-between gap-2">
+            <div>
+              <h3 className="font-semibold text-slate-900">Assessments</h3>
+              <p className="text-xs text-slate-500">Assessments and their RTLP rubrics are created by the admin and mapped to this subject.</p>
+            </div>
+          </div>
           {assessments.map(a => (
             <div key={a.id} className="card">
-              <div className="flex items-center justify-between">
-                <div>
-                  <h4 className="font-semibold text-slate-800">{a.title}</h4>
-                  <p className="text-xs text-slate-500 mt-1">{a.assessment_type} · Max: {a.max_marks} marks</p>
-                  {a.description && <p className="text-sm text-slate-600 mt-1">{a.description}</p>}
+              <div className="flex flex-wrap items-start justify-between gap-3">
+                <div className="min-w-0">
+                  <h4 className="font-semibold text-slate-900">{a.title}</h4>
+                  <p className="text-xs text-slate-500 mt-1">
+                    <span className="font-medium text-primary-700">{a.rubric_source || a.assessment_type}</span>
+                    {' '}· {a.max_marks} marks
+                    {a.due_date && ` · Due ${new Date(a.due_date).toLocaleDateString()}`}
+                    {a.course_unit && ` · ${a.course_unit}`}
+                    {a.has_answer_key && ' · Answer key on file'}
+                  </p>
+                  {a.description && <p className="text-sm text-slate-600 mt-2">{a.description}</p>}
                 </div>
-                <Link to={`/faculty/assessments/${a.id}/rubric`} className="btn-secondary text-xs">
-                  Manage Rubric
-                </Link>
+                <div className="flex flex-col items-end gap-1.5">
+                  <span className="badge-neutral">{a.submission_count} submission{a.submission_count === 1 ? '' : 's'}</span>
+                  {a.shared_with?.length > 0 && <span className="text-[11px] text-slate-400">Shared with {a.shared_with.length} other subject{a.shared_with.length === 1 ? '' : 's'}</span>}
+                </div>
               </div>
+              {a.criteria?.length > 0 && (
+                <details className="mt-3">
+                  <summary className="text-xs font-medium text-primary-700 cursor-pointer select-none">Rubric ({a.criteria.length} criteria)</summary>
+                  <div className="mt-2 space-y-2">
+                    {a.criteria.map((c: any) => (
+                      <div key={c.name} className="rounded-lg border border-slate-200 p-3">
+                        <p className="text-sm font-medium text-slate-800 flex items-center gap-2">
+                          <span className="w-2 h-2 rounded-full" style={{ backgroundColor: c.color }} />
+                          {c.label}. {c.name} <span className="text-xs text-slate-400 font-normal">· {c.max_marks} marks</span>
+                        </p>
+                        <div className="grid sm:grid-cols-2 lg:grid-cols-4 gap-2 mt-2">
+                          {(c.levels || []).map((l: any) => (
+                            <div key={l.name} className="text-[11px] bg-slate-50 rounded-md p-2">
+                              <p className="font-semibold text-slate-700">{l.name} <span className="font-normal text-slate-400">({l.min_marks}–{l.max_marks})</span></p>
+                              <p className="text-slate-600 mt-0.5">{l.description}</p>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </details>
+              )}
             </div>
           ))}
-          {assessments.length === 0 && <div className="card text-center text-slate-400 py-8">No assessments created yet</div>}
+          {assessments.length === 0 && (
+            <div className="card text-center text-slate-400 py-8">No assessments have been assigned to this subject yet. The admin creates and maps assessments.</div>
+          )}
         </div>
       )}
 
       {/* Submissions Tab */}
       {tab === 'submissions' && (
-        <div className="card">
+        <div className="space-y-3">
+          <div className="card flex flex-wrap items-end gap-3">
+            <div>
+              <label className="text-xs text-slate-500 block">Submitted from</label>
+              <input
+                type="date"
+                className="input-field text-sm mt-1"
+                value={submissionDateFrom}
+                onChange={e => setSubmissionDateFrom(e.target.value)}
+              />
+            </div>
+            <div>
+              <label className="text-xs text-slate-500 block">Submitted to</label>
+              <input
+                type="date"
+                className="input-field text-sm mt-1"
+                value={submissionDateTo}
+                onChange={e => setSubmissionDateTo(e.target.value)}
+              />
+            </div>
+            {(submissionDateFrom || submissionDateTo) && (
+              <button
+                type="button"
+                className="btn-secondary text-sm"
+                onClick={() => {
+                  setSubmissionDateFrom('');
+                  setSubmissionDateTo('');
+                }}
+              >
+                Clear dates
+              </button>
+            )}
+            <p className="text-xs text-slate-400 ml-auto">
+              Showing newest submissions first ({visibleSubmissions.length})
+            </p>
+          </div>
+          <div className="card overflow-x-auto">
           <table className="w-full text-sm">
-            <thead><tr className="border-b border-edu-border"><th className="text-left pb-2 text-slate-500 font-medium">Student</th><th className="text-left pb-2 text-slate-500 font-medium">Assessment</th><th className="text-left pb-2 text-slate-500 font-medium">File</th><th className="text-left pb-2 text-slate-500 font-medium">Status</th><th className="pb-2"></th></tr></thead>
+            <thead>
+              <tr className="border-b border-edu-border">
+                <th className="text-left pb-2 text-slate-500 font-medium">Student</th>
+                <th className="text-left pb-2 text-slate-500 font-medium">Assessment</th>
+                <th className="text-left pb-2 text-slate-500 font-medium">Format</th>
+                <th className="text-left pb-2 text-slate-500 font-medium">Status</th>
+                <th className="pb-2"></th>
+              </tr>
+            </thead>
             <tbody>
-              {submissions.map((s: any) => (
+              {visibleSubmissions.map((s: any) => (
                 <tr key={s.id} className="border-b border-edu-border/50 last:border-0">
                   <td className="py-3">
                     <p className="font-medium text-slate-800">{s.student_name}</p>
                     <p className="text-xs text-slate-400">{s.student_id}</p>
                   </td>
                   <td className="py-3 text-slate-600 text-xs">{s.assessment_title}</td>
-                  <td className="py-3 text-slate-500 text-xs">{s.original_filename}</td>
+                  <td className="py-3 text-slate-500 text-xs capitalize">
+                    {s.file_type ? s.file_type.toUpperCase() : 'Typed'}
+                  </td>
                   <td className="py-3">
                     <span className={`badge-${s.status}`}>{s.status}</span>
                   </td>
-                  <td className="py-3">
-                    <Link to={`/faculty/submissions/${s.id}`} className="text-xs text-primary-600 hover:underline">
-                      {s.has_evaluation ? 'View Evaluation' : 'Evaluate'}
-                    </Link>
+                  <td className="py-3 text-right">
+                    <div className="flex items-center justify-end gap-2">
+                      {s.original_filename && (
+                        <>
+                          <button
+                            onClick={() => openSubmissionFile(s.id, false)}
+                            className="text-xs text-slate-600 hover:text-slate-900 inline-flex items-center gap-1"
+                          >
+                            <Eye className="w-3.5 h-3.5" /> View File
+                          </button>
+                          <button
+                            onClick={() => openSubmissionFile(s.id, true)}
+                            className="text-xs text-slate-600 hover:text-slate-900 inline-flex items-center gap-1"
+                          >
+                            <Download className="w-3.5 h-3.5" /> Download
+                          </button>
+                        </>
+                      )}
+                      <Link to={`/faculty/submissions/${s.id}`} className="btn-primary text-xs flex items-center gap-1">
+                        <Edit3 className="w-3.5 h-3.5" /> Evaluate
+                      </Link>
+                    </div>
                   </td>
                 </tr>
               ))}
-              {submissions.length === 0 && (
+              {visibleSubmissions.length === 0 && (
                 <tr><td colSpan={5} className="py-8 text-center text-slate-400">No submissions yet</td></tr>
               )}
             </tbody>
           </table>
+          </div>
         </div>
       )}
     </div>
   );
 }
 
-// ─── Rubric Manager ───────────────────────────────────────────────────────────
-function RubricManager() {
-  const { assessmentId } = useParams<{ assessmentId: string }>();
-  const id = parseInt(assessmentId!);
-  const [rubric, setRubric] = useState<any>(null);
-  const [criteria, setCriteria] = useState([{ name: '', description: '', max_marks: 0 }]);
-  const [totalMarks, setTotalMarks] = useState(20);
-  const [msg, setMsg] = useState('');
-  const [templates, setTemplates] = useState<any[]>([]);
-  const navigate = useNavigate();
-
-  useEffect(() => {
-    facultyApi.getRubricTemplates().then(r => setTemplates(r.data)).catch(() => {});
-    facultyApi.getRubric(id).then(r => {
-      setRubric(r.data);
-      setCriteria(r.data.criteria.map((c: any) => ({ name: c.name, description: c.description || '', max_marks: c.max_marks })));
-      setTotalMarks(r.data.total_marks);
-    }).catch(() => {});
-  }, [id]);
-
-  const addCriterion = () => setCriteria([...criteria, { name: '', description: '', max_marks: 0 }]);
-  const removeCriterion = (i: number) => setCriteria(criteria.filter((_, idx) => idx !== i));
-
-  const sumCriteria = criteria.reduce((s, c) => s + (parseFloat(String(c.max_marks)) || 0), 0);
-
-  const applyTemplate = (templateId: string) => {
-    const template = templates.find(item => item.id === templateId);
-    if (!template) return;
-    let allocated = 0;
-    const next = template.criteria.map((criterion: any, index: number) => {
-      const marks = index === template.criteria.length - 1
-        ? Number((totalMarks - allocated).toFixed(2))
-        : Number((totalMarks * criterion.proportion).toFixed(2));
-      allocated += marks;
-      return { name: criterion.name, description: criterion.description, max_marks: marks };
-    });
-    setCriteria(next);
-  };
-
-  const handleSubmit = async (e: React.FormEvent) => {
-    e.preventDefault();
-    if (Math.abs(sumCriteria - totalMarks) > 0.5) {
-      setMsg(`Error: Criteria sum (${sumCriteria}) must equal total marks (${totalMarks})`);
-      return;
-    }
-    try {
-      await facultyApi.createRubric(id, { total_marks: totalMarks, criteria });
-      setMsg('Rubric saved successfully!');
-    } catch (err: any) {
-      setMsg('Error: ' + (err.response?.data?.detail || 'Failed'));
-    }
-  };
-
-  return (
-    <div>
-      <div className="flex items-center gap-2 mb-6">
-        <button onClick={() => navigate(-1)} className="text-slate-400 text-sm hover:text-slate-600">← Back</button>
-        <span className="text-slate-800 font-medium text-sm">Assessment #{id} — Marking Rubric</span>
-      </div>
-      {msg && <div className={`mb-4 p-3 rounded-lg text-sm ${msg.startsWith('Error') ? 'bg-red-50 text-red-700' : 'bg-green-50 text-green-700'}`}>{msg}</div>}
-      <form onSubmit={handleSubmit} className="card space-y-4">
-        <div className="flex items-center gap-4">
-          <div>
-            <label className="text-xs font-medium text-slate-600">Total Maximum Marks</label>
-            <input type="number" className="input-field mt-1 w-32" value={totalMarks} onChange={e => setTotalMarks(parseFloat(e.target.value))} min={1} />
-          </div>
-          <div>
-            <label className="text-xs font-medium text-slate-600">Start from template</label>
-            <select className="input-field mt-1" defaultValue="" onChange={e => applyTemplate(e.target.value)}>
-              <option value="">Choose a preset...</option>
-              {templates.map(template => <option key={template.id} value={template.id}>{template.name}</option>)}
-            </select>
-          </div>
-          <div className="text-sm text-slate-500 mt-5">
-            Criteria sum: <span className={Math.abs(sumCriteria - totalMarks) > 0.5 ? 'text-red-600 font-bold' : 'text-green-600 font-bold'}>{sumCriteria}</span> / {totalMarks}
-          </div>
-        </div>
-
-        <div className="space-y-3">
-          <div className="flex items-center justify-between">
-            <h4 className="font-medium text-slate-700">Criteria</h4>
-            <button type="button" onClick={addCriterion} className="btn-secondary text-xs">+ Add Criterion</button>
-          </div>
-          {criteria.map((c, i) => (
-            <div key={i} className="grid grid-cols-12 gap-2 items-start bg-slate-50 rounded-lg p-3">
-              <div className="col-span-5">
-                <label className="text-xs text-slate-500">Criterion Name *</label>
-                <input className="input-field mt-1" value={c.name} onChange={e => { const nc = [...criteria]; nc[i].name = e.target.value; setCriteria(nc); }} required />
-              </div>
-              <div className="col-span-5">
-                <label className="text-xs text-slate-500">Description</label>
-                <input className="input-field mt-1" value={c.description} onChange={e => { const nc = [...criteria]; nc[i].description = e.target.value; setCriteria(nc); }} />
-              </div>
-              <div className="col-span-1">
-                <label className="text-xs text-slate-500">Marks</label>
-                <input type="number" className="input-field mt-1" value={c.max_marks} onChange={e => { const nc = [...criteria]; nc[i].max_marks = parseFloat(e.target.value) || 0; setCriteria(nc); }} min={0} />
-              </div>
-              <div className="col-span-1 mt-5">
-                <button type="button" onClick={() => removeCriterion(i)} className="text-red-400 hover:text-red-600 p-1">✕</button>
-              </div>
-            </div>
-          ))}
-        </div>
-
-        <button type="submit" className="btn-primary text-sm">Save Rubric</button>
-      </form>
-    </div>
-  );
+function fmt(n: number) {
+  return Number.isInteger(n) ? String(n) : n.toFixed(2).replace(/0+$/, '').replace(/\.$/, '');
 }
 
-// ─── Evaluation Page ──────────────────────────────────────────────────────────
 function SubmissionEvaluation() {
   const { submissionId } = useParams<{ submissionId: string }>();
   const id = parseInt(submissionId!);
-  const [submission, setSubmission] = useState<any>(null);
-  const [evaluation, setEvaluation] = useState<any>(null);
-  const [loading, setLoading] = useState(true);
-  const [evaluating, setEvaluating] = useState(false);
-  const [msg, setMsg] = useState('');
-  const [approveForm, setApproveForm] = useState({ faculty_total_score: 0, faculty_feedback: '', faculty_notes: '', publish_to_student: false });
-  const [criterionOverrides, setCriterionOverrides] = useState<Record<number, number>>({});
   const navigate = useNavigate();
+  const [context, setContext] = useState<any>(null);
+  const [loading, setLoading] = useState(true);
+  const [saving, setSaving] = useState(false);
+  const [msg, setMsg] = useState<{ type: 'error' | 'success' | 'info'; text: string } | null>(null);
+  const [marks, setMarks] = useState<Record<string, string>>({});
+  const [overall, setOverall] = useState('');
+  const [notes, setNotes] = useState('');
+  const [state, setState] = useState<any>(null);
+  const [docOpen, setDocOpen] = useState(false);
+  const [doc, setDoc] = useState<any>(null);
+  const [pdfBusy, setPdfBusy] = useState(false);
 
   const load = async () => {
     try {
-      const sr = await facultyApi.getSubmissionDetail(id);
-      setSubmission(sr.data);
-      try {
-        const er = await facultyApi.getEvaluation(id);
-        setEvaluation(er.data);
-        setApproveForm(f => ({
-          ...f,
-          faculty_total_score: er.data.faculty_total_score ?? er.data.ai_total_score ?? 0,
-          faculty_feedback: er.data.faculty_feedback ?? er.data.ai_overall_feedback ?? '',
-          faculty_notes: er.data.faculty_notes ?? '',
-        }));
-        setCriterionOverrides(Object.fromEntries(
-          (er.data.criterion_scores || []).map((cs: any) => [cs.id, cs.faculty_score ?? cs.ai_score])
-        ));
-      } catch {}
-    } catch { setMsg('Failed to load submission'); }
-    finally { setLoading(false); }
+      setLoading(true);
+      const { data } = await facultyApi.getEvaluationContext(id);
+      setContext(data);
+      setState(data.evaluation_state);
+      const fe = data.faculty_evaluation;
+      const m: Record<string, string> = {};
+      for (const cm of fe?.criterion_marks || []) m[cm.criterion_name] = String(cm.score);
+      setMarks(m);
+      setOverall(fe?.overall_feedback || '');
+      setNotes(fe?.internal_notes || '');
+    } catch (err: any) {
+      setMsg({ type: 'error', text: 'Failed to load submission: ' + (err.response?.data?.detail || err.message) });
+    } finally {
+      setLoading(false);
+    }
   };
-
   useEffect(() => { load(); }, [id]);
 
-  const triggerEval = async () => {
-    setEvaluating(true);
-    setMsg('Running AI evaluation...');
-    try {
-      await facultyApi.triggerEvaluation(id);
-      await load();
-      setMsg('AI evaluation completed successfully!');
-    } catch (err: any) {
-      setMsg('Error: ' + (err.response?.data?.detail || 'Evaluation failed'));
-    } finally { setEvaluating(false); }
+  // Poll the AI step while it runs
+  useEffect(() => {
+    if (!state || !['processing', 'pending'].includes(state.ai_status)) return;
+    const t = window.setInterval(async () => {
+      try {
+        const { data } = await facultyApi.getEvaluationStatus(id);
+        setState(data);
+        if (data.published) toast.success('Feedback document published to the student');
+      } catch { /* keep polling */ }
+    }, 4000);
+    return () => window.clearInterval(t);
+  }, [state?.ai_status, id]);
+
+  const criteria: any[] = context?.rubric_reference?.criteria || [];
+  const maxMarks: number = context?.max_marks || 20;
+  const total = criteria.reduce((sum, c) => sum + (parseFloat(marks[c.name]) || 0), 0);
+  const allMarked = criteria.length > 0 && criteria.every(c => marks[c.name] !== undefined && marks[c.name] !== '');
+  const isFinal = context?.faculty_evaluation && !context.faculty_evaluation.is_draft;
+
+  const setMark = (name: string, value: string, max: number) => {
+    if (value === '') { setMarks(m => ({ ...m, [name]: '' })); return; }
+    const v = Math.max(0, Math.min(max, parseFloat(value)));
+    if (!isNaN(v)) setMarks(m => ({ ...m, [name]: String(v) }));
   };
 
-  const handleApprove = async (publish: boolean) => {
-    if (!evaluation) return;
+  const levelFor = (c: any) => {
+    const v = parseFloat(marks[c.name]);
+    if (isNaN(v)) return null;
+    return [...(c.levels || [])].sort((a, b) => b.level - a.level).find(l => v + 1e-9 >= (l.min_marks ?? 0)) || null;
+  };
+
+  const save = async (isDraft: boolean) => {
+    if (!isDraft) {
+      if (!allMarked) { setMsg({ type: 'error', text: 'Enter a mark for every rubric criterion before submitting.' }); return; }
+      if (!overall.trim()) { setMsg({ type: 'error', text: 'Overall feedback is required — the student sees it as “Faculty comments”.' }); return; }
+    }
     try {
-      await facultyApi.approveEvaluation(evaluation.id, {
-        ...approveForm,
-        publish_to_student: publish,
-        criterion_overrides: Object.entries(criterionOverrides).map(([criterion_score_id, faculty_score]) => ({
-          criterion_score_id: Number(criterion_score_id),
-          faculty_score,
-        })),
+      setSaving(true);
+      setMsg(null);
+      const { data } = await facultyApi.submitManualEvaluation(id, {
+        faculty_total_marks: Number(total.toFixed(2)),
+        criterion_marks: criteria.filter(c => marks[c.name] !== undefined && marks[c.name] !== '')
+          .map(c => ({ criterion_name: c.name, score: parseFloat(marks[c.name]) })),
+        overall_feedback: overall,
+        internal_notes: notes,
+        is_draft: isDraft,
       });
-      setMsg(publish ? 'Evaluation approved and published to student!' : 'Evaluation approved!');
+      setMsg({ type: 'success', text: data.message });
       await load();
     } catch (err: any) {
-      setMsg('Error: ' + (err.response?.data?.detail || 'Failed'));
+      setMsg({ type: 'error', text: err.response?.data?.detail || 'Failed to save evaluation' });
+    } finally {
+      setSaving(false);
     }
   };
 
-  const maximumMarks = Number(submission?.assessment_max_marks || 0);
-  const setFacultyScore = (value: number) => {
-    const score = Number.isFinite(value) ? Math.min(maximumMarks, Math.max(0, value)) : 0;
-    setApproveForm(f => ({ ...f, faculty_total_score: score }));
-  };
-
-  const handleReject = async () => {
-    if (!evaluation) return;
+  const openDocument = async () => {
     try {
-      await facultyApi.rejectEvaluation(evaluation.id);
-      setMsg('Evaluation rejected');
-      await load();
+      const { data } = await facultyApi.getFeedbackDocument(id);
+      setDoc(data);
+      setDocOpen(true);
     } catch (err: any) {
-      setMsg('Error: ' + (err.response?.data?.detail || 'Failed'));
+      toast.error(err.response?.data?.detail || 'Feedback document not available yet');
     }
   };
 
-  if (loading) return <div className="text-slate-500">Loading...</div>;
+  const downloadPdf = async () => {
+    try {
+      setPdfBusy(true);
+      const res = await facultyApi.downloadFeedbackPdf(id);
+      const url = URL.createObjectURL(res.data);
+      const a = document.createElement('a');
+      a.href = url; a.download = `feedback-${id}.pdf`; document.body.appendChild(a); a.click(); a.remove();
+      URL.revokeObjectURL(url);
+    } catch { toast.error('Unable to download the PDF'); } finally { setPdfBusy(false); }
+  };
 
+  const openSubmissionFile = async (download: boolean) => {
+    try {
+      const response = await facultyApi.getSubmissionFile(id, download);
+      const url = URL.createObjectURL(response.data);
+      if (download) {
+        const link = document.createElement('a');
+        link.href = url; link.download = context?.original_filename || 'student-submission';
+        document.body.appendChild(link); link.click(); link.remove();
+      } else {
+        window.open(url, '_blank', 'noopener,noreferrer');
+      }
+      window.setTimeout(() => URL.revokeObjectURL(url), 60_000);
+    } catch (err: any) {
+      setMsg({ type: 'error', text: err.response?.data?.detail || 'Unable to access submission file' });
+    }
+  };
+
+  if (loading) return <div className="p-8 text-center text-slate-500">Loading submission…</div>;
+  if (!context) return <div className="card text-red-600">{msg?.text || 'Submission not available.'}</div>;
+
+  const aiStatus = state?.ai_status;
   return (
-    <div>
-      <button onClick={() => navigate(-1)} className="text-slate-400 text-sm hover:text-slate-600 mb-4 inline-flex items-center gap-1">
-        ← Back
-      </button>
+    <div className="space-y-6 pb-12">
+      <div className="flex flex-wrap items-start justify-between gap-4">
+        <div>
+          <button onClick={() => navigate(-1)} className="text-slate-500 hover:text-slate-800 text-sm mb-2">← Back</button>
+          <h1 className="page-title">{context.student_name}</h1>
+          <p className="page-subtitle">
+            {context.subject_name} · {context.assessment_title} ·{' '}
+            <span className="font-medium text-slate-700">{context.rtlp_code ? `RTLP ${context.rtlp_code} ` : ''}{context.assessment_type}</span>
+            {context.course_unit ? ` · ${context.course_unit}` : ''}
+          </p>
+        </div>
+        <span className={isFinal ? 'badge-approved' : context.faculty_evaluation ? 'badge-pending' : 'badge-neutral'}>
+          {isFinal ? 'Faculty evaluation submitted' : context.faculty_evaluation ? 'Draft saved' : 'Awaiting your evaluation'}
+        </span>
+      </div>
 
       {msg && (
-        <div className={`mb-4 p-3 rounded-lg text-sm ${msg.startsWith('Error') ? 'bg-red-50 text-red-700' : 'bg-blue-50 text-blue-700'}`}>
-          {msg}
+        <div className={`p-3.5 rounded-lg text-sm border ${msg.type === 'error' ? 'bg-red-50 text-red-700 border-red-200' : 'bg-emerald-50 text-emerald-800 border-emerald-200'}`}>
+          {msg.text}
         </div>
       )}
 
-      {/* Submission Info */}
-      {submission && (
-        <div className="card mb-4">
-          <div className="flex items-start justify-between">
+      {/* AI step + publication status (never shows the AI marks) */}
+      {isFinal && (
+        <div className="card flex flex-wrap items-center justify-between gap-3 py-4">
+          <div className="flex items-center gap-3">
+            {aiStatus === 'completed' && state?.published ? <CheckCircle className="w-5 h-5 text-emerald-600" />
+              : aiStatus === 'failed' ? <XCircle className="w-5 h-5 text-red-600" />
+              : <Brain className="w-5 h-5 text-primary-600 animate-pulse" />}
             <div>
-              <h2 className="text-lg font-bold text-slate-800">{submission.student_name}</h2>
-              <p className="text-sm text-slate-500">Student ID: {submission.student_id_num}</p>
-              <p className="text-sm text-slate-600 mt-1">📄 {submission.original_filename} · {submission.assessment_title}</p>
-              <p className="text-sm text-slate-600 mt-1">Subject: {submission.subject_name}</p>
-              {submission.assessment_description && (
-                <p className="text-sm text-slate-600 mt-1">Question / brief: {submission.assessment_description}</p>
-              )}
-              <p className="text-xs text-slate-400 mt-1">Submitted: {new Date(submission.submitted_at).toLocaleString()}</p>
+              <p className="text-sm font-semibold text-slate-900">
+                {aiStatus === 'completed' && state?.published ? 'Feedback document published to the student'
+                  : aiStatus === 'failed' ? 'AI evaluation failed'
+                  : 'AI evaluation in progress…'}
+              </p>
+              <p className="text-xs text-slate-500">
+                {aiStatus === 'failed' ? (state?.ai_error || 'The admin can retry it from Evaluation Monitor.')
+                  : 'The AI evaluates independently against the same RTLP rubric and course profile. The student’s final mark is the average of both evaluations.'}
+              </p>
             </div>
-            <span className={`badge-${submission.status}`}>{submission.status}</span>
           </div>
-
-          {submission.extracted_text && (
-            <div className="mt-4">
-              <h4 className="text-xs font-semibold text-slate-500 uppercase mb-2">Extracted Submission Content</h4>
-              <div className="bg-slate-50 rounded-lg p-3 max-h-48 overflow-y-auto">
-                <p className="text-sm text-slate-700 whitespace-pre-wrap font-mono leading-relaxed">
-                  {submission.extracted_text.slice(0, 2000)}{submission.extracted_text.length > 2000 ? '...' : ''}
-                </p>
-              </div>
-            </div>
-          )}
-
-          {!evaluation && (
-            <div className="mt-4">
-              <button
-                onClick={triggerEval}
-                disabled={evaluating}
-                className="btn-primary flex items-center gap-2"
-              >
-                <Brain className="w-4 h-4" />
-                {evaluating ? 'Running AI Evaluation...' : '🤖 Trigger AI Evaluation'}
-              </button>
-              {submission.extraction_status !== 'success' && (
-                <div className="flex items-start gap-2 mt-2 p-2 bg-amber-50 rounded-lg">
-                  <AlertTriangle className="w-4 h-4 text-amber-500 mt-0.5 shrink-0" />
-                  <p className="text-xs text-amber-700">Extraction status: {submission.extraction_status}</p>
-                </div>
-              )}
+          {state?.published && (
+            <div className="flex gap-2">
+              <button onClick={openDocument} className="btn-secondary text-xs"><Eye className="w-3.5 h-3.5" /> View student document</button>
+              <button onClick={downloadPdf} disabled={pdfBusy} className="btn-secondary text-xs"><Download className="w-3.5 h-3.5" /> PDF</button>
             </div>
           )}
         </div>
       )}
 
-      {/* Evaluation Results */}
-      {evaluation && (
-        <div className="space-y-4">
-          {/* Score Overview */}
-          <div className="card bg-gradient-to-r from-primary-50 to-indigo-50 border-primary-200">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6 items-start">
+        {/* Submission */}
+        <div className="lg:col-span-5 space-y-4 lg:sticky lg:top-4">
+          <div className="card space-y-3">
+            <h2 className="font-semibold text-slate-900 text-sm flex items-center gap-2"><FileText className="w-4 h-4 text-primary-600" /> Assessment brief</h2>
+            {context.assessment_description && <p className="text-sm text-slate-700">{context.assessment_description}</p>}
+            {context.instructions && <p className="text-xs bg-slate-50 rounded-lg p-2.5 text-slate-600"><strong>Instructions:</strong> {context.instructions}</p>}
+            <p className="text-xs text-slate-500">
+              Submitted {new Date(context.submitted_at).toLocaleString()} · {context.submission_type === 'typed' ? 'Typed answer' : context.original_filename}
+              {context.has_answer_key ? ' · Answer key on file' : ''}
+            </p>
+            {context.submission_type !== 'typed' && context.original_filename && (
+              <div className="flex gap-2">
+                <button onClick={() => openSubmissionFile(false)} className="btn-secondary text-xs flex-1"><Eye className="w-3.5 h-3.5" /> View file</button>
+                <button onClick={() => openSubmissionFile(true)} className="btn-secondary text-xs flex-1"><Download className="w-3.5 h-3.5" /> Download</button>
+              </div>
+            )}
+          </div>
+          <div className="card">
             <div className="flex items-center justify-between mb-2">
-              <h3 className="font-bold text-slate-800">AI Evaluation Results</h3>
-              <span className={`badge-${evaluation.status}`}>{evaluation.status}</span>
+              <h3 className="font-semibold text-slate-900 text-sm">Student submission</h3>
+              <span className="text-xs text-slate-400">{(context.submission_text || '').split(/\s+/).filter(Boolean).length} words</span>
             </div>
-            <div className="flex items-center gap-6">
-              <div>
-                <p className="text-xs text-slate-500">AI Estimated Score</p>
-                <p className="text-3xl font-bold text-primary-700">{evaluation.ai_total_score?.toFixed(1)}</p>
+            {context.submission_text ? (
+              <div className="bg-slate-50 border border-slate-200 rounded-lg p-4 max-h-[60vh] overflow-y-auto text-[13.5px] text-slate-800 whitespace-pre-wrap leading-relaxed">
+                {context.submission_text}
               </div>
-              <div className="text-slate-300 text-2xl">/</div>
-              <div>
-                <p className="text-xs text-slate-500">Maximum Marks</p>
-                <p className="text-3xl font-bold text-slate-600">{submission?.assessment_max_marks || '?'}</p>
-              </div>
-              {evaluation.ai_feedback && (
-                <div className="mt-4 rounded-lg border border-amber-200 bg-amber-50 p-3">
-                  <p className="text-xs font-semibold uppercase text-amber-800">Subject relevance check</p>
-                  <p className="mt-1 text-sm text-amber-700 whitespace-pre-wrap">{evaluation.ai_feedback}</p>
-                </div>
-              )}
-            </div>
+            ) : <p className="text-xs text-slate-400 italic py-4">No text could be extracted from this submission.</p>}
           </div>
+        </div>
 
-          {/* Criterion Scores */}
-          {evaluation.criterion_scores?.length > 0 && (
-            <div className="card">
-              <h4 className="font-semibold text-slate-800 mb-3">Criterion-wise Scores</h4>
-              <div className="space-y-2">
-                {evaluation.criterion_scores.map((cs: any) => (
-                  <div key={cs.id} className="flex items-center gap-3 p-2 bg-slate-50 rounded-lg">
-                    <div className="flex-1">
-                      <p className="text-sm font-medium text-slate-700">{cs.criterion_name}</p>
-                      {cs.justification && <p className="text-xs text-slate-400 mt-0.5">{cs.justification}</p>}
-                    </div>
-                    <div className="text-right">
-                      <span className="text-sm font-bold text-primary-700">{(cs.faculty_score ?? cs.ai_score)?.toFixed(1)}</span>
-                      <span className="text-xs text-slate-400"> / {cs.max_marks}</span>
-                    </div>
-                    <div className="w-20 bg-slate-200 rounded-full h-1.5">
-                      <div className="bg-primary-500 h-1.5 rounded-full" style={{ width: `${Math.min(100, (cs.ai_score / cs.max_marks) * 100)}%` }} />
-                    </div>
-                  </div>
-                ))}
+        {/* Faculty rubric marking */}
+        <div className="lg:col-span-7 space-y-5">
+          <div className="card">
+            <div className="flex flex-wrap items-end justify-between gap-3 mb-4">
+              <div>
+                <h2 className="font-semibold text-slate-900">Mark against the RTLP rubric</h2>
+                <p className="text-xs text-slate-500 mt-0.5">Choose a level for each criterion, then fine-tune the mark inside its band.</p>
+              </div>
+              <div className="text-right">
+                <p className="stat-label">Your total</p>
+                <p className="text-2xl font-semibold text-slate-900">{fmt(Math.round(total * 100) / 100)}<span className="text-sm text-slate-400"> / {fmt(maxMarks)}</span></p>
               </div>
             </div>
-          )}
 
-          {/* Strengths & Weaknesses */}
-          <div className="grid grid-cols-2 gap-4">
-            <div className="card border-green-200 bg-green-50">
-              <h4 className="font-semibold text-green-800 mb-2">✅ Strengths</h4>
-              <p className="text-sm text-green-700 whitespace-pre-wrap">{evaluation.ai_strengths || 'No strengths noted'}</p>
-            </div>
-            <div className="card border-red-200 bg-red-50">
-              <h4 className="font-semibold text-red-800 mb-2">⚠️ Weaknesses</h4>
-              <p className="text-sm text-red-700 whitespace-pre-wrap">{evaluation.ai_weaknesses || 'None identified'}</p>
-            </div>
-          </div>
+            {criteria.length === 0 && <p className="text-sm text-amber-700 bg-amber-50 border border-amber-200 rounded-lg p-3">No rubric is linked to this assessment.</p>}
 
-          {evaluation.ai_missing_concepts && (
-            <div className="card border-amber-200 bg-amber-50">
-              <h4 className="font-semibold text-amber-800 mb-2">🔍 Missing Concepts</h4>
-              <p className="text-sm text-amber-700 whitespace-pre-wrap">{evaluation.ai_missing_concepts}</p>
-            </div>
-          )}
-
-          {evaluation.ai_improvement_suggestions && (
-            <div className="card">
-              <h4 className="font-semibold text-slate-800 mb-2">💡 Improvement Suggestions</h4>
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{evaluation.ai_improvement_suggestions}</p>
-            </div>
-          )}
-
-          {evaluation.ai_overall_feedback && (
-            <div className="card">
-              <h4 className="font-semibold text-slate-800 mb-2">📝 Overall Feedback</h4>
-              <p className="text-sm text-slate-700 whitespace-pre-wrap">{evaluation.ai_overall_feedback}</p>
-            </div>
-          )}
-
-          {(evaluation.comparative_analysis_feedback || evaluation.style_feedback?.length || evaluation.language_errors?.length) && (
-            <div className="card">
-              <h4 className="font-semibold text-slate-800 mb-3">Detailed Analysis</h4>
-              {evaluation.comparative_analysis_feedback && (
-                <div className="mb-3">
-                  <p className="text-xs font-semibold uppercase text-slate-500">Comparative analysis</p>
-                  <p className="text-sm text-slate-700 whitespace-pre-wrap mt-1">{evaluation.comparative_analysis_feedback}</p>
-                </div>
-              )}
-              {evaluation.style_feedback?.length > 0 && (
-                <div className="mb-3">
-                  <p className="text-xs font-semibold uppercase text-slate-500">Style</p>
-                  <ul className="list-disc pl-5 text-sm text-slate-700">{evaluation.style_feedback.map((item: string, i: number) => <li key={i}>{item}</li>)}</ul>
-                </div>
-              )}
-              {evaluation.language_errors?.length > 0 && (
-                <div>
-                  <p className="text-xs font-semibold uppercase text-slate-500">Language and proofreading</p>
-                  <ul className="list-disc pl-5 text-sm text-slate-700">{evaluation.language_errors.map((item: string, i: number) => <li key={i}>{item}</li>)}</ul>
-                </div>
-              )}
-            </div>
-          )}
-
-          {evaluation.line_feedback?.length > 0 && (
-            <div className="card">
-              <h4 className="font-semibold text-slate-800 mb-3">Line-level feedback</h4>
-              <div className="space-y-2">
-                {evaluation.line_feedback.map((item: any, i: number) => (
-                  <div key={i} className="border-l-4 border-primary-300 pl-3">
-                    <p className="text-xs font-semibold text-slate-500">Line {item.line_number} · {item.category}</p>
-                    <p className="text-sm text-slate-700">{item.comment}</p>
-                    {item.suggested_revision && <p className="text-xs text-primary-700 mt-1">Suggested revision: {item.suggested_revision}</p>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Supporting Evidence */}
-          {evaluation.supporting_evidence?.length > 0 && (
-            <div className="card">
-              <h4 className="font-semibold text-slate-800 mb-3">📎 Supporting Evidence</h4>
-              <div className="space-y-2">
-                {evaluation.supporting_evidence.map((e: any) => (
-                  <div key={e.id} className="bg-slate-50 rounded-lg p-3 border-l-4 border-primary-400">
-                    <p className="text-sm text-slate-700 italic">"{e.evidence_text}"</p>
-                    {e.relevance_note && <p className="text-xs text-slate-500 mt-1">{e.relevance_note}</p>}
-                  </div>
-                ))}
-              </div>
-            </div>
-          )}
-
-          {/* Faculty Review Section - remains editable after approval and re-evaluation */}
-          <div id="faculty-score-editor" className="card">
-              <h4 className="font-semibold text-slate-800 mb-4">Faculty Review & Edit</h4>
-              <div className="space-y-3">
-                <div>
-                  <div className="flex items-center justify-between">
-                    <label className="text-xs font-medium text-slate-600">Faculty Final Score</label>
-                    <span className="text-xs font-semibold text-primary-700">
-                      {approveForm.faculty_total_score} / {maximumMarks}
-                    </span>
-                  </div>
-                  <div className="mt-2 flex items-center gap-3">
-                    <input
-                      type="range"
-                      className="w-full accent-primary-600"
-                      value={approveForm.faculty_total_score}
-                      onChange={e => setFacultyScore(parseFloat(e.target.value))}
-                      min={0}
-                      max={maximumMarks}
-                      step={0.5}
-                      aria-label={`Faculty final score out of ${maximumMarks}`}
-                    />
-                    <input
-                      type="number"
-                      className="input-field w-24"
-                      value={approveForm.faculty_total_score}
-                      onChange={e => setFacultyScore(parseFloat(e.target.value))}
-                      min={0}
-                      max={maximumMarks}
-                      step={0.5}
-                      aria-label="Faculty final score"
-                    />
-                  </div>
-                  <p className="text-xs text-slate-500 mt-1">
-                    Move the slider or enter a score from 0 to {maximumMarks}.
-                  </p>
-                </div>
-                {evaluation.criterion_scores?.length > 0 && (
-                  <div>
-                    <label className="text-xs font-medium text-slate-600">Criterion marks (editable)</label>
-                    <div className="mt-2 space-y-2">
-                      {evaluation.criterion_scores.map((cs: any) => (
-                        <div key={cs.id} className="flex items-center gap-2">
-                          <span className="flex-1 text-sm text-slate-700">{cs.criterion_name}</span>
-                          <input
-                            type="number"
-                            className="input-field w-24"
-                            min={0}
-                            max={cs.max_marks}
-                            step={0.5}
-                            value={criterionOverrides[cs.id] ?? cs.ai_score}
-                            onChange={e => setCriterionOverrides({
-                              ...criterionOverrides,
-                              [cs.id]: parseFloat(e.target.value),
-                            })}
-                          />
-                          <span className="text-xs text-slate-400">/ {cs.max_marks}</span>
+            <div className="space-y-4">
+              {criteria.map((c: any) => {
+                const lvl = levelFor(c);
+                return (
+                  <div key={c.name} className="rounded-xl border border-slate-200 p-4">
+                    <div className="flex items-start justify-between gap-3">
+                      <div className="flex items-start gap-2.5 min-w-0">
+                        <span className="mt-1.5 w-2.5 h-2.5 rounded-full shrink-0" style={{ backgroundColor: c.color }} />
+                        <div className="min-w-0">
+                          <p className="text-sm font-semibold text-slate-900">{c.label}. {c.name}</p>
+                          <p className="text-xs text-slate-500">Maximum {fmt(c.max_marks)} marks</p>
                         </div>
-                      ))}
+                      </div>
+                      <div className="flex items-center gap-1.5 shrink-0">
+                        <input
+                          type="number" inputMode="decimal" min={0} max={c.max_marks} step={0.5}
+                          aria-label={`Mark for ${c.name}`}
+                          className="input-field w-20 text-center font-semibold"
+                          value={marks[c.name] ?? ''}
+                          onChange={e => setMark(c.name, e.target.value, c.max_marks)}
+                        />
+                        <span className="text-xs text-slate-400">/ {fmt(c.max_marks)}</span>
+                      </div>
+                    </div>
+                    <div className="grid grid-cols-2 sm:grid-cols-4 gap-2 mt-3">
+                      {[...(c.levels || [])].sort((a: any, b: any) => b.level - a.level).map((l: any) => {
+                        const selected = lvl && lvl.level === l.level;
+                        return (
+                          <button
+                            key={l.level}
+                            type="button"
+                            onClick={() => setMark(c.name, String(l.max_marks ?? l.level), c.max_marks)}
+                            className={`text-left rounded-lg border p-2.5 transition-colors ${selected ? 'border-primary-500 bg-primary-50 ring-1 ring-primary-500' : 'border-slate-200 hover:border-slate-300 hover:bg-slate-50'}`}
+                            title={l.description}
+                          >
+                            <p className="text-[11px] font-semibold text-slate-800">{l.name}</p>
+                            <p className="text-[10.5px] text-slate-500">
+                              {l.min_marks !== undefined && l.min_marks !== l.max_marks ? `${fmt(l.min_marks)}–${fmt(l.max_marks)}` : fmt(l.max_marks ?? l.level)} marks
+                            </p>
+                            <p className="text-[11px] text-slate-600 mt-1 leading-snug line-clamp-3">{l.description}</p>
+                          </button>
+                        );
+                      })}
                     </div>
                   </div>
-                )}
-                <div>
-                  <label className="text-xs font-medium text-slate-600">Faculty Feedback (optional override)</label>
-                  <textarea className="input-field mt-1" rows={3}
-                    value={approveForm.faculty_feedback}
-                    onChange={e => setApproveForm({ ...approveForm, faculty_feedback: e.target.value })} />
-                </div>
-                <div>
-                  <label className="text-xs font-medium text-slate-600">Faculty Notes (internal)</label>
-                  <input className="input-field mt-1"
-                    value={approveForm.faculty_notes}
-                    onChange={e => setApproveForm({ ...approveForm, faculty_notes: e.target.value })} />
-                </div>
-                <div className="flex gap-3 pt-2">
-                  <button onClick={() => handleApprove(false)} className="btn-success flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4" /> {evaluation.status === 'approved' ? 'Save Changes' : 'Approve'}
-                  </button>
-                  <button onClick={() => handleApprove(true)} className="btn-primary flex items-center gap-2">
-                    <CheckCircle className="w-4 h-4" /> Save & Publish to Student
-                  </button>
-                  {evaluation.status !== 'approved' && (
-                    <button onClick={handleReject} className="btn-danger flex items-center gap-2">
-                      <XCircle className="w-4 h-4" /> Reject
-                    </button>
-                  )}
-                  <button onClick={triggerEval} disabled={evaluating} className="btn-secondary text-sm flex items-center gap-1.5">
-                    <Brain className="w-3.5 h-3.5" /> Re-evaluate
-                  </button>
-                </div>
-              </div>
+                );
+              })}
+            </div>
           </div>
 
-          {(evaluation.status === 'approved' || evaluation.status === 'rejected') && (
-            <div className={`card border-2 ${evaluation.status === 'approved' ? 'border-green-300 bg-green-50' : 'border-red-300 bg-red-50'}`}>
-              <div className="flex items-center gap-2">
-                {evaluation.status === 'approved' ? <CheckCircle className="w-5 h-5 text-green-600" /> : <XCircle className="w-5 h-5 text-red-600" />}
-                <span className="font-semibold capitalize text-slate-800">Evaluation {evaluation.status}</span>
-              </div>
-              {evaluation.faculty_total_score !== null && (
-                <p className="text-sm text-slate-600 mt-2">Final Score: <strong>{evaluation.faculty_total_score}</strong></p>
-              )}
-              <button
-                onClick={() => {
-                  document.getElementById('faculty-score-editor')?.scrollIntoView({ behavior: 'smooth', block: 'center' });
-                }}
-                className="btn-secondary text-xs mt-3"
-              >
-                Edit Score & Feedback
+          <div className="card space-y-4">
+            <div>
+              <label className="form-label">Overall feedback <span className="text-red-500">*</span></label>
+              <textarea className="input-field" rows={4} value={overall} onChange={e => setOverall(e.target.value)}
+                placeholder="Your overall judgement of the work. The student sees this as “Faculty comments” on the feedback document." />
+            </div>
+            <div>
+              <label className="form-label">Private notes <span className="text-slate-400 font-normal">(never shown to the student)</span></label>
+              <input className="input-field" value={notes} onChange={e => setNotes(e.target.value)} placeholder="Notes for yourself or the admin" />
+            </div>
+            <div className="flex flex-wrap items-center justify-between gap-3 pt-2 border-t border-slate-100">
+              <button type="button" onClick={() => save(true)} disabled={saving} className="btn-secondary text-sm"><Save className="w-4 h-4" /> Save draft</button>
+              <button type="button" onClick={() => save(false)} disabled={saving || !allMarked} className="btn-primary text-sm">
+                <Send className="w-4 h-4" /> {saving ? 'Submitting…' : isFinal ? 'Update evaluation' : 'Submit evaluation'}
               </button>
             </div>
-          )}
+            <p className="text-xs text-slate-500 flex gap-1.5"><Info className="w-3.5 h-3.5 shrink-0 mt-0.5" />
+              Submitting starts the AI evaluation. The student receives the annotated feedback document with the average of your marks and the AI’s marks.</p>
+          </div>
+        </div>
+      </div>
+
+      {docOpen && doc && (
+        <div className="modal-backdrop items-start overflow-y-auto" onMouseDown={() => setDocOpen(false)}>
+          <div className="w-full max-w-[900px] my-6" onMouseDown={e => e.stopPropagation()}>
+            <div className="flex justify-end mb-3">
+              <button onClick={() => setDocOpen(false)} className="btn-secondary text-xs">Close preview</button>
+            </div>
+            <FeedbackDocument doc={doc} onDownload={downloadPdf} downloading={pdfBusy} />
+          </div>
         </div>
       )}
     </div>
@@ -785,7 +908,7 @@ function SubjectList() {
   useEffect(() => { facultyApi.getSubjects().then(r => setSubjects(r.data)); }, []);
   return (
     <div>
-      <h2 className="text-xl font-bold text-slate-800 mb-6">My Subjects</h2>
+      <h2 className="text-xl font-semibold text-slate-900 tracking-tight mb-6">My Subjects</h2>
       <div className="grid gap-4">
         {subjects.map(s => (
           <Link key={s.id} to={`/faculty/subjects/${s.id}`}
@@ -833,7 +956,7 @@ function EvaluationsList() {
 
   return (
     <div>
-      <h2 className="text-xl font-bold text-slate-800 mb-6">Submissions & Evaluations</h2>
+      <h2 className="text-xl font-semibold text-slate-900 tracking-tight mb-6">Submissions & Evaluations</h2>
       <div className="card">
         <table className="w-full text-sm">
           <thead><tr className="border-b border-edu-border"><th className="text-left pb-2 text-slate-500 font-medium">Student</th><th className="text-left pb-2 text-slate-500 font-medium">Assessment</th><th className="text-left pb-2 text-slate-500 font-medium">Status</th><th className="text-left pb-2 text-slate-500 font-medium">Evaluated?</th><th className="pb-2"></th></tr></thead>
@@ -869,7 +992,6 @@ export default function FacultyPortal() {
         <Route path="/" element={<FacultyDashboard />} />
         <Route path="/subjects" element={<SubjectList />} />
         <Route path="/subjects/:subjectId" element={<SubjectDetail />} />
-        <Route path="/assessments/:assessmentId/rubric" element={<RubricManager />} />
         <Route path="/submissions/:submissionId" element={<SubmissionEvaluation />} />
         <Route path="/evaluations" element={<EvaluationsList />} />
       </Routes>

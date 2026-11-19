@@ -32,20 +32,19 @@ def get_current_user(
     return user
 
 
-def require_admin(current_user: User = Depends(get_current_user)) -> User:
-    if current_user.role != UserRole.admin:
-        raise HTTPException(status_code=403, detail="Admin access required")
-    return current_user
+def require_role(*roles: UserRole):
+    """Strict role guard: only the listed roles may access the route."""
+    def checker(current_user: User = Depends(get_current_user)) -> User:
+        if current_user.role not in roles:
+            raise HTTPException(
+                status_code=status.HTTP_403_FORBIDDEN,
+                detail=f"{' or '.join(r.value.capitalize() for r in roles)} access required",
+            )
+        return current_user
+    return checker
 
 
-def require_faculty(current_user: User = Depends(get_current_user)) -> User:
-    if current_user.role not in (UserRole.admin, UserRole.faculty):
-        raise HTTPException(status_code=403, detail="Faculty access required")
-    return current_user
-
-
-def require_student(current_user: User = Depends(get_current_user)) -> User:
-    if current_user.role not in (UserRole.admin, UserRole.student):
-        raise HTTPException(status_code=403, detail="Student access required")
-    return current_user
-
+# Each portal is accessible only to its own role.
+require_admin = require_role(UserRole.admin)
+require_faculty = require_role(UserRole.faculty)
+require_student = require_role(UserRole.student)

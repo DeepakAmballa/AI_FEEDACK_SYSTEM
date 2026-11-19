@@ -1,0 +1,1574 @@
+<USER_REQUEST>
+# EDU EVAL AI — COMPLETE IMPLEMENTATION PROMPT FOR ANTIGRAVITY
+
+## Project objective
+
+Enhance the existing EduEval AI application into a complete AI-assisted academic assessment and evaluation platform.
+
+Implement all the requirements below while preserving the existing application, working features, architecture, database records, authentication, and user workflows.
+
+**MOST IMPORTANT: Do not rebuild the project from scratch. Do not replace working modules unnecessarily. Inspect the existing codebase first, understand its architecture, and make incremental, backward-compatible changes.**
+
+---
+
+# 1. EXISTING TECHNOLOGY STACK
+
+The project currently uses the following technologies. Continue using the existing stack wherever possible.
+
+### Frontend
+- React
+- TypeScript
+- Vite
+- Tailwind CSS
+- Axios
+- React Router
+- Lucide React
+- React Hot Toast
+
+### Backend
+- Python 3.11
+- FastAPI
+- Uvicorn
+- SQLAlchemy
+- Pydantic
+- Pydantic Settings
+- JWT authentication using Python-Jose
+- Passlib / Bcrypt
+
+### AI and document processing
+- OpenAI Python SDK
+- Sentence Transformers for local embeddings
+- FAISS CPU for local vector search
+- PyMuPDF for PDF extraction
+- python-docx
+- python-pptx
+- Pillow
+- Tesseract OCR
+- ReportLab for PDF report generation
+
+### Database and storage
+- SQLite for local development.
+- Uploaded documents stored under `Backend/uploads/`.
+- FAISS indexes stored under `Backend/faiss_indexes/`.
+
+Reuse existing database models, services, routes, utilities, and components wherever appropriate.
+
+---
+
+# 2. FIRST STEP — INSPECT THE EXISTING PROJECT
+
+Before modifying anything:
+
+1. Inspect the complete frontend and backend folder structures.
+2. Identify existing authentication, Admin, Faculty, and Student modules.
+3. Inspect the current database models, schemas, migrations, and relationships.
+4. Understand existing assessment creation and submission workflows.
+5. Inspect the existing course profile upload and RAG indexing process.
+6. Identify the current AI evaluation implementation.
+7. Inspect existing report generation and download functionality.
+8. Identify reusable components and services.
+9. Identify existing bugs without unnecessarily changing unrelated functionality.
+
+Create a backup of important files before making structural changes.
+
+Prepare an implementation plan based on the existing code.
+
+Do not:
+- Delete existing working features.
+- Replace the existing application with a new project.
+- Change the technology stack unnecessarily.
+- Remove existing uploaded documents or database records.
+- Break authentication or role-based access.
+- Introduce duplicate API endpoints or duplicate frontend components.
+- Hardcode assessment types in multiple locations.
+- expose API keys or internal AI results to unauthorized users.
+
+---
+
+# 3. USER ROLES AND ACCESS CONTROL
+
+Maintain three separate portals.
+
+### Admin
+Admin has complete system-level access.
+
+Admin must be able to:
+- Manage users and roles.
+- Manage faculty and student accounts.
+- Manage subjects and course assignments.
+- Manage assessment types and rubrics.
+- Monitor student submissions.
+- View faculty evaluations.
+- View AI evaluations.
+- Compare faculty and AI marks.
+- View discrepancy calculations.
+- View final calculated marks.
+- Inspect AI evaluation failures.
+- Retry failed AI evaluations.
+- Review combined evaluation reports.
+- Monitor audit logs and system activity.
+
+### Faculty
+Faculty can:
+- Access assigned subjects.
+- Create assessments.
+- View student submissions.
+- Manually evaluate complete submissions.
+- View assessment-specific rubric reference guides.
+- Submit overall marks and feedback.
+- Manage course profiles.
+- Review evaluation history.
+- View final published student evaluation information as permitted.
+
+Faculty must not see:
+- AI evaluation buttons.
+- AI-generated marks.
+- AI-generated criterion scores.
+- AI comparison results.
+- AI discrepancy calculations.
+- AI processing details or internal statuses.
+- Admin-only evaluation monitoring.
+
+### Student
+Students can:
+- Access assigned subjects.
+- View available assessments.
+- Upload assignment files.
+- Type submissions directly.
+- Save drafts.
+- Submit assignments.
+- View submission history.
+- View published final marks.
+- View combined feedback.
+- Download published evaluation reports.
+
+Students must never see:
+- AI marks.
+- Faculty-versus-AI comparisons.
+- AI-only evaluation reports.
+- Internal AI processing statuses.
+- Other students' submissions or evaluation information.
+
+Implement authorization at both frontend and backend levels. Hiding a button is not sufficient.
+
+---
+
+# 4. ADMIN — ASSESSMENT AND RUBRIC MANAGEMENT
+
+Create or enhance the following Admin Dashboard section:
+
+**Assessment & Rubric Management**
+
+Admin must be able to create, manage, activate, deactivate, and maintain assessment types and their associated rubrics.
+
+Initially configure these three assessment types:
+
+1. Group Discussion
+2. Free Writing
+3. Reflective Journal
+
+Each assessment type has five criteria. Each criterion has four performance levels:
+
+- 4 — Excellent
+- 3 — Good
+- 2 — Average
+- 1 — Needs Improvement
+
+Each criterion contributes a maximum of four points. Total rubric maximum: 20 points.
+
+## 4.1 Group Discussion Rubric
+
+### Criterion 1: Participation
+
+**4 — Excellent:** Actively and consistently engages with the discussion, providing valuable insights.
+
+**3 — Good:** Regularly contributes with thoughtful ideas, though may lack depth.
+
+**2 — Average:** Contributes occasionally with relevant ideas but lacks consistency.
+
+**1 — Needs Improvement:** Rarely contributes or engages with the discussion.
+
+### Criterion 2: Listening Skills
+
+**4 — Excellent:** Demonstrates exceptional listening skills, respects others' ideas, and supports group dynamics.
+
+**3 — Good:** Actively listens and avoids interrupting, showing empathy.
+
+**2 — Average:** Generally attentive but occasionally interrupts or loses focus.
+
+**1 — Needs Improvement:** Frequently interrupts or demonstrates poor listening skills.
+
+### Criterion 3: Content Relevance
+
+**4 — Excellent:** Contributions are highly relevant, insightful, and add significant value to the discussion.
+
+**3 — Good:** Contributions are relevant and well-thought-out but lack depth.
+
+**2 — Average:** Contributions are moderately relevant but lack focus or clarity.
+
+**1 — Needs Improvement:** Contributions are irrelevant or fail to align with the discussion topic.
+
+### Criterion 4: Collaboration
+
+**4 — Excellent:** Works exceptionally well with the group, fostering a positive and productive dynamic.
+
+**3 — Good:** Collaborates effectively, resolving conflicts constructively.
+
+**2 — Average:** Collaborates inconsistently, with occasional conflicts.
+
+**1 — Needs Improvement:** Does not collaborate effectively; may disrupt group dynamics.
+
+### Criterion 5: Problem Solving
+
+**4 — Excellent:** Consistently contributes innovative and effective solutions to group challenges.
+
+**3 — Good:** Actively engages in problem-solving with creative solutions.
+
+**2 — Average:** Provides basic solutions but lacks depth or creativity.
+
+**1 — Needs Improvement:** Rarely contributes to problem-solving or offers ineffective solutions.
+
+## 4.2 Free Writing Rubric
+
+### Criterion 1: Relevance
+
+**4 — Excellent:** Responses are highly relevant, directly addressing the questions with clarity and precision.
+
+**3 — Good:** Responses are relevant and address the questions effectively but with minor gaps.
+
+**2 — Average:** Responses are moderately relevant but lack focus or depth.
+
+**1 — Needs Improvement:** Responses are irrelevant or fail to address the questions.
+
+### Criterion 2: Understanding
+
+**4 — Excellent:** Demonstrates a deep understanding of concepts with accurate and insightful answers.
+
+**3 — Good:** Demonstrates good understanding with mostly accurate responses.
+
+**2 — Average:** Demonstrates basic understanding but contains minor inaccuracies.
+
+**1 — Needs Improvement:** Demonstrates limited understanding with superficial or partially correct responses.
+
+### Criterion 3: Critical Thinking
+
+**4 — Excellent:** Provides strong analysis and logical reasoning, offering well-supported arguments or interpretations.
+
+**3 — Good:** Demonstrates thoughtful analysis with some logical reasoning but lacks depth.
+
+**2 — Average:** Provides basic analysis, with minimal reasoning or support.
+
+**1 — Needs Improvement:** Lacks analysis or reasoning; answers are superficial or unsupported.
+
+### Criterion 4: Clarity
+
+**4 — Excellent:** Writing is exceptionally clear, concise, and well-structured.
+
+**3 — Good:** Writing is clear and organized, with minor lapses in flow or clarity.
+
+**2 — Average:** Writing is somewhat clear but lacks strong organization or detail.
+
+**1 — Needs Improvement:** Writing is unclear, disorganized, or difficult to understand.
+
+### Criterion 5: Completeness
+
+**4 — Excellent:** Fully addresses all parts of the question, providing detailed and comprehensive answers.
+
+**3 — Good:** Answers most parts with minor omissions.
+
+**2 — Average:** Answers some parts but several sections are incomplete.
+
+**1 — Needs Improvement:** Major gaps; many parts of the question are unanswered.
+
+## 4.3 Reflective Journal Rubric
+
+### Criterion 1: Experience (Concrete Experience)
+
+**4 — Excellent:** Clearly and accurately describes all learning activities (theory, lab, self-study); shows strong engagement and observation.
+
+**3 — Good:** Describes most learning activities clearly with minor missing details.
+
+**2 — Average:** Describes activities but lacks clarity or important details.
+
+**1 — Needs Improvement:** Very limited or unclear description of activities.
+
+### Criterion 2: Reflection (Feelings & Learning Experience)
+
+**4 — Excellent:** Deep and honest reflection on learning experience with clear emotional and cognitive responses.
+
+**3 — Good:** Good reflection with some insight into learning experience.
+
+**2 — Average:** Basic reflection with limited depth or personal insight.
+
+**1 — Needs Improvement:** Superficial reflection with little personal connection.
+
+### Criterion 3: Analysis (Conceptual Understanding)
+
+**4 — Excellent:** Shows deep conceptual understanding with strong links between theory and experience; insights are accurate and meaningful.
+
+**3 — Good:** Shows good conceptual understanding with correct connections.
+
+**2 — Average:** Shows basic understanding with minor inaccuracies.
+
+**1 — Needs Improvement:** Shows weak understanding with unclear or incorrect concepts.
+
+### Criterion 4: Action Plan (Application & Improvement)
+
+**4 — Excellent:** Clear, realistic, and detailed plan for applying learning and improving performance.
+
+**3 — Good:** Practical action plan with some clarity for future use.
+
+**2 — Average:** Basic plan mentioned with limited detail.
+
+**1 — Needs Improvement:** Vague or unclear plan with no real direction.
+
+### Criterion 5: Clarity & Organization
+
+**4 — Excellent:** Writing is very clear, well-organized, reflective in tone, and easy to understand.
+
+**3 — Good:** Writing is clear with minor errors in flow or structure.
+
+**2 — Average:** Writing is understandable but lacks proper organization.
+
+**1 — Needs Improvement:** Writing is unclear, poorly structured, or difficult to follow.
+
+## 4.4 Dynamic assessment type management
+
+Admin must be able to:
+
+- Add new assessment types.
+- Create custom rubric criteria.
+- Add four performance levels with descriptions.
+- Edit assessment details.
+- Activate or deactivate assessment types.
+- Maintain rubric versions.
+- View previous rubric versions.
+- Configure the maximum marks.
+- Set the default discrepancy threshold.
+- Save changes safely.
+
+Do not hardcode the three assessment types into the Faculty frontend.
+
+The Faculty assessment dropdown must retrieve only active assessment types from the Admin-managed database.
+
+When an assessment is created, associate it with the applicable rubric version. Existing assessments must retain their original rubric version even when Admin updates a rubric later.
+
+---
+
+# 5. FACULTY — CREATE ASSESSMENT
+
+Enhance the existing Faculty assessment creation page.
+
+Include:
+
+- Assessment title.
+- Subject.
+- Assessment type.
+- Assessment question or topic.
+- Instructions.
+- Maximum marks.
+- Start date and time.
+- Submission deadline.
+- Allowed file types.
+- Assessment description.
+- Selected rubric version, automatically associated with the active assessment type.
+
+Assessment type dropdown must dynamically retrieve active types configured by Admin.
+
+Initially display:
+
+- Group Discussion
+- Free Writing
+- Reflective Journal
+
+Do not display deactivated assessment types for new assessments.
+
+Existing assessments must remain accessible even if their assessment type is later deactivated.
+
+---
+
+# 6. FACULTY-FIRST EVALUATION WORKFLOW
+
+This is one of the most important requirements.
+
+The workflow must be:
+
+**Student submits → Faculty manually evaluates → Faculty submits overall evaluation → Backend automatically starts AI evaluation → Python validates both results → Final score is calculated → Combined report is generated → Publication.**
+
+AI evaluation must not begin before the faculty submits the manual evaluation.
+
+## 6.1 Student submission
+
+When a student submits an assignment:
+
+1. Save the submission.
+2. Store the student, subject, assessment, and submission version.
+3. Preserve the original uploaded document or typed content.
+4. Extract text from supported files.
+5. Store extracted content and metadata.
+6. Associate the submission with the correct assessment and rubric version.
+7. Make the submission available to the assigned faculty.
+
+At this stage, AI evaluation must not automatically start.
+
+## 6.2 Faculty manually evaluates the complete submission
+
+When faculty opens a submission, display:
+
+### A. Complete submission preview
+
+Allow faculty to read the entire submission, including extracted text and uploaded document preview where supported.
+
+### B. Assessment-specific rubric reference
+
+Display the correct rubric for the assessment.
+
+For example:
+- Group Discussion → Group Discussion rubric.
+- Free Writing → Free Writing rubric.
+- Reflective Journal → Reflective Journal rubric.
+
+Display all five criteria and their four performance-level descriptions.
+
+The rubric must remain visible or easily accessible while faculty evaluates the submission.
+
+**Important: The rubric is a reference guide only. It is not an individual scoring form for faculty.**
+
+### C. Faculty evaluation form
+
+Faculty must provide:
+
+1. One overall marks input field.
+2. Maximum marks displayed clearly.
+3. Overall feedback.
+4. Strengths.
+5. Weaknesses or areas requiring improvement.
+6. Suggestions for improvement.
+7. Irrelevant-content observations, if applicable.
+8. Reasons for deductions, if applicable.
+9. Optional internal notes.
+
+**Critical scoring requirement: Faculty evaluates the entire submission collectively using all five rubric criteria and enters only ONE overall mark.**
+
+Example:
+
+- Assessment: Reflective Journal
+- Maximum marks: 20
+- Faculty overall marks: 15/20
+
+Do not ask faculty to assign separate marks to Participation, Listening Skills, Relevance, or any other individual criterion.
+
+Do not create a five-criterion scoring form for faculty.
+
+The rubric is displayed only to guide faculty's overall judgement.
+
+### D. Save and submit
+
+Faculty must be able to:
+
+- Save evaluation as a draft.
+- Edit the draft before submission.
+- Submit the final faculty evaluation.
+
+On submission, store:
+
+`faculty_total_marks`
+
+This must represent one overall faculty score, not a collection of criterion-wise marks.
+
+Validate that:
+- Marks are numeric.
+- Marks are not negative.
+- Marks do not exceed the assessment maximum.
+- Required fields are valid.
+
+Once the faculty evaluation is successfully submitted, automatically trigger the backend AI evaluation workflow.
+
+Do not show a manual AI evaluation button.
+
+Do not show AI marks or AI evaluation results to faculty.
+
+---
+
+# 7. AUTOMATIC AI EVALUATION AFTER FACULTY SUBMISSION
+
+After faculty successfully submits the evaluation, the backend must automatically initiate AI evaluation.
+
+The frontend must not require faculty to click anything to trigger AI.
+
+Use background processing so the faculty interface is not blocked.
+
+Use the existing hybrid architecture:
+
+- Local RAG for relevant academic context.
+- OpenAI API for intelligent evaluation and feedback.
+- Python for validation and final score calculations.
+
+## 7.1 AI evaluation inputs
+
+AI must receive:
+
+1. Student's complete submission.
+2. Assessment title.
+3. Assessment type.
+4. Assessment question or topic.
+5. Assessment instructions.
+6. Maximum marks.
+7. Associated rubric version.
+8. All five rubric criteria.
+9. Performance-level descriptions.
+10. Relevant course profile content retrieved through RAG.
+11. Relevant subject reference materials.
+12. Faculty feedback as supplementary context, where appropriate.
+
+AI must evaluate the student's actual submission against the assessment question and rubric.
+
+It must not blindly agree with the faculty evaluation.
+
+## 7.2 AI evaluation output
+
+AI must generate:
+
+- AI overall marks.
+- Criterion-wise marks.
+- Criterion-wise explanations.
+- Overall feedback.
+- Strengths.
+- Weaknesses.
+- Improvement suggestions.
+- Conceptual accuracy observations.
+- Content relevance observations.
+- Completeness observations.
+- Supporting evidence from the submission.
+- Irrelevant-content observations.
+- Reasons for any suggested deductions.
+
+AI may internally score the five rubric criteria using the four-level scale.
+
+For example:
+
+| Criterion | AI score |
+|---|---:|
+| Relevance | 3/4 |
+| Understanding | 4/4 |
+| Critical Thinking | 3/4 |
+| Clarity | 3/4 |
+| Completeness | 2/4 |
+| **AI total** | **15/20** |
+
+This criterion-wise evaluation is for Admin review and internal validation.
+
+**Do not introduce criterion-wise faculty scoring.**
+
+## 7.3 AI response format
+
+Require structured JSON output.
+
+Validate:
+- All required rubric criteria are present.
+- Criterion marks are numeric.
+- Each criterion mark is within the allowed range.
+- Overall marks do not exceed maximum marks.
+- Total marks match the validated criterion scores.
+- Feedback fields have valid types.
+- Evidence references are grounded in the submission.
+- No unsupported observations or fabricated quotations are included.
+
+If the AI response is malformed, attempt a controlled correction or retry. Never accept invalid results as completed evaluations.
+
+---
+
+# 8. PYTHON VALIDATION AND FINAL SCORE CALCULATION
+
+Python must be the authoritative scoring and validation layer.
+
+Do not allow the language model to independently decide or calculate the final published marks.
+
+Store these separately:
+
+- `faculty_total_marks`
+- `ai_total_marks`
+- `ai_criterion_scores`
+- `final_total_marks`
+- `discrepancy_value`
+- `discrepancy_threshold`
+- `calculation_method`
+
+## 8.1 Discrepancy calculation
+
+Let:
+
+- F = Faculty overall marks.
+- A = AI overall marks.
+- M = Maximum assessment marks.
+- D = Absolute difference between faculty and AI marks.
+
+Calculate:
+
+`D = abs(F - A)`
+
+Default discrepancy threshold:
+
+`T = 0.20 × M`
+
+The 20% threshold must be configurable by Admin, with 20% as the initial default.
+
+## 8.2 Final score policy
+
+Apply the following exact rules:
+
+**Case 1: Difference is greater than the threshold**
+
+If:
+
+`D > T`
+
+Then:
+
+`Final Marks = (F + A) / 2`
+
+**Case 2: Difference is equal to or less than the threshold**
+
+If:
+
+`D <= T`
+
+Then:
+
+`Final Marks = F`
+
+Important:
+- Exactly equal to the threshold must NOT trigger averaging.
+- Do not use `>=` for the averaging condition.
+- Preserve both original evaluation scores.
+- Allow decimal or half-mark precision.
+- Do not round in a way that changes the scoring policy.
+- Validate that the final score is within the assessment maximum.
+
+### Example 1
+
+Maximum marks = 20
+
+Faculty marks = 15
+
+AI marks = 10
+
+Difference = 5
+
+Threshold = 4
+
+Since 5 > 4:
+
+Final marks = (15 + 10) / 2 = 12.5
+
+### Example 2
+
+Maximum marks = 20
+
+Faculty marks = 15
+
+AI marks = 11
+
+Difference = 4
+
+Threshold = 4
+
+Since 4 is NOT greater than 4:
+
+Final marks = 15
+
+The faculty score is retained.
+
+Admin must be able to configure the discrepancy threshold for future assessments. Preserve the threshold used at the time of each calculation for audit purposes.
+
+---
+
+# 9. AI FAILURE HANDLING AND RETRY
+
+If AI evaluation fails:
+
+- Preserve the faculty evaluation.
+- Do not delete or overwrite faculty marks.
+- Record the failure reason internally.
+- Set the internal AI evaluation status to failed.
+- Do not calculate a final combined score.
+- Do not generate a completed combined report.
+- Do not publish an incomplete evaluation.
+- Allow Admin to inspect the failure.
+- Allow Admin to retry AI evaluation.
+
+Implement safe retry and idempotency.
+
+Do not duplicate evaluations when:
+- A request is accidentally submitted twice.
+- A background task is retried.
+- A user refreshes the page.
+- The backend restarts.
+- The same submission is processed again.
+
+Use a unique evaluation identity based on relevant information, such as:
+- Submission ID.
+- Submission version.
+- Assessment ID.
+- Rubric version.
+- AI configuration/model version.
+
+Preserve historical evaluation records.
+
+If a student resubmits or faculty-authorized changes create a new submission version, process the new version independently.
+
+Never overwrite an earlier valid evaluation.
+
+Suggested internal workflow statuses:
+
+- Faculty Pending
+- Faculty Draft
+- Faculty Completed
+- AI Pending
+- AI Processing
+- AI Completed
+- AI Failed
+- Final Calculation Pending
+- Final Evaluation Ready
+- Published
+
+These are internal statuses. Do not expose AI-specific statuses to Faculty or Students.
+
+---
+
+# 10. ADMIN — AI EVALUATION MONITORING
+
+Create an Admin-only evaluation monitoring section.
+
+Admin must be able to view:
+
+- Student name and ID.
+- Subject.
+- Faculty.
+- Assessment title.
+- Assessment type.
+- Submission date.
+- Faculty evaluation status.
+- Faculty overall marks.
+- AI evaluation status.
+- AI overall marks.
+- AI criterion-wise marks.
+- Discrepancy value.
+- Configured threshold.
+- Calculation method.
+- Final calculated marks.
+- Evaluation timestamps.
+- AI error details when applicable.
+
+Provide filters for:
+- Subject.
+- Faculty.
+- Student.
+- Assessment.
+- Assessment type.
+- Evaluation status.
+- Date range.
+
+Admin must be able to open a detailed comparison view.
+
+### Comparison view
+
+Display faculty and AI evaluations separately.
+
+For example:
+
+| Evaluation | Marks |
+|---|---:|
+| Faculty overall marks | 15/20 |
+| AI overall marks | 10/20 |
+| Difference | 5 |
+| Threshold | 4 |
+| Final marks | 12.5/20 |
+
+Also display AI criterion-wise analysis, faculty feedback, AI feedback, evidence, and the final calculation explanation.
+
+Admin must be able to retry failed AI evaluations.
+
+All Admin actions must be recorded in audit logs.
+
+---
+
+# 11. COMBINED STUDENT FEEDBACK AND FINAL REPORT
+
+After both evaluations are successfully completed and Python calculates the final marks, generate a unified evaluation report.
+
+The report must combine faculty and AI feedback without unnecessary repetition.
+
+### Report structure
+
+**1. Student information**
+- Student name.
+- Student ID.
+- Course or department, if available.
+- Subject.
+
+**2. Assessment information**
+- Assessment title.
+- Assessment type.
+- Assessment question or topic.
+- Maximum marks.
+- Submission date.
+
+**3. Final evaluation**
+- Final marks.
+- Maximum marks.
+- Final percentage, if applicable.
+
+Do not show the AI score separately to students.
+
+Do not show faculty-versus-AI comparison or discrepancy calculations to students.
+
+**4. Overall feedback**
+
+Combine the faculty's observations and AI's useful feedback into one clear explanation.
+
+**5. Strengths**
+
+List the student's demonstrated strengths.
+
+**6. Areas for improvement**
+
+List weaknesses and areas that need attention.
+
+**7. Criterion-level feedback**
+
+Explain performance in relation to the relevant rubric criteria in student-friendly language.
+
+Do not expose separate AI marks for each criterion.
+
+**8. Improvement suggestions**
+
+Provide actionable academic suggestions.
+
+**9. Irrelevant-content observations**
+
+Identify unrelated or irrelevant content when genuinely present.
+
+For every supported observation, include:
+- Exact excerpt from the student's submission.
+- Page number or section, if available.
+- Why the content is unrelated.
+- Relevant rubric criterion.
+- Explanation of any score impact, if supported by the actual evaluation.
+
+Important rules:
+- Never invent quotations.
+- Never invent page numbers.
+- Do not mark valid elaboration as irrelevant merely because it is lengthy.
+- Do not penalize the same issue twice.
+- Do not claim a deduction unless the evaluation supports it.
+- Distinguish genuinely unrelated material from relevant supporting explanations.
+- Preserve evidence so Admin can verify the observation.
+
+Faculty must also be able to provide their own irrelevant-content observations and deduction explanations during manual evaluation.
+
+**10. Final remarks**
+
+Provide a concise and constructive summary for the student.
+
+### Student report access
+
+After Admin-approved publication or the existing authorized publication process:
+
+- Student can view the final marks.
+- Student can view the unified feedback.
+- Student can download the final PDF report.
+- Student can access previous published reports.
+
+Use the existing ReportLab PDF generation functionality wherever possible.
+
+Ensure the report is professionally formatted and readable.
+
+---
+
+# 12. STUDENT PORTAL — TYPE SUBMISSION FEATURE
+
+Enhance the existing Student submission page.
+
+Currently, students can upload assignment documents. Preserve this functionality.
+
+Add a second option:
+
+**Type Submission**
+
+The page should provide two methods:
+
+1. Upload Document
+2. Type Submission
+
+### Type Submission editor
+
+Allow students to:
+- Type their assignment directly.
+- Format text where practical.
+- Save as draft.
+- Edit saved drafts.
+- Preview content.
+- Submit the completed assignment.
+
+Store:
+- Student ID.
+- Assessment ID.
+- Submission text.
+- Submission version.
+- Created timestamp.
+- Updated timestamp.
+- Submitted timestamp.
+- Submission status.
+
+Validate:
+- Empty submissions.
+- Submission deadline.
+- Maximum content size.
+- Duplicate submissions.
+- Allowed resubmission rules.
+
+Typed submissions must enter exactly the same faculty-first and automatic AI evaluation workflow as uploaded documents.
+
+Do not create a separate evaluation system for typed submissions.
+
+Preserve the existing document upload feature and supported file types.
+
+---
+
+# 13. FACULTY PORTAL — TYPE COURSE PROFILE FEATURE
+
+Enhance the existing Faculty Course Profile section.
+
+Preserve the existing upload functionality.
+
+Add another option:
+
+1. Upload Course Profile
+2. Type Course Profile
+
+### Type Course Profile editor
+
+Allow faculty to enter:
+
+- Course title.
+- Subject.
+- Course description.
+- Syllabus.
+- Units.
+- Topics.
+- Course objectives.
+- Course outcomes.
+- Reference content.
+- Learning materials.
+- Additional academic information.
+
+Faculty must be able to:
+- Save drafts.
+- Edit drafts.
+- Preview the course profile.
+- Submit or publish the course profile according to the existing workflow.
+
+Store the original typed content and associated metadata.
+
+Once submitted or published, process the typed course profile through the existing RAG indexing pipeline.
+
+### RAG integration
+
+The typed course profile must be:
+1. Stored in the database.
+2. Converted into processable text.
+3. Chunked appropriately.
+4. Embedded using the existing Sentence Transformers implementation.
+5. Indexed in the appropriate FAISS subject index.
+6. Associated with the correct subject and course profile version.
+
+The RAG system must retrieve relevant content for the correct subject and assessment.
+
+Do not mix unrelated subjects or course profiles.
+
+If a course profile is edited, re-index the updated version safely while preserving historical references required by previous evaluations.
+
+---
+
+# 14. EXISTING DOCUMENT UPLOAD AND PROCESSING
+
+Preserve all existing supported document uploads.
+
+Continue supporting, wherever already implemented:
+
+- PDF
+- DOC
+- DOCX
+- PPT
+- PPTX
+- TXT
+- Images
+
+Preserve:
+- PyMuPDF extraction.
+- DOCX extraction.
+- PPTX extraction.
+- OCR through Tesseract.
+- Existing document previews.
+- Existing upload validation.
+- Existing file storage.
+- Existing RAG indexing.
+
+Typed and uploaded content must eventually produce consistent structured text and metadata for evaluation.
+
+Do not remove existing document processing to implement the new text editors.
+
+---
+
+# 15. FACULTY EVALUATION UI — IMPORTANT FINAL REQUIREMENT
+
+This requirement overrides any earlier design that asks faculty to enter marks for individual criteria.
+
+When faculty opens an assignment for evaluation, show:
+
+- Full student submission.
+- Assessment question and instructions.
+- Maximum marks.
+- Assessment-specific rubric reference.
+- One overall marks field.
+- Faculty feedback.
+- Strengths.
+- Weaknesses.
+- Suggestions.
+- Irrelevant-content observations.
+- Reasons for deductions.
+- Optional internal notes.
+- Save Draft.
+- Submit Evaluation.
+
+The five rubric criteria and their four performance descriptions must be visible as a reference guide.
+
+**Faculty awards ONE overall score for the complete submission.**
+
+Example:
+
+`Faculty Overall Marks: 15 / 20`
+
+Do not show five separate faculty score inputs.
+
+Do not require faculty to select Excellent, Good, Average, or Needs Improvement for each criterion.
+
+Do not store or require faculty criterion-wise marks in the new workflow.
+
+If legacy database fields for criterion-wise faculty marks already exist, maintain backward compatibility where necessary, but do not use them as required inputs in the new faculty evaluation process.
+
+AI can still internally evaluate each criterion and calculate its own overall score.
+
+Admin comparison must use:
+
+- Faculty's single overall mark.
+- AI's validated overall mark.
+
+Python must calculate the final score using the discrepancy policy defined above.
+
+---
+
+# 16. SECURITY AND DATA PRIVACY
+
+Implement strict role-based access control.
+
+### AI API key
+
+Use the OpenAI API key only on the backend.
+
+Read it from:
+
+`OPENAI_API_KEY`
+
+Store it in the backend `.env` file.
+
+Ensure `.env` is included in `.gitignore`.
+
+Provide `.env.example` with placeholders only.
+
+Never:
+- Hardcode the key.
+- Send the key to the React frontend.
+- Expose it in API responses.
+- Print it in logs.
+- Commit it to GitHub.
+- Include it in generated reports.
+
+Use an environment-configurable model:
+
+`OPENAI_MODEL`
+
+If the key is missing:
+- The application must still start.
+- Existing local functionality must continue working.
+- AI evaluation must report a clear internal configuration error.
+- Admin must be able to identify the issue.
+
+Remember that OpenAI API usage is separate from a ChatGPT subscription.
+
+### Authorization
+
+Ensure:
+- Students access only their own records.
+- Faculty access only assigned subjects and authorized submissions.
+- Faculty cannot access Admin-only AI endpoints.
+- Students cannot access faculty evaluation records.
+- Only Admin can access AI comparison and monitoring endpoints.
+- Uploaded documents cannot be accessed through unauthorized direct URLs.
+
+Validate ownership and permissions on the backend for every relevant API.
+
+---
+
+# 17. DATABASE AND BACKEND IMPLEMENTATION
+
+Inspect existing SQLAlchemy models before introducing changes.
+
+Extend the current database schema using safe migrations or backward-compatible table/column creation.
+
+Do not delete existing data.
+
+Create or extend models for the following concepts as required by the existing architecture:
+
+### Assessment types
+- ID
+- Name
+- Description
+- Active status
+- Maximum marks, where applicable
+- Created timestamp
+- Updated timestamp
+
+### Rubric versions
+- ID
+- Assessment type ID
+- Version
+- Criteria
+- Performance-level descriptions
+- Maximum marks
+- Active status
+- Created timestamp
+
+### Assessments
+- Assessment ID
+- Faculty ID
+- Subject ID
+- Assessment type ID
+- Rubric version ID
+- Question/topic
+- Instructions
+- Maximum marks
+- Deadline
+- Status
+
+### Student submissions
+- Submission ID
+- Student ID
+- Assessment ID
+- Submission version
+- Submission type (uploaded or typed)
+- Original file reference, where applicable
+- Typed content, where applicable
+- Extracted text
+- Submission timestamp
+- Status
+
+### Faculty evaluations
+- Evaluation ID
+- Submission ID
+- Faculty ID
+- Faculty overall marks
+- Overall feedback
+- Strengths
+- Weaknesses
+- Improvement suggestions
+- Irrelevant-content observations
+- Deduction explanations
+- Internal notes
+- Evaluation timestamp
+- Submission version
+
+Do not require criterion-wise faculty scores.
+
+### AI evaluations
+- Evaluation ID
+- Submission ID
+- Rubric version ID
+- AI model/configuration version
+- AI overall marks
+- AI criterion-wise marks
+- Criterion explanations
+- Strengths
+- Weaknesses
+- Suggestions
+- Evidence
+- Irrelevant-content observations
+- Processing status
+- Error details
+- Created timestamp
+- Completed timestamp
+
+### Final evaluations
+- Final evaluation ID
+- Submission ID
+- Faculty evaluation ID
+- AI evaluation ID
+- Faculty marks
+- AI marks
+- Discrepancy
+- Threshold
+- Calculation method
+- Final marks
+- Combined feedback
+- Report reference
+- Publication status
+- Created timestamp
+- Published timestamp
+
+Adapt these models to existing relationships rather than blindly creating duplicates.
+
+Use proper foreign keys, indexes, uniqueness constraints, and transaction handling.
+
+Preserve historical evaluations and rubric versions.
+
+---
+
+# 18. BACKGROUND PROCESSING AND RELIABILITY
+
+AI evaluation must run independently of the faculty's browser session.
+
+Use an appropriate background task mechanism compatible with the existing FastAPI application and project scale.
+
+Ensure:
+- Faculty submission is saved before AI processing begins.
+- Background processing survives ordinary frontend refreshes.
+- Processing failures are recorded.
+- Admin can retry failures.
+- Duplicate processing is prevented.
+- Final calculation occurs only after both evaluations are valid.
+- Report generation occurs only after final calculation succeeds.
+
+Use database transactions for important evaluation state changes.
+
+Do not mark an evaluation completed before all required validation and persistence steps succeed.
+
+---
+
+# 19. FRONTEND DESIGN AND EXPERIENCE
+
+Preserve the current application design system.
+
+Improve the interface consistently across Admin, Faculty, and Student portals.
+
+Use:
+- Clear navigation.
+- Responsive layouts.
+- Readable tables.
+- Search and filters.
+- Loading states.
+- Empty states.
+- Error handling.
+- Confirmation dialogs for important actions.
+- Success and failure notifications.
+- Accessible forms.
+- Appropriate validation messages.
+
+### Admin interface
+Provide:
+- Assessment and rubric management.
+- Evaluation monitoring.
+- Detailed comparison.
+- Failed AI evaluation retry.
+- Final evaluation records.
+- Audit logs.
+
+### Faculty interface
+Provide:
+- Assessment creation.
+- Student submission review.
+- Rubric reference panel.
+- Single overall marks input.
+- Manual feedback form.
+- Course profile upload and typing options.
+
+Do not display AI evaluation controls or AI results.
+
+### Student interface
+Provide:
+- Assessment list.
+- Upload and Type Submission options.
+- Draft management.
+- Submission history.
+- Published marks and combined feedback.
+- PDF report download.
+
+Do not display AI marks or AI comparison.
+
+---
+
+# 20. API IMPLEMENTATION
+
+Follow the existing API structure and naming conventions.
+
+Create or extend endpoints as appropriate for:
+
+- Admin assessment type management.
+- Admin rubric management.
+- Faculty assessment creation.
+- Student document submissions.
+- Student typed submissions.
+- Faculty submission review.
+- Faculty evaluation draft creation and editing.
+- Faculty overall evaluation submission.
+- Automatic AI evaluation processing.
+- Admin AI evaluation monitoring.
+- Admin retry of failed evaluations.
+- Final score calculation.
+- Combined report generation.
+- Student published report access.
+- Faculty typed course profile creation and publishing.
+- Course profile RAG indexing.
+
+All protected endpoints must validate the authenticated user's role and resource permissions.
+
+Do not expose internal AI endpoints to Faculty or Student roles.
+
+---
+
+# 21. TESTING AND VALIDATION
+
+Do not consider implementation complete just because the application starts.
+
+Run the existing application and test the full workflow.
+
+### Test 1 — Admin rubric management
+- Admin logs in.
+- Admin views the three initial assessment types.
+- Admin opens each rubric.
+- All five criteria and four performance levels are displayed correctly.
+- Admin creates another assessment type.
+- Faculty dropdown reflects the active configuration.
+- Deactivated types are unavailable for new assessments.
+- Existing assessments retain their original rubric version.
+
+### Test 2 — Assessment creation
+- Faculty logs in.
+- Faculty creates an assessment.
+- Faculty selects Group Discussion, Free Writing, or Reflective Journal.
+- Correct rubric version is associated.
+- Assessment is saved successfully.
+
+### Test 3 — Student document submission
+- Student logs in.
+- Student uploads a supported document.
+- Submission is saved and extracted.
+- Faculty can access the submission.
+- AI does not start before faculty submits an evaluation.
+
+### Test 4 — Student typed submission
+- Student types an assignment.
+- Saves a draft.
+- Edits the draft.
+- Submits successfully.
+- Faculty can view the typed content.
+- The same evaluation workflow is followed.
+
+### Test 5 — Faculty overall evaluation
+- Faculty opens the submission.
+- Correct rubric reference is displayed.
+- Faculty enters one overall mark.
+- Faculty enters feedback.
+- Faculty submits.
+- No criterion-wise faculty marks are requested.
+- No AI button or AI marks are visible.
+
+### Test 6 — Automatic AI evaluation
+- Faculty submits the evaluation.
+- Backend automatically starts AI evaluation.
+- Correct submission, rubric, assessment question, and RAG context are used.
+- AI produces criterion-wise scores and an overall score.
+- Python validates the output.
+- Admin can view the results.
+- Faculty and Student cannot access AI results.
+
+### Test 7 — Final score calculation
+
+Test all of these cases:
+
+**Case A:** Faculty = 15, AI = 10, maximum = 20. Final = 12.5.
+
+**Case B:** Faculty = 15, AI = 11, maximum = 20. Final = 15.
+
+**Case C:** Faculty = 12, AI = 12, maximum = 20. Final = 12.
+
+**Case D:** Faculty = 20, AI = 0, maximum = 20. Final = 10.
+
+Confirm that averaging happens only when the difference is strictly greater than the threshold.
+
+### Test 8 — AI failure
+- Simulate an invalid API key or failed AI request.
+- Faculty evaluation remains saved.
+- No final combined score is generated.
+- Admin can see the failure.
+- Admin can retry.
+- A successful retry creates a valid AI evaluation.
+- Duplicate records are not created.
+
+### Test 9 — Combined report
+- Both evaluations complete.
+- Python calculates final marks.
+- Combined feedback is generated.
+- Report contains correct student and assessment information.
+- Irrelevant-content evidence is accurate and traceable.
+- PDF downloads successfully.
+- Student sees only final marks and unified feedback.
+
+### Test 10 — Typed course profile
+- Faculty creates a typed course profile.
+- Saves and publishes it.
+- Content is indexed into the correct subject's FAISS index.
+- Relevant assessment queries retrieve the appropriate content.
+
+### Test 11 — Security
+- Student cannot access another student's submission.
+- Faculty cannot access unassigned subjects.
+- Faculty cannot access Admin AI endpoints.
+- Student cannot access AI comparison endpoints.
+- Unauthorized direct API requests return appropriate errors.
+
+### Test 12 — Regression
+Verify existing:
+- Login and logout.
+- JWT authentication.
+- Role-based dashboards.
+- Subject management.
+- Faculty assignments.
+- Course profile uploads.
+- Document extraction and OCR.
+- Existing RAG retrieval.
+- Existing assessment functionality.
+- Existing report functionality.
+- Existing database records.
+
+Fix regressions caused by the implementation.
+
+---
+
+# 22. IMPLEMENTATION ORDER
+
+Implement the changes in the following order to reduce risk:
+
+**Phase 1 — Codebase inspection**
+- Understand existing modules.
+- Back up critical files.
+- Identify existing reusable services.
+
+**Phase 2 — Database and Admin configuration**
+- Add assessment types.
+- Add versioned rubrics.
+- Seed the three supplied assessment types.
+- Build Admin management screens.
+
+**Phase 3 — Faculty assessment creation**
+- Connect assessment type dropdown to Admin configuration.
+- Associate the correct rubric version.
+
+**Phase 4 — Submission enhancements**
+- Add Student Type Submission.
+- Add Faculty Type Course Profile.
+- Integrate both with existing processing services.
+
+**Phase 5 — Faculty-first evaluation**
+- Implement the rubric reference panel.
+- Implement one overall faculty marks field.
+- Implement faculty feedback and observations.
+- Remove the manual AI trigger.
+
+**Phase 6 — Automatic AI evaluation**
+- Trigger AI after successful faculty submission.
+- Use local RAG and OpenAI.
+- Validate structured AI results using Python.
+- Add safe background processing and retries.
+
+**Phase 7 — Final scoring**
+- Implement discrepancy calculation.
+- Implement the exact threshold policy.
+- Store independent evaluation scores and final score.
+
+**Phase 8 — Admin monitoring**
+- Build AI monitoring and comparison.
+- Add failure inspection and retry.
+
+**Phase 9 — Combined feedback and reports**
+- Generate unified feedback.
+- Generate PDF reports.
+- Implement Student report access.
+
+**Phase 10 — Security and regression testing**
+- Verify all role permissions.
+- Test the complete workflow.
+- Fix existing feature regressions.
+
+---
+
+# 23. FINAL NON-NEGOTIABLE REQUIREMENTS
+
+1. Preserve the existing project and its working functionality.
+2. Do not rebuild the application from scratch.
+3. Keep the existing technology stack.
+4. Admin exclusively manages assessment types and rubrics.
+5. Initially configure Group Discussion, Free Writing, and Reflective Journal with the exact supplied rubric descriptions.
+6. Faculty assessment dropdown must use Admin-managed active assessment types.
+7. Preserve rubric versions for historical assessments.
+8. Faculty manually evaluates before AI evaluation begins.
+9. Faculty enters only ONE overall mark for the entire submission.
+10. Faculty rubric is a reference guide, not a criterion-wise scoring form.
+11. AI evaluation starts automatically after successful faculty evaluation submission.
+12. AI can generate criterion-wise marks internally.
+13. Admin alone can see AI marks, criterion scores, comparison, and discrepancy details.
+14. Students see only final published marks and combined feedback.
+15. Python validates AI output and calculates final marks.
+16. Average faculty and AI marks only when their difference is strictly greater than the configured threshold.
+17. Preserve faculty marks and AI marks separately.
+18. Do not generate or publish incomplete combined evaluations.
+19. Support failed AI evaluation inspection and retry.
+20. Prevent duplicate evaluations and preserve historical records.
+21. Include evidence-based irrelevant-content observations without fabricating evidence or deductions.
+22. Add Student Type Submission without removing document uploads.
+23. Add Faculty Type Course Profile without removing course profile uploads.
+24. Integrate typed course profiles with the existing RAG pipeline.
+25. Keep the OpenAI API key secure and backend-only.
+26. Implement proper role-based API authorization.
+27. Test the entire application, not just individual screens.
+28. Do not declare completion until the complete workflow works end to end.
+
+---
+
+# 24. FINAL DELIVERABLES
+
+After implementation, provide:
+
+1. Summary of all modified modules.
+2. List of new files and updated files.
+3. Database schema or migration changes.
+4. New and modified API endpoints.
+5. Frontend features implemented for each role.
+6. AI evaluation and scoring workflow explanation.
+7. Environment variables required.
+8. Exact commands to start the backend and frontend.
+9. Testing results for the complete workflow.
+10. Any remaining issues or limitations.
+
+**Start by inspecting the existing codebase. Then implement the requirements incrementally, carefully, and completely. Prioritize a stable, working end-to-end EduEval AI application over unnecessary redesign or rewriting.**
+</USER_REQUEST>
+<ADDITIONAL_METADATA>
+The current local time is: 2026-11-17T21:43:06+05:30.
+
+The user's current state is as follows:
+Active Document: c:\AI_FEEDACK_SYSTEM\PROJECT_OVERVIEW.md (LANGUAGE_UNSPECIFIED)
+Cursor is on line: 217
+</ADDITIONAL_METADATA>
+<USER_SETTINGS_CHANGE>
+The user changed setting `Model Selection` from Gemini 3.8 Flash (Low) to Claude Sonnet 4.6 (Thinking). No need to comment on this change if the user doesn't ask about it. If reporting what model you are, please use a human readable name instead of the exact string.
+</USER_SETTINGS_CHANGE>

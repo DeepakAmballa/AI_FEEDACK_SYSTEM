@@ -28,6 +28,32 @@ system activity.
 - Student-facing feedback and downloadable evaluation reports
 - Audit logging for important administrative and evaluation actions
 
+## Evaluation Flow
+
+1. **Faculty set up the subject** — a course profile (syllabus, objectives, outcomes, units and
+   topics, reference content) and/or uploaded course documents, indexed for retrieval.
+2. **The admin creates assessments** (Admin → Assessments) and maps each one to one or more
+   subjects. Its rubric starts from the RTLP rubric library — all Chapter 14 rubrics of the Aurora
+   Reflective Teaching Learning Policy, seeded from `Backend/app/data/rtlp_rubrics.json` — and the
+   admin can edit criteria, level descriptors and mark bands or scale the marks. Only admins create
+   or change assessments and rubrics; faculty and students of every mapped subject see them. An
+   assessment can name a course unit and carry a model answer / answer key (quizzes require one).
+3. **Students submit** a document or a typed answer through one of their subjects; the submission
+   belongs to that subject (its faculty evaluate it and its course profile grounds the AI).
+4. **Faculty mark every rubric criterion** (the total is the sum) and write overall feedback.
+5. **The AI evaluates independently** (OpenAI or OpenRouter, `OPENAI_MODEL`) — it never sees the
+   faculty marks. It is grounded on the assessment brief, the linked course unit, the course
+   profile, retrieved course-document passages and the RTLP rubric, and returns per-criterion
+   marks, an overall feedback paragraph, and one comment for every numbered sentence of the
+   submission. Python validates all marks and comments.
+6. **Final mark = average of faculty and AI marks**, per criterion and in total. A difference
+   above the type's threshold is flagged for admin review in Evaluation Monitor.
+7. **The student receives the feedback document** (web view and PDF): score and criteria page,
+   the submission split into numbered segments highlighted by rubric criterion, overall feedback,
+   faculty comments, and strengths / weaknesses / suggestions keyed to the segment numbers.
+
+Tests run offline by default (the model call is faked); set `RUN_LIVE_AI=1` to use the real model.
+
 ## Technology Stack
 
 ### Frontend
@@ -115,3 +141,9 @@ VITE_API_BASE_URL=https://your-backend.onrender.com
 ```
 
 Never commit `.env` files, API keys, passwords, or production secrets.
+
+
+dr.smith@university.edu	Faculty@123
+admin@edueval.ai	Admin@123
+john.doe@student.edu	Student@123
+ 
